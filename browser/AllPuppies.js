@@ -7,9 +7,9 @@ export default class AllPuppies extends React.Component {
       <div className="container flexbox-container">
         <div className="jumbotron">
           <ul className="list-unstyled">
-            <li><a>PUPPY NAME GOES HERE</a></li>
-            <li><a>PUPPY NAME GOES HERE</a></li>
-            <li><a>PUPPY NAME GOES HERE</a></li>
+            <li><a href="#">PUPPY NAME GOES HERE</a></li>
+            <li><a href="#">PUPPY NAME GOES HERE</a></li>
+            <li><a href="#">PUPPY NAME GOES HERE</a></li>
           </ul>
         </div>
       </div>
