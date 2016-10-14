@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 export default class AllPuppies extends Component {
 
   componentDidMount () {
-    this.props.onLoadPuppies();
+    // this.props.onLoadPuppies();
   }
 
   render () {
