@@ -2,14 +2,12 @@
 
 const express = require('express');
 const volleyball = require('volleyball');
-const path = require('path'); 
-const rootPath = path.resolve(__dirname + '/../');
 
 const app = express();
 
 app.use(volleyball);
 
-app.use(express.static(rootPath));
+app.use(express.static(__dirname));
 
 const puppies = [{
   id: 1,
