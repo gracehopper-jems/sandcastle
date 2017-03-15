@@ -1,14 +1,41 @@
 'use strict';
 
-import React from 'react';
 import ReactDOM from 'react-dom';
-import AllPuppies from './AllPuppies';
+
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import firebase from 'firebase';
+
+import WritePage from './Firepad';
+import config from '../firebaseInfo';
+
+
+
+
+
+// const store = createStore(reducers, {}, applyMiddleware(thunkMiddleware));
+
+
+class App extends Component {
+
+	componentWillMount() {
+		firebase.initializeApp(config);
+	}
+
+	render() {
+    return (
+        <div className="container flexbox-container">
+            <WritePage />
+        </div>
+		);
+	}
+}
+
+export default App;
 
 ReactDOM.render(
-  <div className="container flexbox-container">
-    <div className="jumbotron">
-      <AllPuppies />
-    </div>
-  </div>,
+    <App />,
   document.getElementById('app')
 );
