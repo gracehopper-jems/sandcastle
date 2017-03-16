@@ -1,5 +1,6 @@
 import React from 'react';
 import {apiKey, authDomain, databaseURL} from '../../secrets';
+import firebase from 'firebase';
 
 export default class TextEditor extends React.Component {
 
@@ -26,7 +27,10 @@ export default class TextEditor extends React.Component {
     var firepadRef = firebase.database().ref();
 
     // Create CodeMirror (with lineWrapping on).
-   var codeMirror = CodeMirror(this.refs.firepad, { lineWrapping: true });
+   var codeMirror = CodeMirror(document.getElementById('firepad'), {
+        lineNumbers: true,
+        mode: 'javascript'
+    });
 
     // Create Firepad (with rich text toolbar and shortcuts enabled).
     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
@@ -37,10 +41,9 @@ export default class TextEditor extends React.Component {
 
   }
 
-
   render () {
     return (
-      <div ref="firepad"></div>
+      <div id="firepad"></div>
     )
   }
 }
