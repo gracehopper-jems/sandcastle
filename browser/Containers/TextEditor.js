@@ -1,5 +1,5 @@
 import React from 'react';
-import {apiKey, authDomain, databaseURL} from '../secrets';
+import {apiKey, authDomain, databaseURL} from '../../secrets';
 import firebase from 'firebase';
 
 export default class TextEditor extends React.Component {
