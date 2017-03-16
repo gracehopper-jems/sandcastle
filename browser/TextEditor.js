@@ -1,16 +1,17 @@
 import React from 'react';
-import {apiKey, authDomain, databaseURL} from '../secrets'; 
+import {apiKey, authDomain, databaseURL} from '../secrets';
+import firebase from 'firebase';
 
 export default class TextEditor extends React.Component {
 
   constructor(props){
     super(props)
-    this.init = this.init.bind(this); 
+    this.init = this.init.bind(this);
   }
 
 
   componentDidMount(){
-    this.init(); 
+    this.init();
   }
 
 
@@ -18,7 +19,7 @@ export default class TextEditor extends React.Component {
     var config = {
       apiKey: apiKey,
       authDomain: authDomain,
-      databaseURL: databaseURL, 
+      databaseURL: databaseURL,
     };
     firebase.initializeApp(config);
 
@@ -26,21 +27,23 @@ export default class TextEditor extends React.Component {
     var firepadRef = firebase.database().ref();
 
     // Create CodeMirror (with lineWrapping on).
-   var codeMirror = CodeMirror(this.refs.firepad, { lineWrapping: true });
+   var codeMirror = CodeMirror(document.getElementById('firepad'), {
+        lineNumbers: true,
+        mode: 'javascript'
+    });
 
     // Create Firepad (with rich text toolbar and shortcuts enabled).
     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
       richTextShortcuts: true,
-      richTextToolbar: true,  
+      richTextToolbar: true,
       defaultText: 'Hello World!'
     });
 
   }
 
-
   render () {
     return (
-      <div ref="firepad"></div>
+      <div id="firepad"></div>
     )
   }
 }
