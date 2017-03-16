@@ -18,7 +18,7 @@ export default class TextEditor extends React.Component {
     var config = {
       apiKey: apiKey,
       authDomain: authDomain,
-      databaseURL: databaseUrl, 
+      databaseURL: databaseURL, 
     };
     firebase.initializeApp(config);
 
