@@ -1,16 +1,16 @@
 import React from 'react';
-import {apiKey, authDomain, databaseURL} from '../secrets'; 
+import {apiKey, authDomain, databaseURL} from '../../secrets';
 
 export default class TextEditor extends React.Component {
 
   constructor(props){
     super(props)
-    this.init = this.init.bind(this); 
+    this.init = this.init.bind(this);
   }
 
 
   componentDidMount(){
-    this.init(); 
+    this.init();
   }
 
 
@@ -18,7 +18,7 @@ export default class TextEditor extends React.Component {
     var config = {
       apiKey: apiKey,
       authDomain: authDomain,
-      databaseURL: databaseURL, 
+      databaseURL: databaseURL,
     };
     firebase.initializeApp(config);
 
@@ -31,7 +31,7 @@ export default class TextEditor extends React.Component {
     // Create Firepad (with rich text toolbar and shortcuts enabled).
     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
       richTextShortcuts: true,
-      richTextToolbar: true,  
+      richTextToolbar: true,
       defaultText: 'Hello World!'
     });
 
