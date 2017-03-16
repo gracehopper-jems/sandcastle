@@ -8,11 +8,30 @@
 
     <!-- CodeMirror -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/codemirror.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/mode/javascript/javascript.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/codemirror.css" />
 
     <!-- Firepad -->
     <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.css" />
     <script src="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.min.js"></script>
+
+    <style>
+    html { height: 100%; }
+    body { margin: 0; height: 100%; position: relative; }
+    /* Height / width / positioning can be customized for your use case.
+       For demo purposes, we make firepad fill the entire browser. */
+    .firepad {
+      width: 700px;
+      height: 450px;
+      background-color: #f62; /* dark orange background */
+    }
+
+    /* Note: CodeMirror applies its own styles which can be customized in the same way.
+      To apply a background to the entire editor, we need to also apply it to CodeMirror. */
+    .CodeMirror {
+      background-color: #f62;
+    }
+    </style>
 
     <script src="public/bundle.js" defer></script>
     <title>Text Editor</title>
