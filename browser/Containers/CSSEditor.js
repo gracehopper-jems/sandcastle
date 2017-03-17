@@ -29,14 +29,13 @@ export default class TextEditor extends React.Component {
     // Create CodeMirror (with lineWrapping on).
    var codeMirror = CodeMirror(document.getElementById('firepad'), {
         lineWrapping: true,
-        lineNumbers: true,
         mode: 'javascript'
     });
 
     // Create Firepad (with rich text toolbar and shortcuts enabled).
     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
-      richTextShortcuts: false,
-      richTextToolbar: false,
+      richTextShortcuts: true,
+      richTextToolbar: true,
       defaultText: 'Hello World!'
     });
 
@@ -44,14 +43,7 @@ export default class TextEditor extends React.Component {
 
   render () {
     return (
-      <div className="container">
-      <div>
-        <div id="firepad"></div>
-      </div>
-        <div id="firepad">
-        <img src="https://storage.googleapis.com/material-design/publish/material_v_10/assets/0Bx4BSt6jniD7MG80dmpHT0RidGs/style_icons_system_intro_principles_actionable.png"></img>
-      </div>
-      </div>
+      <div id="firepad"></div>
     )
   }
 }
