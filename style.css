@@ -13,9 +13,8 @@
     .firepad {
       width: 720px;
       height: 720px;
-      background-color: green; /* dark orange background */
     }
-    #pagehalf {
+    .pagehalf {
         flex: 1;
     }
     .powered-by-firepad {
