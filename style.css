@@ -15,7 +15,7 @@
       height: 720px;
       background-color: green; /* dark orange background */
     }
-    #firepad {
+    #pagehalf {
         flex: 1;
     }
     .powered-by-firepad {
@@ -25,6 +25,6 @@
     /* Note: CodeMirror applies its own styles which can be customized in the same way.
       To apply a background to the entire editor, we need to also apply it to CodeMirror. */
     .CodeMirror {
-      background-color: lightblue;
+      background-color: lightseagreen;
       display: flexbox;
     }

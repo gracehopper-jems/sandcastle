@@ -30,7 +30,14 @@ export default class TextEditor extends React.Component {
    var codeMirror = CodeMirror(document.getElementById('firepad'), {
         lineWrapping: true,
         lineNumbers: true,
-        mode: 'javascript'
+        mode: 'javascript',
+        matchBrackets: true,
+        autoCloseBrackets: true,
+        // matchTags: true,
+        autoCloseTags: true,
+        toggleComment: true,
+        foldCode: true,
+        hint: true
     });
 
     // Create Firepad (with rich text toolbar and shortcuts enabled).
@@ -46,9 +53,9 @@ export default class TextEditor extends React.Component {
     return (
       <div className="container">
       <div>
-        <div id="firepad"></div>
+        <div id="firepad" className="pagehalf"></div>
       </div>
-        <div id="firepad">
+        <div className="pagehalf">
         <img src="https://storage.googleapis.com/material-design/publish/material_v_10/assets/0Bx4BSt6jniD7MG80dmpHT0RidGs/style_icons_system_intro_principles_actionable.png"></img>
       </div>
       </div>
