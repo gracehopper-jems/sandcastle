@@ -1,12 +1,12 @@
 /* We would need to provide the below for them  at the start of their empty file */
 
-var Sequelize = require('sequelize');
-var db = new Sequelize(process.env.DATABASE_URL);
+const Sequelize = require('sequelize');
+const db = new Sequelize(process.env.DATABASE_URL);
 
 
 /* they would right out their models within our online text editor like below (again, below is just a hard-coded test) */
 
-var Sandcastle = db.define('Sandcastle', {
+const Sandcastle = db.define('Sandcastle', {
     name: Sequelize.STRING
 })
 

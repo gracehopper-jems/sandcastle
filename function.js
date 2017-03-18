@@ -21,21 +21,21 @@ const userPackageJson = `{
 }`;
 
 const userServer = `'use strict';
-var retry = require('retry');
-var pg = require('pg');
-var models = require('./models');
-var db = models.db;
+const retry = require('retry');
+const pg = require('pg');
+const models = require('./models');
+const db = models.db;
 const express = require('express');
-const userApp = require('./userApp');
+const userRoutes = require('./userRoutes');
 
-var operation = retry.operation({ retries: 3 });
+const operation = retry.operation({ retries: 3 });
 
 // Constants
 const PORT = 8080;
 
 // App
 operation.attempt(function() {
-    var client = new pg.Client()
+    const client = new pg.Client()
     client.connect(function(e) {
         client.end()
         if (operation.retry(e)) {
@@ -44,27 +44,27 @@ operation.attempt(function() {
         if (!e) console.log("Hello Postgres!")
 
         const server = express();
-        server.use('/', userApp);
+        server.use('/', userRoutes);
 
         db.sync({ force: true })
             .then(() => {
                 server.listen(PORT, () => {
                     console.log(process.env.DATABASE_URL);
-                    console.log('Running on port', PORT);
+                    console.log('Running on http://localhost:3001');
                 });
             })
     })
-})`;
+`;
 
 const userModels = `/* We would need to provide the below for them  at the start of their empty file */
 
-var Sequelize = require('sequelize');
-var db = new Sequelize(process.env.DATABASE_URL);
+const Sequelize = require('sequelize');
+const db = new Sequelize(process.env.DATABASE_URL);
 
 
 /* they would right out their models within our online text editor like below (again, below is just a hard-coded test) */
 
-var Sandcastle = db.define('Sandcastle', {
+const Sandcastle = db.define('Sandcastle', {
     name: Sequelize.STRING
 })
 
@@ -76,7 +76,7 @@ module.exports = {
 }
 `;
 
-const userApp = `/* We would have to have this already provided for them on their blank text editor */
+const userRoutes = `/* We would have to have this already provided for them on their blank text editor */
 
 const express = require('express');
 const models = require('./models');
@@ -142,7 +142,7 @@ const dockerFunc = () => {
     })
     .then(() => {
         // write user routes to user-app folder
-        writeFile('userApp.js', userApp);
+        writeFile('userRoutes.js', userRoutes);
     })
     .then(() => {
       // run user server

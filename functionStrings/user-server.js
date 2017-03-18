@@ -1,19 +1,19 @@
 'use strict';
-var retry = require('retry');
-var pg = require('pg');
-var models = require('./models');
-var db = models.db;
+const retry = require('retry');
+const pg = require('pg');
+const models = require('./models');
+const db = models.db;
 const express = require('express');
-const userApp = require('./userApp');
+const userRoutes = require('./userRoutes');
 
-var operation = retry.operation({ retries: 3 });
+const operation = retry.operation({ retries: 3 });
 
 // Constants
 const PORT = 8080;
 
 // App
 operation.attempt(function() {
-    var client = new pg.Client()
+    const client = new pg.Client()
     client.connect(function(e) {
         client.end()
         if (operation.retry(e)) {
@@ -22,17 +22,13 @@ operation.attempt(function() {
         if (!e) console.log("Hello Postgres!")
 
         const server = express();
-        server.use('/', userApp);
+        server.use('/', userRoutes);
 
         db.sync({ force: true })
             .then(() => {
                 server.listen(PORT, () => {
                     console.log(process.env.DATABASE_URL);
-                    console.log('Running on port', PORT);
+                    console.log('Running on http://localhost:3001');
                 });
             })
     })
-})
-
-
-
