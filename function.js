@@ -20,21 +20,7 @@ const userPackageJson = `{
   }
 }`;
 
-const userServer = `'use strict';
-const retry = require('retry');
-const pg = require('pg');
-const models = require('./models');
-const db = models.db;
-const express = require('express');
-const userRoutes = require('./userRoutes');
-
-const operation = retry.operation({ retries: 3 });
-
-// Constants
-const PORT = 8080;
-
-// App
-operation.attempt(function() {
+const userServer = `operation.attempt(function() {
     const client = new pg.Client()
     client.connect(function(e) {
         client.end()
@@ -54,7 +40,7 @@ operation.attempt(function() {
                 });
             })
     })
-`;
+})`;
 
 const userModels = `/* We would need to provide the below for them  at the start of their empty file */
 
