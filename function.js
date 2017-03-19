@@ -183,22 +183,17 @@ const dockerFunc = () => {
       return exec('docker-compose build');
     })
     .then(() => {
-      // run docker container
-      console.log('running docker-compose up');
-      return exec('docker-compose up');
+        // run docker container
+        console.log('running docker-compose up');
+        // docker-compose up runs strangely when in called in promisified exec
+        return exec('docker-compose up');
     })
-    // does not reach below
-    .then((res) => {
-        console.log('====got here');
-        console.log(res);
-        // console.log(`docker stdout: ${stdout}`);
-        // console.log(`docker stderr: ${stderr}`);
+    .then(() => {
+        // never gets here
+        // stop docker container
+        console.log('running docker-compose down');
+        return exec('docker-compose down');
     })
-    // .then(() => {
-    //   // stop docker container
-    //   console.log('running docker-compose down');
-    //   return exec('docker-compose down');
-    // })
     .catch(console.error);
 
 };
