@@ -1,7 +1,6 @@
 import React from 'react';
 import {apiKey, authDomain, databaseURL} from '../../secrets';
 import firebase from 'firebase';
-
 export default class TextEditor extends React.Component {
 
   constructor(props){
@@ -14,17 +13,9 @@ export default class TextEditor extends React.Component {
     this.init();
   }
 
-
   init(){
-    var config = {
-      apiKey: apiKey,
-      authDomain: authDomain,
-      databaseURL: databaseURL,
-    };
-    firebase.initializeApp(config);
-
     // Get Firebase Database reference.
-    var firepadRef = firebase.database().ref();
+    var firepadRef = firebase.database().ref('/html');
 
     // Create CodeMirror (with lineWrapping on).
    var codeMirror = CodeMirror(document.getElementById('firepad'), {
@@ -44,7 +35,7 @@ export default class TextEditor extends React.Component {
     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
       richTextShortcuts: false,
       richTextToolbar: false,
-      defaultText: 'Hello World!'
+      defaultText: 'HTML here!'
     });
 
   }
