@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TextEditor from './Containers/TextEditor';
+import HTMLEditor from './Containers/HTMLEditor';
 import CSSEditor from './Containers/CSSEditor';
 import JSEditor from './Containers/JSEditor';
 import ServerEditor from './Containers/ServerEditor';
@@ -12,23 +12,20 @@ import AppContainer from './Containers/AppContainer';
 import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 
-function init() {
+const onAppEnter = () => {
+  // run init
   var config = {
       apiKey,
       authDomain,
       databaseURL
     };
     firebase.initializeApp(config);
-}
+};
+
 ReactDOM.render(
   <Router history={hashHistory}>
-    <Route path="/"
-      component={AppContainer}
-      onEnter={() => {
-        init()
-      }}
-      >
-      <Route path="/html" component={TextEditor} />
+    <Route path="/" component={AppContainer} onEnter={onAppEnter} >
+      <Route path="/html" component={HTMLEditor} />
       <Route path="/css" component={CSSEditor} />
       <Route path="/javascript" component={JSEditor} />
       <Route path="/server" component={ServerEditor} />
