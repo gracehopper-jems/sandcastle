@@ -8,7 +8,6 @@ class AppContainer extends Component {
   constructor(props){
     super(props)
   }
-
   render(){
     console.log("Inside App Container rendering the entire page", this.props.children);
     return(
@@ -32,7 +31,7 @@ class AppContainer extends Component {
               </div>
           </nav>
             {/* load html firepad on default */}
-            {this.props.children ? this.props.children : <HTMLEditor />}
+            {this.props.children ? this.props.children : <HTMLEditor handleHTMLUpdate={this.props.handleHTMLUpdate} />}
         </div>
     );
   }
@@ -41,7 +40,7 @@ class AppContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     code: state.code
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -53,25 +52,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     handleUserUpdate(userId, orderId, productId, color, quantity) {
-//       dispatch(updateOrderItemFromUserCart(userId, orderId, productId, color, quantity))
-//     },
-//     handleUserDelete (userId, orderId, productId) {
-//       dispatch(deleteOrderItemFromUserCart(userId, orderId, productId))
-//     },
-//     handleGuestDelete(orderlineId) {
-//       dispatch(deleteOrderItemFromGuestCart(orderlineId))
-//     },
-//     handleGuestUpdate(orderlineId, color, quantity) {
-//       dispatch(updateOrderItemFromGuestCart(orderlineId, color, quantity))
-//     },
-//     handleCheckoutUserCart(orderTotals, userId) {
-//       dispatch(checkoutUserCart(orderTotals, userId))
-//     },
-//   }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(CartContainer)
