@@ -2,7 +2,7 @@ import React from 'react';
 import {apiKey, authDomain, databaseURL} from '../../secrets';
 import firebase from 'firebase';
 
-export default class CSSEditor extends React.Component {
+export default class ServerEditor extends React.Component {
 
   constructor(props){
     super(props)
@@ -17,7 +17,7 @@ export default class CSSEditor extends React.Component {
 
   init(){
     // Get Firebase Database reference.
-    var firepadRef = firebase.database().ref('/css');
+    var firepadRef = firebase.database().ref('/server');
 
     // Create CodeMirror (with lineWrapping on).
    var codeMirror = CodeMirror(document.getElementById('firepad'), {
@@ -37,7 +37,7 @@ export default class CSSEditor extends React.Component {
     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
       richTextShortcuts: false,
       richTextToolbar: false,
-      defaultText: 'CSS here!'
+      defaultText: 'Server here!'
     });
   }
 
