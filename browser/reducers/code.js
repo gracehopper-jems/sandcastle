@@ -31,9 +31,8 @@ export const receiveHTML = htmlString => ({
 });
 
 export const updateHTML = (htmlString) => {
-  return dispatch => {
-    dispatch(receiveHTML(htmlString));
-  };
+  return receiveHTML(htmlString);
+
 };
 
 export default reducer;
