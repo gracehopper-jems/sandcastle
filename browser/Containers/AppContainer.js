@@ -22,6 +22,10 @@ export default class AppContainer extends Component {
                           <li><Link to="/server">Server</Link></li>
                           <li><Link to="/database">Database</Link></li>
                       </ul>
+                      <ul className="nav navbar-nav navbar-right">
+                        <li><a href="#">Sign Up</a></li>
+                        <li><a href="#">Sign In</a></li>
+                      </ul>
                   </div>
               </nav>
                 {this.props.children}
