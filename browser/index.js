@@ -14,9 +14,9 @@ import firebase from 'firebase';
 
 function init() {
   var config = {
-      apiKey: apiKey,
-      authDomain: authDomain,
-      databaseURL: databaseURL,
+      apiKey,
+      authDomain,
+      databaseURL
     };
     firebase.initializeApp(config);
 }
