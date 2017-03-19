@@ -32,11 +32,20 @@ export default class HTMLEditor extends React.Component {
         hint: true
     });
 
+
     // Create Firepad (with rich text toolbar and shortcuts enabled).
     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
       richTextShortcuts: false,
       richTextToolbar: false,
       defaultText: 'HTML here!'
+    });
+
+    firepad.on('synced', function(isSynced) {
+      // isSynced will be false immediately after the user edits the pad,
+      // and true when their edit has been saved to Firebase.
+      if (isSynced) {
+        console.log('====', firepad.getText());
+      }
     });
 
   }
