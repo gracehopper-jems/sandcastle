@@ -1,10 +1,14 @@
 module.exports = {
-  entry: './browser/index.js',
+  entry: './browser/main.js',
   output: {
     path: __dirname,
     filename: './public/bundle.js'
   },
+  context: __dirname,
   devtool: 'source-map',
+  resolve: {
+    extensions: ['.js', '.jsx', '.json', '*']
+  },
   module: {
     rules: [
       {
