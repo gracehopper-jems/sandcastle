@@ -1,9 +1,7 @@
 'use strict';
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const {resolve} = require('path');
-// const volleyball = require('volleyball');
 const PrettyError = require('pretty-error');
 const finalHandler = require('finalhandler');
 // PrettyError docs: https://www.npmjs.com/package/pretty-error
