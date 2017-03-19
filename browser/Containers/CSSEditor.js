@@ -23,7 +23,7 @@ export default class CSSEditor extends React.Component {
    var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
         lineWrapping: true,
         lineNumbers: true,
-        mode: 'javascript',
+        mode: 'css',
         matchBrackets: true,
         autoCloseBrackets: true,
         // matchTags: true,
