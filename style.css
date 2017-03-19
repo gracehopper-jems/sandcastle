@@ -8,30 +8,34 @@ body {
   position: relative;
 }
 
-.container {
+/*.container {
   display: flex;
   justify-content: space-around;
   flex-direction: row;
   align-items: center;
   flex: 1;
 }
-
-.firepad {
-  width: 720px;
-  height: 720px;
+*/
+#firepad-container {
+  width: 100%;
+  height: 85vh;
 }
 
-.pagehalf {
+/*.pagehalf {
   flex: 1;
+}*/
+
+img {
+  width: 45vw;
+  height: 85vh;
 }
 
 .powered-by-firepad {
   height: 0px;
 }
 
-/* Note: CodeMirror applies its own styles which can be customized in the same way.
-  To apply a background to the entire editor, we need to also apply it to CodeMirror. */
+/* Note: CodeMirror applies its own styles which can be customized in the same way. To apply a background to the entire editor, we need to also apply it to CodeMirror. */
 .CodeMirror {
   background-color: lightgray;
-  display: flexbox;
+  /*display: flexbox;*/
 }
