@@ -14,12 +14,8 @@ import firebase from 'firebase';
 
 const onAppEnter = () => {
   // run init
-  var config = {
-      apiKey,
-      authDomain,
-      databaseURL
-    };
-    firebase.initializeApp(config);
+  var config = {apiKey, authDomain, databaseURL};
+  firebase.initializeApp(config);
 };
 
 ReactDOM.render(

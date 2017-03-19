@@ -19,7 +19,7 @@ export default class HTMLEditor extends React.Component {
     var firepadRef = firebase.database().ref('/html');
 
     // Create CodeMirror (with lineWrapping on).
-   var codeMirror = CodeMirror(document.getElementById('firepad'), {
+    var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
         lineWrapping: true,
         lineNumbers: true,
         mode: 'javascript',
@@ -43,13 +43,15 @@ export default class HTMLEditor extends React.Component {
 
   render () {
     return (
-      <div className="container">
-      <div>
-        <div id="firepad" className="pagehalf"></div>
-      </div>
-        <div className="pagehalf">
-        <img src="https://storage.googleapis.com/material-design/publish/material_v_10/assets/0Bx4BSt6jniD7MG80dmpHT0RidGs/style_icons_system_intro_principles_actionable.png"></img>
-      </div>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-6">
+            <div id="firepad-container"></div>
+          </div>
+          <div className="col-md-6">
+            <img src="https://storage.googleapis.com/material-design/publish/material_v_10/assets/0Bx4BSt6jniD7MG80dmpHT0RidGs/style_icons_system_intro_principles_actionable.png"></img>
+          </div>
+        </div>
       </div>
     )
   }
