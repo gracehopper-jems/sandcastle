@@ -187,16 +187,18 @@ const dockerFunc = () => {
       console.log('running docker-compose up');
       return exec('docker-compose up');
     })
+    // does not reach below
+    .then((res) => {
+        console.log('====got here');
+        console.log(res);
+        // console.log(`docker stdout: ${stdout}`);
+        // console.log(`docker stderr: ${stderr}`);
+    })
     // .then(() => {
     //   // stop docker container
     //   console.log('running docker-compose down');
     //   return exec('docker-compose down');
     // })
-    .then((res) => {
-        console.log(res);
-        // console.log(`docker stdout: ${stdout}`);
-        // console.log(`docker stderr: ${stderr}`);
-    })
     .catch(console.error);
 
 };
