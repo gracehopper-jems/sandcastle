@@ -1,5 +1,4 @@
 import React from 'react';
-import {apiKey, authDomain, databaseURL} from '../../secrets';
 import firebase from 'firebase';
 
 export default class HTMLEditor extends React.Component {
@@ -22,7 +21,8 @@ export default class HTMLEditor extends React.Component {
     var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
         lineWrapping: true,
         lineNumbers: true,
-        mode: 'javascript',
+        mode: 'xml',
+        htmlMode: true,
         matchBrackets: true,
         autoCloseBrackets: true,
         // matchTags: true,
