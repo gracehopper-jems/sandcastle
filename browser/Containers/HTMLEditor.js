@@ -1,7 +1,8 @@
 import React from 'react';
 import {apiKey, authDomain, databaseURL} from '../../secrets';
 import firebase from 'firebase';
-export default class TextEditor extends React.Component {
+
+export default class HTMLEditor extends React.Component {
 
   constructor(props){
     super(props)
