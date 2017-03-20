@@ -17,6 +17,10 @@ export default class LoadingButton extends Component {
 			// This probably where you would have an `ajax` call
 			this.props.handlers
 
+			this.props.handlers.forEach(handler => {
+				console.log('HANDLER', handler)
+			})
+
 			setTimeout(() => {
 				// Completed of async action, set loading state back
 				this.setState({isLoading: false});
@@ -25,7 +29,6 @@ export default class LoadingButton extends Component {
 
 		render() {
 			console.log('props for loading button', this.props);
-			console.log('state in loading button', this.state);
 			let isLoading = this.state.isLoading;
 			return (
 				<Button
