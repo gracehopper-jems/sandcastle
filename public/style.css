@@ -39,3 +39,9 @@ img {
   background-color: lightgray;
   /*display: flexbox;*/
 }
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #4CAF50;
+    font-weight: bold;
+}
