@@ -16,7 +16,8 @@ export default class ServerEditor extends React.Component {
 
   init(){
     // Get Firebase Database reference.
-    var firepadRef = firebase.database().ref('/server');
+    const userId = this.props.user.userId;
+    var firepadRef = firebase.database().ref(`/users/${userId}/server`);
 
     // Create CodeMirror (with lineWrapping on).
    var codeMirror = CodeMirror(document.getElementById('firepad-container'), {

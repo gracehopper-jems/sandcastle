@@ -48,7 +48,8 @@ class AppContainer extends Component {
     const children = React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {
         code: this.props.code,
-        handlers: this.props.handlers
+        handlers: this.props.handlers,
+        user: this.props.user
       })
     });
 
