@@ -8,7 +8,6 @@ export default class HTMLEditor extends React.Component {
     this.init = this.init.bind(this);
   }
 
-
   componentDidMount(){
     this.init();
   }
@@ -32,7 +31,6 @@ export default class HTMLEditor extends React.Component {
         hint: true
     });
 
-
     // Create Firepad (with rich text toolbar and shortcuts enabled).
     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
       richTextShortcuts: false,
@@ -40,11 +38,16 @@ export default class HTMLEditor extends React.Component {
       defaultText: 'HTML here!'
     });
 
+    const self = this;
+    firepad.on('ready', function() {
+      // Firepad is ready.
+      self.props.handlers.handleHTMLUpdate(firepad.getText());
+    });
     firepad.on('synced', function(isSynced) {
       // isSynced will be false immediately after the user edits the pad,
       // and true when their edit has been saved to Firebase.
       if (isSynced) {
-        console.log('====', firepad.getText());
+        self.props.handlers.handleHTMLUpdate(firepad.getText());
       }
     });
 
