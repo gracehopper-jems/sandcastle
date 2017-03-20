@@ -70,24 +70,24 @@ export const receiveDatabase = databaseString => ({
   databaseString
 });
 
-export const updateHTML = (htmlString) => {
-  return receiveHTML(htmlString);
+export const updateHTML = (...args) => {
+  return receiveHTML(...args);
 };
 
-export const updateCSS = (cssString) => {
-  return receiveCSS(cssString);
+export const updateCSS = (...args) => {
+  return receiveCSS(...args);
 };
 
-export const updateJS = (jsString) => {
-  return receiveJS(jsString);
+export const updateJS = (...args) => {
+  return receiveJS(...args);
 };
 
-export const updateServer = (serverString) => {
-  return receiveServer(serverString);
+export const updateServer = (...args) => {
+  return receiveServer(...args);
 };
 
-export const updateDatabase = (databaseString) => {
-  return receiveDatabase(databaseString);
+export const updateDatabase = (...args) => {
+  return receiveDatabase(...args);
 };
 
 export default reducer;
