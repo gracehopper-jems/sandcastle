@@ -39,12 +39,15 @@ export default class HTMLEditor extends React.Component {
     });
 
     const self = this;
+    firepad.on('ready', function() {
+      // Firepad is ready.
+      self.props.handlers.handleHTMLUpdate(firepad.getText());
+    });
     firepad.on('synced', function(isSynced) {
       // isSynced will be false immediately after the user edits the pad,
       // and true when their edit has been saved to Firebase.
       if (isSynced) {
-        const htmlString = firepad.getText();
-        self.props.handleHTMLUpdate(htmlString);
+        self.props.handlers.handleHTMLUpdate(firepad.getText());
       }
     });
 

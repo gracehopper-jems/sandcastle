@@ -39,13 +39,19 @@ export default class ServerEditor extends React.Component {
       defaultText: 'Server here!'
     });
 
+    const self = this;
+    firepad.on('ready', function() {
+      // Firepad is ready.
+      self.props.handlers.handleServerUpdate(firepad.getText());
+    });
     firepad.on('synced', function(isSynced) {
       // isSynced will be false immediately after the user edits the pad,
       // and true when their edit has been saved to Firebase.
       if (isSynced) {
-        console.log('====', firepad.getText());
+        self.props.handlers.handleServerUpdate(firepad.getText());
       }
     });
+
   }
 
   render () {
