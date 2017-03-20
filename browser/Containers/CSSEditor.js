@@ -16,7 +16,8 @@ export default class CSSEditor extends React.Component {
 
   init(){
     // Get Firebase Database reference.
-    var firepadRef = firebase.database().ref('/users/userid/css');
+    const userId = this.props.user.userId;
+    var firepadRef = firebase.database().ref(`/users/${userId}/css`);
 
     // Create CodeMirror (with lineWrapping on).
    var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
