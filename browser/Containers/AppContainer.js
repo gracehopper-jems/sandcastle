@@ -5,39 +5,44 @@ import HTMLEditor from './HTMLEditor';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
 import {toggleLogIn} from '../reducers/user';
 var firebase = require('firebase');
-var firebaseui = require('firebaseui');
 
 
 class AppContainer extends Component {
   constructor(props){
     super(props)
     this.state = {
-      email: "", 
-      password: "" 
+      email: "",
+      password: ""
     }
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this); 
+    this.handleChange = this.handleChange.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleSubmit(event){
-    event.preventDefault(); 
-    const email = this.state.email; 
+    event.preventDefault();
+    const email = this.state.email;
     const password = this.state.password;
-    this.props.handlers.handleLogIn(); 
+    this.props.handlers.handleLogIn();
     firebase.auth().signInWithEmailAndPassword(email, password)
-    .catch(console.error) 
+    .catch(console.error)
+  }
+
+  handleLogout(event) {
+    event.preventDefault();
+    this.props.handlers.handleLogIn();
   }
 
   handleChange(event){
-    const value = event.target.value; 
-    const name = event.target.name; 
+    const value = event.target.value;
+    const name = event.target.name;
     this.setState({ [name]: value })
   }
 
 
   render(){
 
-    console.log("PROPS", this.props); 
+    console.log("PROPS", this.props);
     const children = React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {
         code: this.props.code,
@@ -62,32 +67,30 @@ class AppContainer extends Component {
                       <li><Link to="/signup">Signup</Link></li>
 
                   </ul>
-                  {/*  <div id="firebaseui-auth-container"></div> */} 
-
-                  {this.props.user.loggedIn 
-                            ? <div>Log Out</div> 
-                            : 
-                 <form className="form-inline" onSubmit={this.handleSubmit} >
-                    <ul className="nav navbar-nav navbar-right">
-                      <li>
-                        <label className="sr-only" htmlFor="inlineFormInput">Email</label>
-                        <input name="email" type="text" className="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Email" onChange={this.handleChange} />
-                      </li> 
-                      <li>
-                        <label className="sr-only" htmlFor="inlineFormInputGroup">Password</label>
-                        <div className="input-group mb-2 mr-sm-2 mb-sm-0">
-                          <input name="password" type="text" className="form-control" id="inlineFormInputGroup" placeholder="Password" onChange={this.handleChange}/>
-                        </div>
-                      </li> 
-                      <li>
-                        <button type="submit" className="btn btn-primary">Sign In</button>
-                      </li> 
-                      <li>
-                        <Link to="/signup">Sign Up</Link>
-                      </li>
-                    </ul>
-                  </form> 
-                } 
+                  {this.props.user.loggedIn
+                    ? <button type="submit" className="btn btn-primary" onClick={this.handleLogout}>Sign Out</button>
+                    :
+                     <form className="form-inline" onSubmit={this.handleSubmit} >
+                        <ul className="nav navbar-nav navbar-right">
+                          <li>
+                            <label className="sr-only" htmlFor="inlineFormInput">Email</label>
+                            <input name="email" type="text" className="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Email" onChange={this.handleChange} />
+                          </li>
+                          <li>
+                            <label className="sr-only" htmlFor="inlineFormInputGroup">Password</label>
+                            <div className="input-group mb-2 mr-sm-2 mb-sm-0">
+                              <input name="password" type="text" className="form-control" id="inlineFormInputGroup" placeholder="Password" onChange={this.handleChange}/>
+                            </div>
+                          </li>
+                          <li>
+                            <button type="submit" className="btn btn-primary">Sign In</button>
+                          </li>
+                          <li>
+                            <Link to="/signup">Sign Up</Link>
+                          </li>
+                        </ul>
+                      </form>
+                  }
               </div>
           </nav>
             {children}
@@ -98,8 +101,8 @@ class AppContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    code: state.code, 
-    user: state.user, 
+    code: state.code,
+    user: state.user,
   };
 };
 
@@ -123,7 +126,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleLogIn() {
           dispatch(toggleLogIn())
-        }, 
+        },
       }
   };
 };

@@ -16,7 +16,7 @@ export default class CSSEditor extends React.Component {
 
   init(){
     // Get Firebase Database reference.
-    var firepadRef = firebase.database().ref('/css');
+    var firepadRef = firebase.database().ref('css');
 
     // Create CodeMirror (with lineWrapping on).
    var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
@@ -29,7 +29,7 @@ export default class CSSEditor extends React.Component {
         autoCloseTags: true,
         toggleComment: true,
         foldCode: true,
-        hint: true, 
+        hint: true,
     });
 
     // Create Firepad (with rich text toolbar and shortcuts enabled).
