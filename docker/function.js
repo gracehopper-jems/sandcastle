@@ -1,12 +1,12 @@
 const Promise = require('bluebird');
 const fs = require('fs');
-const path = require('path'); 
+const path = require('path');
 
 const dockerFunc = () => {
     //promisified child process exec
     const exec = Promise.promisify(require('child_process').exec);
     const writeFile = Promise.promisify(fs.writeFile);
-    const readFile = Promise.promisify(fs.readFile); 
+    const readFile = Promise.promisify(fs.readFile);
 
     //create user app folder
     exec('mkdir user-app')
@@ -19,16 +19,23 @@ const dockerFunc = () => {
         catch (err) {
           console.log(`chdir: ${err}`);
         }
-        console.log("reading package.json"); 
-        return readFile(path.join(__dirname,'./package.json'), 'utf8') 
+
+        // check that we can do docker-compose down
+        setTimeout(() => {
+            console.log('timeout, docker compose down');
+            exec('docker-compose down');
+        }, 20000);
+
+        console.log("reading package.json");
+        return readFile(path.join(__dirname,'./package.json'), 'utf8')
     })
     .then( (userPackageJson) => {
         console.log('creating a package.json');
         return writeFile('package.json', userPackageJson);
     })
     .then(() => {
-        console.log("reading user server"); 
-        return readFile(path.join(__dirname,'./server.js'), 'utf8')   
+        console.log("reading user server");
+        return readFile(path.join(__dirname,'./server.js'), 'utf8')
     })
     .then((userServer) => {
         // write user server to user-app folder
@@ -36,8 +43,8 @@ const dockerFunc = () => {
         return writeFile('server.js', userServer);
     })
     .then(() => {
-        console.log("reading user models"); 
-        return readFile(path.join(__dirname,'./models.js'), 'utf8')   
+        console.log("reading user models");
+        return readFile(path.join(__dirname,'./models.js'), 'utf8')
     })
     .then((userModels) => {
         // write user models to user-app folder
@@ -45,8 +52,8 @@ const dockerFunc = () => {
         return writeFile('models.js', userModels);
     })
     .then(() => {
-        console.log("reading user routes"); 
-        return readFile(path.join(__dirname,'./models.js'), 'utf8')   
+        console.log("reading user routes");
+        return readFile(path.join(__dirname,'./models.js'), 'utf8')
     })
     .then((userRoutes) => {
         // write user routes to user-app folder
@@ -54,8 +61,8 @@ const dockerFunc = () => {
         return writeFile('userRoutes.js', userRoutes);
     })
     .then(() => {
-        console.log("reading docker-compose"); 
-        return readFile(path.join(__dirname,'./docker-compose.yml'), 'utf8')   
+        console.log("reading docker-compose");
+        return readFile(path.join(__dirname,'./docker-compose.yml'), 'utf8')
     })
     .then((dockerCompose) => {
         // write docker-compose to user-app folder
@@ -63,15 +70,14 @@ const dockerFunc = () => {
         return writeFile('docker-compose.yml', dockerCompose);
     })
     .then(() => {
-        console.log("reading Dockerfile"); 
-        return readFile(path.join(__dirname,'./Dockerfile'), 'utf8')   
+        console.log("reading Dockerfile");
+        return readFile(path.join(__dirname,'./Dockerfile'), 'utf8')
     })
     .then((dockerFile) => {
         // write dockerFile to user-app folder
         console.log('creating docker file');
         return writeFile('Dockerfile', dockerFile);
     })
-    // docker-compose also works without lines below?
     .then(() => {
       // build docker container
      console.log('building docker container')
@@ -80,16 +86,10 @@ const dockerFunc = () => {
     .then(() => {
         // run docker container
         console.log('running docker-compose up');
-        // docker-compose up runs strangely when in called in promisified exec
         return exec('docker-compose up');
     })
-    .then(() => {
-        // never gets here
-        // stop docker container
-        console.log('running docker-compose down');
-        return exec('docker-compose down');
-    })
     .catch(console.error);
+
 
 };
 
