@@ -19,10 +19,11 @@ export default class JSEditor extends React.Component {
     var firepadRef = firebase.database().ref('/javascript');
 
     // Create CodeMirror (with lineWrapping on).
-   var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
+    var codeMirror = CodeMirror(document.getElementById('javascriptFirepad'), {
         lineWrapping: true,
         lineNumbers: true,
         mode: 'javascript',
+        htmlMode: true,
         matchBrackets: true,
         autoCloseBrackets: true,
         // matchTags: true,
@@ -36,7 +37,7 @@ export default class JSEditor extends React.Component {
     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
       richTextShortcuts: false,
       richTextToolbar: false,
-      defaultText: 'Javascript here!'
+      defaultText: 'HTML here!'
     });
 
     const self = this;
@@ -54,12 +55,13 @@ export default class JSEditor extends React.Component {
 
   }
 
-  render () {
+  render() {
+    console.log('props in js', this.props);
     return (
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-6">
-            <div id="firepad-container"></div>
+            <div id="javascriptFirepad"></div>
           </div>
           <div className="col-md-6">
             <img src="https://storage.googleapis.com/material-design/publish/material_v_10/assets/0Bx4BSt6jniD7MG80dmpHT0RidGs/style_icons_system_intro_principles_actionable.png"></img>
