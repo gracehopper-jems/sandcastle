@@ -23,7 +23,7 @@ class AppContainer extends Component {
                       <Link className="navbar-brand" to="/">Text Editor</Link>
                   </div>
                   <ul className="nav navbar-nav nav-tabs">
-                      <li className="active"><Link to="/html">HTML</Link></li>
+                      <li><Link to="/html">HTML</Link></li>
                       <li><Link to="/css">CSS</Link></li>
                       <li><Link to="/javascript">Javascript</Link></li>
                       <li><Link to="/server">Server</Link></li>

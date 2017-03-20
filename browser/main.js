@@ -24,7 +24,6 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={AppContainer} onEnter={onAppEnter}>
-        <IndexRoute component={HTMLEditor} />
         <Route path="/html" component={HTMLEditor} />
         <Route path="/css" component={CSSEditor} />
         <Route path="/javascript" component={JSEditor} />
