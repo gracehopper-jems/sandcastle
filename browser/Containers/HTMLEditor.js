@@ -1,5 +1,4 @@
 import React from 'react';
-import {apiKey, authDomain, databaseURL} from '../../secrets';
 import firebase from 'firebase';
 
 export default class HTMLEditor extends React.Component {
@@ -22,7 +21,8 @@ export default class HTMLEditor extends React.Component {
     var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
         lineWrapping: true,
         lineNumbers: true,
-        mode: 'javascript',
+        mode: 'xml',
+        htmlMode: true,
         matchBrackets: true,
         autoCloseBrackets: true,
         // matchTags: true,
@@ -32,11 +32,20 @@ export default class HTMLEditor extends React.Component {
         hint: true
     });
 
+
     // Create Firepad (with rich text toolbar and shortcuts enabled).
     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
       richTextShortcuts: false,
       richTextToolbar: false,
       defaultText: 'HTML here!'
+    });
+
+    firepad.on('synced', function(isSynced) {
+      // isSynced will be false immediately after the user edits the pad,
+      // and true when their edit has been saved to Firebase.
+      if (isSynced) {
+        console.log('====', firepad.getText());
+      }
     });
 
   }

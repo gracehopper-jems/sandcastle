@@ -1,5 +1,4 @@
 import React from 'react';
-import {apiKey, authDomain, databaseURL} from '../../secrets';
 import firebase from 'firebase';
 
 export default class JSEditor extends React.Component {
@@ -38,6 +37,14 @@ export default class JSEditor extends React.Component {
       richTextShortcuts: false,
       richTextToolbar: false,
       defaultText: 'Javascript here!'
+    });
+
+    firepad.on('synced', function(isSynced) {
+      // isSynced will be false immediately after the user edits the pad,
+      // and true when their edit has been saved to Firebase.
+      if (isSynced) {
+        console.log('====', firepad.getText());
+      }
     });
   }
 
