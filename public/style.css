@@ -21,6 +21,16 @@ body {
   height: 85vh;
 }
 
+#htmlFirepad {
+  width: 100%;
+  height: 85vh;
+}
+
+#cssFirepad {
+  width: 100%;
+  height: 85vh;
+}
+
 /*.pagehalf {
   flex: 1;
 }*/
