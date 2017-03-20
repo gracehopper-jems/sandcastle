@@ -55,20 +55,20 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleHTMLUpdate(htmlString) {
-      dispatch(updateHTML(htmlString));
+    handleHTMLUpdate(...args) {
+      dispatch(updateHTML(...args));
     },
-    handleCSSUpdate(cssString) {
-      dispatch(updateCSS(cssString));
+    handleCSSUpdate(...args) {
+      dispatch(updateCSS(...args));
     },
-    handleJSUpdate(jsString) {
-      dispatch(updateJS(jsString));
+    handleJSUpdate(...args) {
+      dispatch(updateJS(...args));
     },
-    handleServerUpdate(serverString) {
-      dispatch(updateServer(serverString));
+    handleServerUpdate(...args) {
+      dispatch(updateServer(...args));
     },
-    handleDatabaseUpdate(databaseString) {
-      dispatch(updateDatabase(databaseString));
+    handleDatabaseUpdate(...args) {
+      dispatch(updateDatabase(...args));
     },
   };
 };
