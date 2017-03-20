@@ -53,7 +53,8 @@ export default class HTMLEditor extends React.Component {
 
   }
 
-  render () {
+  render() {
+    console.log('props in html', this.props);
     return (
       <div className="container-fluid">
         <div className="row">
