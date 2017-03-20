@@ -5,53 +5,53 @@ export default class HTMLEditor extends React.Component {
 
   constructor(props){
     super(props)
-    // this.init = this.init.bind(this);
+    this.init = this.init.bind(this);
   }
 
-  // componentDidMount(){
-  //   this.init();
-  // }
+  componentDidMount(){
+    this.init();
+  }
 
-  // init(){
-  //   // Get Firebase Database reference.
-  //   var firepadRef = firebase.database().ref('/html');
+  init(){
+    // Get Firebase Database reference.
+    var firepadRef = firebase.database().ref('/html');
 
-  //   // Create CodeMirror (with lineWrapping on).
-  //   var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
-  //       lineWrapping: true,
-  //       lineNumbers: true,
-  //       mode: 'xml',
-  //       htmlMode: true,
-  //       matchBrackets: true,
-  //       autoCloseBrackets: true,
-  //       // matchTags: true,
-  //       autoCloseTags: true,
-  //       toggleComment: true,
-  //       foldCode: true,
-  //       hint: true
-  //   });
+    // Create CodeMirror (with lineWrapping on).
+    var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
+        lineWrapping: true,
+        lineNumbers: true,
+        mode: 'xml',
+        htmlMode: true,
+        matchBrackets: true,
+        autoCloseBrackets: true,
+        // matchTags: true,
+        autoCloseTags: true,
+        toggleComment: true,
+        foldCode: true,
+        hint: true
+    });
 
-  //   // Create Firepad (with rich text toolbar and shortcuts enabled).
-  //   var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
-  //     richTextShortcuts: false,
-  //     richTextToolbar: false,
-  //     defaultText: 'HTML here!'
-  //   });
+    // Create Firepad (with rich text toolbar and shortcuts enabled).
+    var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
+      richTextShortcuts: false,
+      richTextToolbar: false,
+      defaultText: 'HTML here!'
+    });
 
-  //   const self = this;
-  //   firepad.on('ready', function() {
-  //     // Firepad is ready.
-  //     self.props.handlers.handleHTMLUpdate(firepad.getText());
-  //   });
-  //   firepad.on('synced', function(isSynced) {
-  //     // isSynced will be false immediately after the user edits the pad,
-  //     // and true when their edit has been saved to Firebase.
-  //     if (isSynced) {
-  //       self.props.handlers.handleHTMLUpdate(firepad.getText());
-  //     }
-  //   });
+    const self = this;
+    firepad.on('ready', function() {
+      // Firepad is ready.
+      self.props.handlers.handleHTMLUpdate(firepad.getText());
+    });
+    firepad.on('synced', function(isSynced) {
+      // isSynced will be false immediately after the user edits the pad,
+      // and true when their edit has been saved to Firebase.
+      if (isSynced) {
+        self.props.handlers.handleHTMLUpdate(firepad.getText());
+      }
+    });
 
-  // }
+  }
 
   render() {
     console.log('props in html', this.props);
