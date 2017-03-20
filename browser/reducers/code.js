@@ -5,7 +5,7 @@ const initialState = {
   cssString: '',
   jsString: '',
   serverString: '',
-  databaseString: ''
+  databaseString: '', 
 };
 
 // reducer
