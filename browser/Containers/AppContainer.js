@@ -13,83 +13,40 @@ class AppContainer extends Component {
   }
 
   componentDidMount() {
-    let types = ['html', 'css', 'javascript']
-    let ref, codeMirror, firepad;
+    // let types = ['html', 'css', 'javascript']
+    // let ref, codeMirror, firepad;
 
-    types.forEach(type => {
-      ref = firebase.database().ref(`/${type}`);
-      codeMirror = CodeMirror(document.getElementById(`${type}Firepad`), {
-        lineWrapping: true,
-        lineNumbers: true,
-        mode: 'javascript',
-        htmlMode: true,
-        matchBrackets: true,
-        autoCloseBrackets: true,
-        // matchTags: true,
-        autoCloseTags: true,
-        toggleComment: true,
-        foldCode: true,
-        hint: true
-      });
+    // types.forEach(type => {
+    //   ref = firebase.database().ref(`/${type}`);
+    //   codeMirror = CodeMirror(document.getElementById(`${type}Firepad`));
 
-      firepad = Firepad.fromCodeMirror(ref, codeMirror, {
-        richTextShortcuts: false,
-        richTextToolbar: false
-      });
+    //   firepad = Firepad.fromCodeMirror(ref, codeMirror);
 
-      const self = this;
-      // console.log('self', self);
-      let handleType = (type === 'javascript') ? 'JS' : type.toUpperCase();
-      let typeString = `handle${handleType}Update`;
+    //   const self = this;
+    //   // console.log('self', self);
+    //   let handleType = (type === 'javascript') ? 'JS' : type.toUpperCase();
+    //   let typeString = `handle${handleType}Update`;
 
-      firepad.on('ready', function() {
-        // Firepad is ready.
-        console.log('ready');
-        self.props.handlers[typeString](firepad.getText());
-        console.log('done being ready');
-      });
-      firepad.on('synced', function(isSynced) {
-        // isSynced will be false immediately after the user edits the pad,
-        // and true when their edit has been saved to Firebase.
-        if (isSynced) {
-          self.props.handlers[typeString](firepad.getText());
-        }
-      });
+    //   firepad.on('ready', function() {
+    //     // Firepad is ready.
+    //     console.log('ready');
+    //     self.props.handlers[typeString](firepad.getText());
+    //     console.log('done being ready');
+    //   });
+    //   firepad.on('synced', function(isSynced) {
+    //     // isSynced will be false immediately after the user edits the pad,
+    //     // and true when their edit has been saved to Firebase.
+    //     if (isSynced) {
+    //       self.props.handlers[typeString](firepad.getText());
+    //     }
+    //   });
+    // })
+
+    let cssRef = firebase.database().ref('/css');
+    cssRef.on('child_changed', snapshot => {
+      console.log(snapshot.val());
     })
-    // var firepadRef = firebase.database().ref('/css');
-    // var codeMirror = CodeMirror(document.getElementById('cssFirepad'), {
-    //     lineWrapping: true,
-    //     lineNumbers: true,
-    //     mode: 'css',
-    //     htmlMode: true,
-    //     matchBrackets: true,
-    //     autoCloseBrackets: true,
-    //     // matchTags: true,
-    //     autoCloseTags: true,
-    //     toggleComment: true,
-    //     foldCode: true,
-    //     hint: true
-    // });
-
-    // // Create Firepad (with rich text toolbar and shortcuts enabled).
-    // var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
-    //   richTextShortcuts: false,
-    //   richTextToolbar: false,
-    //   defaultText: 'HTML here!'
-    // });
-
-    // const self = this;
-    // firepad.on('ready', function() {
-    //   // Firepad is ready.
-    //   self.props.handlers.handleCSSUpdate(firepad.getText());
-    // });
-    // firepad.on('synced', function(isSynced) {
-    //   // isSynced will be false immediately after the user edits the pad,
-    //   // and true when their edit has been saved to Firebase.
-    //   if (isSynced) {
-    //     self.props.handlers.handleCSSUpdate(firepad.getText());
-    //   }
-    // });
+    
   }
 
   render(){
