@@ -29,7 +29,7 @@ export default class CSSEditor extends React.Component {
         autoCloseTags: true,
         toggleComment: true,
         foldCode: true,
-        hint: true
+        hint: true, 
     });
 
     // Create Firepad (with rich text toolbar and shortcuts enabled).
