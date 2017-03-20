@@ -7,6 +7,7 @@ import CSSEditor from './Containers/CSSEditor';
 import JSEditor from './Containers/JSEditor';
 import ServerEditor from './Containers/ServerEditor';
 import DatabaseEditor from './Containers/DatabaseEditor';
+import SignUp from './Containers/SignUp'; 
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import AppContainer from './Containers/AppContainer';
 import {apiKey, authDomain, databaseURL} from '../secrets';
@@ -29,6 +30,7 @@ ReactDOM.render(
         <Route path="/javascript" component={JSEditor} />
         <Route path="/server" component={ServerEditor} />
         <Route path="/database" component={DatabaseEditor} />
+        <Route path="/signup" component={SignUp} /> 
       </Route>
     </Router>
   </Provider>,
