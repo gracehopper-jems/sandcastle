@@ -14,7 +14,7 @@ export default class HTMLEditor extends React.Component {
 
   init(){
     // Get Firebase Database reference.
-    var firepadRef = firebase.database().ref('/html');
+    var firepadRef = firebase.database().ref('/users/WCYTQqPmvwhXZMwi27wVBQ5lOY93/html');
 
     // Create CodeMirror (with lineWrapping on).
     var codeMirror = CodeMirror(document.getElementById('firepad-container'), {

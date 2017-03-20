@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import { Link } from 'react-router';
 import HTMLEditor from './HTMLEditor';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
-import {toggleLogIn} from '../reducers/user';
+import {toggleLogIn, setUserId} from '../reducers/user';
 var firebase = require('firebase');
 
 
@@ -23,9 +23,11 @@ class AppContainer extends Component {
     event.preventDefault();
     const email = this.state.email;
     const password = this.state.password;
-    this.props.handlers.handleLogIn();
     firebase.auth().signInWithEmailAndPassword(email, password)
     .catch(console.error)
+    const user = firebase.auth().currentUser;
+    const userId = user.uid;
+    this.props.handlers.handleLogIn(userId);
   }
 
   handleLogout(event) {
@@ -124,8 +126,9 @@ const mapDispatchToProps = (dispatch) => {
         handleDatabaseUpdate(...args) {
           dispatch(updateDatabase(...args));
         },
-        handleLogIn() {
-          dispatch(toggleLogIn())
+        handleLogIn(...args) {
+          dispatch(toggleLogIn());
+          dispatch(setUserId(...args));
         },
       }
   };
