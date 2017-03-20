@@ -1,0 +1,20 @@
+db:
+  image: postgres
+  ports:
+    - 6542:5432
+  environment:
+    POSTGRES_USER: username
+    POSTGRES_PASSWORD: pgpassword
+    POSTGRES_DB: docker-test
+wikistack:
+  build: .
+  ports:
+    - 3001:8080
+  links:
+    - db
+  environment:
+    SEQ_DB: docker-test
+    SEQ_USER: username
+    SEQ_PW: pgpassword
+    PORT: 8080
+    DATABASE_URL: postgres://username:pgpassword@db:5432/docker-test
