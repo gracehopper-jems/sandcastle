@@ -41,7 +41,6 @@ class AppContainer extends Component {
                   </ul>
               </div>
           </nav>
-            {/* load html firepad on default */}
             {children}
         </div>
     );
