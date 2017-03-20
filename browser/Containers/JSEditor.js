@@ -19,18 +19,20 @@ export default class JSEditor extends React.Component {
     var firepadRef = firebase.database().ref('/javascript');
 
     // Create CodeMirror (with lineWrapping on).
-   var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
-        lineWrapping: true,
-        lineNumbers: true,
-        mode: 'javascript',
-        matchBrackets: true,
-        autoCloseBrackets: true,
-        // matchTags: true,
-        autoCloseTags: true,
-        toggleComment: true,
-        foldCode: true,
-        hint: true
-    });
+  //  var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
+  //       lineWrapping: true,
+  //       lineNumbers: true,
+  //       mode: 'javascript',
+  //       matchBrackets: true,
+  //       autoCloseBrackets: true,
+  //       // matchTags: true,
+  //       autoCloseTags: true,
+  //       toggleComment: true,
+  //       foldCode: true,
+  //       hint: true
+  //   });
+
+    var codeMirror = document.getElementById('firepad-container');
 
     // Create Firepad (with rich text toolbar and shortcuts enabled).
     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
