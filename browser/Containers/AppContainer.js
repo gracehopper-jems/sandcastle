@@ -9,16 +9,10 @@ class AppContainer extends Component {
     super(props)
   }
   render(){
-    console.log("Inside App Container rendering the entire page", this.props.children);
-    var children = React.Children.map(this.props.children, (child) => {
-      const handleHTMLUpdate = this.props.handleHTMLUpdate;
-      const handleCSSUpdate = this.props.handleCSSUpdate;
-      const handleJSUpdate = this.props.handleJSUpdate;
-      const handleServerUpdate = this.props.handleServerUpdate;
-      const handleDatabaseUpdate = this.props.handleDatabaseUpdate;
+    const children = React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {
         code: this.props.code,
-        handlers: {handleHTMLUpdate, handleCSSUpdate, handleJSUpdate, handleServerUpdate, handleDatabaseUpdate}
+        handlers: this.props.handlers
       })
     });
     return(
@@ -54,22 +48,24 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    handleHTMLUpdate(...args) {
-      dispatch(updateHTML(...args));
-    },
-    handleCSSUpdate(...args) {
-      dispatch(updateCSS(...args));
-    },
-    handleJSUpdate(...args) {
-      dispatch(updateJS(...args));
-    },
-    handleServerUpdate(...args) {
-      dispatch(updateServer(...args));
-    },
-    handleDatabaseUpdate(...args) {
-      dispatch(updateDatabase(...args));
-    },
+  return {handlers:
+      {
+        handleHTMLUpdate(...args) {
+          dispatch(updateHTML(...args));
+        },
+        handleCSSUpdate(...args) {
+          dispatch(updateCSS(...args));
+        },
+        handleJSUpdate(...args) {
+          dispatch(updateJS(...args));
+        },
+        handleServerUpdate(...args) {
+          dispatch(updateServer(...args));
+        },
+        handleDatabaseUpdate(...args) {
+          dispatch(updateDatabase(...args));
+        },
+      }
   };
 };
 
