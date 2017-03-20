@@ -23,7 +23,6 @@
     "express": "^4.14.0",
     "finalhandler": "^1.0.0",
     "firebase": "^3.7.2",
-    "firebaseui": "^1.0.0",
     "firepad": "^1.4.0",
     "nodemon": "^1.11.0",
     "pg": "^6.1.4",
