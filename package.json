@@ -16,6 +16,7 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
     "bluebird": "^3.5.0",
+    "codemirror": "^5.24.2",
     "express": "^4.14.0",
     "firebase": "^3.7.2",
     "firepad": "^1.4.0",

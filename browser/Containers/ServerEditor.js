@@ -1,7 +1,7 @@
 import React from 'react';
 import firebase from 'firebase';
 
-export default class CSSEditor extends React.Component {
+export default class ServerEditor extends React.Component {
 
   constructor(props){
     super(props)
@@ -16,13 +16,13 @@ export default class CSSEditor extends React.Component {
 
   init(){
     // Get Firebase Database reference.
-    var firepadRef = firebase.database().ref('/css');
+    var firepadRef = firebase.database().ref('/server');
 
     // Create CodeMirror (with lineWrapping on).
    var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
         lineWrapping: true,
         lineNumbers: true,
-        mode: 'css',
+        mode: 'javascript',
         matchBrackets: true,
         autoCloseBrackets: true,
         // matchTags: true,
@@ -36,7 +36,7 @@ export default class CSSEditor extends React.Component {
     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
       richTextShortcuts: false,
       richTextToolbar: false,
-      defaultText: 'CSS here!'
+      defaultText: 'Server here!'
     });
 
     firepad.on('synced', function(isSynced) {
