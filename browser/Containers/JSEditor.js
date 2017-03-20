@@ -39,13 +39,19 @@ export default class JSEditor extends React.Component {
       defaultText: 'Javascript here!'
     });
 
+    const self = this;
+    firepad.on('ready', function() {
+      // Firepad is ready.
+      self.props.handlers.handleJSUpdate(firepad.getText());
+    });
     firepad.on('synced', function(isSynced) {
       // isSynced will be false immediately after the user edits the pad,
       // and true when their edit has been saved to Firebase.
       if (isSynced) {
-        console.log('====', firepad.getText());
+        self.props.handlers.handleJSUpdate(firepad.getText());
       }
     });
+
   }
 
   render () {

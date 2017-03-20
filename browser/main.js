@@ -7,7 +7,7 @@ import CSSEditor from './Containers/CSSEditor';
 import JSEditor from './Containers/JSEditor';
 import ServerEditor from './Containers/ServerEditor';
 import DatabaseEditor from './Containers/DatabaseEditor';
-import {Router, Route, browserHistory} from 'react-router';
+import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import AppContainer from './Containers/AppContainer';
 import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
@@ -23,7 +23,8 @@ const onAppEnter = () => {
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={AppContainer} onEnter={onAppEnter} >
+      <Route path="/" component={AppContainer} onEnter={onAppEnter}>
+        <IndexRoute component={HTMLEditor} />
         <Route path="/html" component={HTMLEditor} />
         <Route path="/css" component={CSSEditor} />
         <Route path="/javascript" component={JSEditor} />

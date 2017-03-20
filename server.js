@@ -1,47 +1,52 @@
 'use strict';
-
 const express = require('express');
-const volleyball = require('volleyball');
+const bodyParser = require('body-parser');
+const {resolve} = require('path');
+const PrettyError = require('pretty-error');
+const finalHandler = require('finalhandler');
+// PrettyError docs: https://www.npmjs.com/package/pretty-error
 
 const app = express();
 
-app.use(volleyball);
+// Pretty error prints errors all pretty.
+const prettyError = new PrettyError();
 
-app.use(express.static(__dirname));
+// Skip events.js and http.js and similar core node files.
+prettyError.skipNodeFiles()
 
-const puppies = [{
-  id: 1,
-  name: 'Taylor',
-  image: 'https://designerdoginfo.files.wordpress.com/2013/01/puggle-puppy-4.jpg?w=584'
-}, {
-  id: 2,
-  name: 'Reggie',
-  image: 'http://images.shape.mdpcdn.com/sites/shape.com/files/styles/slide/public/puppy-2_0.jpg'
-}, {
-  id: 3,
-  name: 'Christian',
-  image: 'https://www.askideas.com/media/19/Papillon-Puppy-Looking.jpg'
-}, {
-  id: 4,
-  name: 'Jessie',
-  image: 'http://www.101dogbreeds.com/wp-content/uploads/2015/10/Chi-Spaniel-Puppy-Pictures.jpg'
-}, {
-  id: 5,
-  name: 'Pandora',
-  image: 'http://4.bp.blogspot.com/-3JeIxWBU7bY/UKjIt8lVpCI/AAAAAAAABx8/YM8piSOwczs/s1600/Schipperke-Puppy.jpg'
-}];
+// Skip all the trace lines about express' core and sub-modules.
+prettyError.skipPackage('express')
 
-app.get('/api/puppies', function (req, res) {
-  res.json(puppies.map(({id, name}) => ({id, name})));
-});
+module.exports = app
+  // Body parsing middleware
+  .use(bodyParser.urlencoded({ extended: true }))
+  .use(bodyParser.json())
 
-app.get('/api/puppies/:id', function (req, res) {
-  const aPuppy = puppies.find(p => p.id === Number(req.params.id));
-  if (!aPuppy) res.status(404).end();
-  else res.json(aPuppy);
-});
+  // Serve static files from ../public
+  .use(express.static(resolve(__dirname, 'public')))
 
-app.listen(3000, function () {
-  console.log('Server listening on port', 3000);
-});
+  // Serve our api - ./api also requires in ../db, which syncs with our database
+  // .use('/api', require('./api'))
+
+  // Send index.html for anything else.
+  .get('/*', (_, res) => res.sendFile(resolve(__dirname, 'public', 'index.html')))
+
+  // Error middleware interceptor, delegates to same handler Express uses.
+  // https://github.com/expressjs/express/blob/master/lib/application.js#L162
+  // https://github.com/pillarjs/finalhandler/blob/master/index.js#L172
+  .use((err, req, res, next) => {
+    console.error(prettyError.render(err))
+    finalHandler(req, res)(err)
+  })
+
+const server = app.listen(
+  3000,
+  () => {
+    console.log(`--- Started HTTP Server ---`);
+    const { address, port } = server.address();
+    const host = address === '::' ? 'localhost' : address;
+    const urlSafeHost = host.includes(':') ? `[${host}]` : host;
+    console.log(`Listening on http://${urlSafeHost}:${port}`);
+  }
+)
 
