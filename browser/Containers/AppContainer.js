@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { Link } from 'react-router';
 import HTMLEditor from './HTMLEditor';
-import {updateHTML} from '../reducers/code';
+import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
 
 class AppContainer extends Component {
   constructor(props){
@@ -10,6 +10,17 @@ class AppContainer extends Component {
   }
   render(){
     console.log("Inside App Container rendering the entire page", this.props.children);
+    var children = React.Children.map(this.props.children, (child) => {
+      const handleHTMLUpdate = this.props.handleHTMLUpdate;
+      const handleCSSUpdate = this.props.handleCSSUpdate;
+      const handleJSUpdate = this.props.handleJSUpdate;
+      const handleServerUpdate = this.props.handleServerUpdate;
+      const handleDatabaseUpdate = this.props.handleDatabaseUpdate;
+      return React.cloneElement(child, {
+        code: this.props.code,
+        handlers: {handleHTMLUpdate, handleCSSUpdate, handleJSUpdate, handleServerUpdate, handleDatabaseUpdate}
+      })
+    });
     return(
         <div>
             <nav className="navbar navbar-default">
@@ -31,7 +42,7 @@ class AppContainer extends Component {
               </div>
           </nav>
             {/* load html firepad on default */}
-            {this.props.children ? this.props.children : <HTMLEditor handleHTMLUpdate={this.props.handleHTMLUpdate} />}
+            {children}
         </div>
     );
   }
@@ -47,7 +58,19 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleHTMLUpdate(htmlString) {
       dispatch(updateHTML(htmlString));
-    }
+    },
+    handleCSSUpdate(cssString) {
+      dispatch(updateCSS(cssString));
+    },
+    handleJSUpdate(jsString) {
+      dispatch(updateJS(jsString));
+    },
+    handleServerUpdate(serverString) {
+      dispatch(updateServer(serverString));
+    },
+    handleDatabaseUpdate(databaseString) {
+      dispatch(updateDatabase(databaseString));
+    },
   };
 };
 
