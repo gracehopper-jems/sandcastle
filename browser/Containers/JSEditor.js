@@ -22,6 +22,7 @@ export default class JSEditor extends React.Component {
 
   init(){
     // Get Firebase Database reference.
+    console.log('props in js', this.props);
     const userId = this.props.user.userId;
     var firepadRef = firebase.database().ref(`/users/${userId}/javascript`);
 
