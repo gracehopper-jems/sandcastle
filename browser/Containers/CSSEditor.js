@@ -23,21 +23,22 @@ export default class CSSEditor extends React.Component {
 
   init(){
     // Get Firebase Database reference.
-    var firepadRef = firebase.database().ref('/css');
+    const userId = this.props.user.userId;
+    var firepadRef = firebase.database().ref(`/users/${userId}/css`);
 
     // Create CodeMirror (with lineWrapping on).
-    var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
-          lineWrapping: true,
-          lineNumbers: true,
-          mode: 'css',
-          matchBrackets: true,
-          autoCloseBrackets: true,
-          // matchTags: true,
-          autoCloseTags: true,
-          toggleComment: true,
-          foldCode: true,
-          hint: true,
-      });
+   var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
+        lineWrapping: true,
+        lineNumbers: true,
+        mode: 'css',
+        matchBrackets: true,
+        autoCloseBrackets: true,
+        // matchTags: true,
+        autoCloseTags: true,
+        toggleComment: true,
+        foldCode: true,
+        hint: true,
+    });
 
     // Create Firepad (with rich text toolbar and shortcuts enabled).
       let firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
