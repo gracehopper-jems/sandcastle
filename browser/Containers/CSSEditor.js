@@ -9,6 +9,8 @@ export default class CSSEditor extends React.Component {
     super(props)
     this.init = this.init.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.createMarkup = this.createMarkup.bind(this);
+    this.MyComponent = this.MyComponent.bind(this);
     this.state = {
       text: null
     }
@@ -66,6 +68,14 @@ export default class CSSEditor extends React.Component {
     self.props.handlers.handleCSSUpdate(this.state.text);
   }
 
+  createMarkup(text) {
+    return {__html: text};
+  }
+
+   MyComponent() {
+    return <div dangerouslySetInnerHTML={this.createMarkup(this.state.text)} />;
+  }
+
   render() {
     console.log('state in css', this.state);
     return (
@@ -79,7 +89,7 @@ export default class CSSEditor extends React.Component {
               onClick={this.handleSave}>SAVE CSS</button>
           </div>
           <div className="col-md-6">
-            <img src="https://storage.googleapis.com/material-design/publish/material_v_10/assets/0Bx4BSt6jniD7MG80dmpHT0RidGs/style_icons_system_intro_principles_actionable.png"></img>
+          {this.MyComponent()}
           </div>
         </div>
       </div>
