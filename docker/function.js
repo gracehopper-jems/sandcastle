@@ -2,18 +2,48 @@ const Promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
 
-const dockerFunc = () => {
+const userId = 'abc123';
+// include timestamp in future if time
+
+
+const dockerFunc = (userId) => {
     //promisified child process exec
     const exec = Promise.promisify(require('child_process').exec);
+    const spawn = Promise.promisify(require('child_process').spawn);
     const writeFile = Promise.promisify(fs.writeFile);
     const readFile = Promise.promisify(fs.readFile);
 
+    // new Promise(function (resolve, reject) {
+
+    //     const runningProcess = spawn('docker-compose up');
+
+    //     runningProcess.on('stdout', v => {
+    //         showValue(v);
+    //     });
+
+    //     runningProcess.on('error', e => reject(e));
+    //     runningProcess.on('end', statusCode => statusCode === 0 ? resolve() : reject());
+
+    // })
+
+    const promisifiedDockerComposeUp = new Promise(function (resolve, reject) {
+
+        const runningProcess = require('child_process').spawn('docker-compose', ['up']);
+        runningProcess.stdout.on('data', v => {
+            console.log(v.toString());
+        });
+        runningProcess.stderr.on('data', e => reject(e));
+        runningProcess.on('exit', statusCode => statusCode === 0 ? resolve() : reject());
+
+    })
+
+
     //create user app folder
-    exec('mkdir user-app')
+    exec(`mkdir ${userId}-app`)
     .then(() => {
         //change current working directory
         try {
-          process.chdir('./user-app');
+          process.chdir(`./${userId}-app`);
           console.log(`Changed working directory: ${process.cwd()}`);
         }
         catch (err) {
@@ -21,6 +51,7 @@ const dockerFunc = () => {
         }
 
         //check that we can do docker-compose down and delete user-app folder
+        // in future run this in separate function when user reload their app on frontend
         setTimeout(() => {
             console.log('timeout, docker compose down');
             exec('docker-compose down')
@@ -28,10 +59,10 @@ const dockerFunc = () => {
                 process.chdir('../');
                 console.log(`Changed working directory: ${process.cwd()}`);
                 console.log('deleting user-app folder');
-                exec('rm -r user-app');
+                exec(`rm -r ${userId}-app`);
             })
             .catch(console.error);
-        }, 60000);
+        }, 20000);
 
         console.log("reading package.json");
         return readFile(path.join(__dirname,'./package.json'), 'utf8')
@@ -89,15 +120,19 @@ const dockerFunc = () => {
       // build docker container
      console.log('building docker container')
       return exec('docker-compose build');
+      //******error: Unhandled rejection (<docker_db_1 is up-to-date>, no stack trace) ????
     })
     .then(() => {
         // run docker container
-        console.log('running docker-compose up');
-        return exec('docker-compose up');
+        // console.log('running docker-compose up');
+        // return exec('docker-compose up');
+        return promisifiedDockerComposeUp;
+
+        //****** returns random buffer????
     })
     .catch(console.error);
 
 
 };
 
-dockerFunc();
+dockerFunc(userId);
