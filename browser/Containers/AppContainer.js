@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { Link } from 'react-router';
-import firebase from 'firebase';
-
 import HTMLEditor from './HTMLEditor';
 import {toggleLogIn, setUserId} from '../reducers/user';
-import firebase from 'firebase'; 
+import firebase from 'firebase';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateHTMLCSSJS } from '../reducers/code';
 import LoadingButton from './LoadingButton';
 
@@ -75,7 +73,7 @@ class AppContainer extends Component {
                       <li><Link to="/database">Database</Link></li>
 
                   </ul>
-                  {this.props.user.userId !== ""  
+                  {this.props.user.userId !== ""
                     ? <button type="submit" className="btn btn-primary" onClick={this.handleLogout}>Sign Out</button>
                     :
                      <form className="form-inline" onSubmit={this.handleSubmit} >
@@ -136,8 +134,8 @@ const mapDispatchToProps = (dispatch) => {
         handleLogIn(...args) {
           dispatch(setUserId(...args));
         },
-        handleLogOut(...args){ 
-          dispatch(setUserId('')); 
+        handleLogOut(...args){
+          dispatch(setUserId(''));
         }
       }
   };
