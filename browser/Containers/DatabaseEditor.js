@@ -18,7 +18,8 @@ export default class DatabaseEditor extends React.Component {
 
   init(){
     // Get Firebase Database reference.
-    var firepadRef = firebase.database().ref('/database');
+        const userId = this.props.user.userId;
+    var firepadRef = firebase.database().ref(`/users/${userId}/database`);
 
     // Create CodeMirror (with lineWrapping on).
    var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
