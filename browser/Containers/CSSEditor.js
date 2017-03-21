@@ -64,8 +64,7 @@ export default class CSSEditor extends React.Component {
   }
 
   handleSave(){
-    const self = this;
-    self.props.handlers.handleCSSUpdate(this.state.text);
+    this.props.handlers.handleCSSUpdate(this.state.text);
   }
 
   createMarkup(text) {

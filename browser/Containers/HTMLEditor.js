@@ -63,8 +63,7 @@ export default class HTMLEditor extends React.Component {
   }
 
   handleSave(){
-    const self = this;
-    self.props.handlers.handleHTMLUpdate(this.state.text);
+    this.props.handlers.handleHTMLUpdate(this.state.text);
   }
 
     createMarkup(text) {

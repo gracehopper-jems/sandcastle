@@ -63,8 +63,7 @@ export default class JSEditor extends React.Component {
  }
 
   handleSave(){
-    const self = this;
-    self.props.handlers.handleJSUpdate(this.state.text);
+    this.props.handlers.handleJSUpdate(this.state.text);
   }
 
 
