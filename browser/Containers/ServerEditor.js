@@ -60,8 +60,7 @@ export default class ServerEditor extends React.Component {
   }
 
   handleSave(){
-    const self = this;
-    self.props.handlers.handleServerUpdate(this.state.text);
+    this.props.handlers.handleServerUpdate(this.state.text);
   }
 
   render () {

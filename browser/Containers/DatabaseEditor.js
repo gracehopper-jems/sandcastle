@@ -60,8 +60,7 @@ export default class DatabaseEditor extends React.Component {
   }
 
   handleSave(){
-    const self = this;
-    self.props.handlers.handleDatabaseUpdate(this.state.text);
+    this.props.handlers.handleDatabaseUpdate(this.state.text);
   }
 
   render () {
