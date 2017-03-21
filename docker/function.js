@@ -1,30 +1,43 @@
 const Promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
+const _ = require('lodash');
 
+// dummy data
 const userId = 'abc123';
+const serverPort = 3001;
+const postgresPort = 6542;
 // include timestamp in future if time
 
+const dockerComposeStr = `db:
+  image: postgres
+  ports:
+    - <%= postgresPort %>:5432
+  environment:
+    POSTGRES_USER: username
+    POSTGRES_PASSWORD: pgpassword
+    POSTGRES_DB: docker-test
+docker-test:
+  build: .
+  ports:
+    - <%= serverPort %>:8080
+  links:
+    - db
+  environment:
+    SEQ_DB: docker-test
+    SEQ_USER: username
+    SEQ_PW: pgpassword
+    PORT: 8080
+    DATABASE_URL: postgres://username:pgpassword@db:5432/docker-test`;
 
-const dockerFunc = (userId) => {
+
+const dockerFunc = (userId, serverPort, postgresPort) => {
+const dockerCompose = _.template(dockerComposeStr);
     //promisified child process exec
     const exec = Promise.promisify(require('child_process').exec);
     const spawn = Promise.promisify(require('child_process').spawn);
     const writeFile = Promise.promisify(fs.writeFile);
     const readFile = Promise.promisify(fs.readFile);
-
-    // new Promise(function (resolve, reject) {
-
-    //     const runningProcess = spawn('docker-compose up');
-
-    //     runningProcess.on('stdout', v => {
-    //         showValue(v);
-    //     });
-
-    //     runningProcess.on('error', e => reject(e));
-    //     runningProcess.on('end', statusCode => statusCode === 0 ? resolve() : reject());
-
-    // })
 
     const promisifiedDockerComposeUp = new Promise(function (resolve, reject) {
 
@@ -98,14 +111,13 @@ const dockerFunc = (userId) => {
         console.log('creating the user routes');
         return writeFile('userRoutes.js', userRoutes);
     })
+    // .then(() => {
+    //     console.log("reading docker-compose");
+    //     return readFile(path.join(__dirname,'./docker-compose.yml'), 'utf8')
+    // })
     .then(() => {
-        console.log("reading docker-compose");
-        return readFile(path.join(__dirname,'./docker-compose.yml'), 'utf8')
-    })
-    .then((dockerCompose) => {
         // write docker-compose to user-app folder
-        console.log('creating docker-compose');
-        return writeFile('docker-compose.yml', dockerCompose);
+        return writeFile('docker-compose.yml', dockerCompose({'serverPort': serverPort, 'postgresPort': postgresPort}));
     })
     .then(() => {
         console.log("reading Dockerfile");
@@ -135,4 +147,4 @@ const dockerFunc = (userId) => {
 
 };
 
-dockerFunc(userId);
+dockerFunc(userId, serverPort, postgresPort);
