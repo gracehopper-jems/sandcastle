@@ -23,15 +23,12 @@ class AppContainer extends Component {
     //   firepad = Firepad.fromCodeMirror(ref, codeMirror);
 
     //   const self = this;
-    //   // console.log('self', self);
     //   let handleType = (type === 'javascript') ? 'JS' : type.toUpperCase();
     //   let typeString = `handle${handleType}Update`;
 
     //   firepad.on('ready', function() {
     //     // Firepad is ready.
-    //     console.log('ready');
     //     self.props.handlers[typeString](firepad.getText());
-    //     console.log('done being ready');
     //   });
     //   firepad.on('synced', function(isSynced) {
     //     // isSynced will be false immediately after the user edits the pad,
@@ -41,11 +38,6 @@ class AppContainer extends Component {
     //     }
     //   });
     // })
-
-    let cssRef = firebase.database().ref('/css');
-    cssRef.on('child_changed', snapshot => {
-      console.log(snapshot.val());
-    })
 
   }
 
