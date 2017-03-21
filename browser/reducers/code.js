@@ -8,8 +8,8 @@ const initialState = {
 
 // reducer
 const reducer = (state = initialState, action) => {
-  console.log('ACTION', action);
   const newState = Object.assign({}, state);
+
   switch(action.type) {
     case RECEIVE_HTML:
       newState.htmlString = action.htmlString;
