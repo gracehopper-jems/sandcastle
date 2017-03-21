@@ -21,17 +21,17 @@ const dockerFunc = () => {
         }
 
         // check that we can do docker-compose down and delete user-app folder
-        setTimeout(() => {
-            console.log('timeout, docker compose down');
-            exec('docker-compose down')
-            .then(() => {
-                process.chdir('../');
-                console.log(`Changed working directory: ${process.cwd()}`);
-                console.log('deleting user-app folder');
-                exec('rm -r user-app');
-            })
-            .catch(console.error);
-        }, 10000);
+        // setTimeout(() => {
+        //     console.log('timeout, docker compose down');
+        //     exec('docker-compose down')
+        //     .then(() => {
+        //         process.chdir('../');
+        //         console.log(`Changed working directory: ${process.cwd()}`);
+        //         console.log('deleting user-app folder');
+        //         exec('rm -r user-app');
+        //     })
+        //     .catch(console.error);
+        // }, 10000);
 
         console.log("reading package.json");
         return readFile(path.join(__dirname,'./package.json'), 'utf8')
@@ -60,7 +60,7 @@ const dockerFunc = () => {
     })
     .then(() => {
         console.log("reading user routes");
-        return readFile(path.join(__dirname,'./models.js'), 'utf8')
+        return readFile(path.join(__dirname,'./userRoutes.js'), 'utf8')
     })
     .then((userRoutes) => {
         // write user routes to user-app folder
