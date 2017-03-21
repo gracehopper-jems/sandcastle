@@ -64,11 +64,11 @@ class AppContainer extends Component {
   // }
 
   onHTMLClick() {
-    this.setState({ currentFirepad: <HTMLEditor user={this.props.user} code={this.props.code} handlers={this.props.handlers} /> });
+    this.setState({ currentFirepad: 'html' });
     console.log(this.state);
   }
   onCSSClick() {
-  this.setState({ currentFirepad: <CSSEditor user={this.props.user} code={this.props.code} handlers={this.props.handlers} /> });
+  this.setState({ currentFirepad: 'css' });
   console.log(this.state);
   }
   onJSClick() {
@@ -94,8 +94,7 @@ class AppContainer extends Component {
     //   })
     // });
 
-    console.log('react kids', this.props.children);
-    let FirepadDisplay = this.state.currentFirepad;
+    // let FirepadDisplay = this.state.currentFirepad;
 
     return (
         <div>
@@ -144,9 +143,12 @@ class AppContainer extends Component {
             </nav>
             <LoadingButton code={this.props.code} handlers={this.props.handlers} />
             {/*children*/}
-            {console.log('chitlins', children)}
             {console.log(this.state)}
-            {this.state.currentFirepad}
+            {/*this.state.currentFirepad*/}
+
+            <HTMLEditor style={{ display: this.state.currentFirepad === 'html' ? 'block' : 'none' }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+
+            <CSSEditor style={{ display: this.state.currentFirepad === 'css' ? 'block' : 'none' }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
         </div>
     );
   }
