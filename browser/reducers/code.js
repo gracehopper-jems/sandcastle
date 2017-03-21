@@ -1,11 +1,9 @@
-import axios from 'axios';
-
 const initialState = {
   htmlString: '',
   cssString: '',
   jsString: '',
   serverString: '',
-  databaseString: ''
+  databaseString: '',
 };
 
 // reducer
