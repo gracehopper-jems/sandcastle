@@ -12,7 +12,9 @@ import AppContainer from './Containers/AppContainer';
 import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
+// import { updateCSS } from './reducers/code';
+// import { initialize } from './firepads';
 
 const onAppEnter = () => {
   // run init
