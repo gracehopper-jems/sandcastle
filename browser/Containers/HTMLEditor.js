@@ -14,7 +14,8 @@ export default class HTMLEditor extends React.Component {
 
   init(){
     // Get Firebase Database reference.
-    var firepadRef = firebase.database().ref('/html');
+    const userId = this.props.user.userId;
+    var firepadRef = firebase.database().ref(`/users/${userId}/html`);
 
     // Create CodeMirror (with lineWrapping on).
     var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
@@ -54,6 +55,7 @@ export default class HTMLEditor extends React.Component {
   }
 
   render () {
+    console.log('====PROPS', this.props)
     return (
       <div className="container-fluid">
         <div className="row">

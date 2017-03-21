@@ -7,17 +7,29 @@ import CSSEditor from './Containers/CSSEditor';
 import JSEditor from './Containers/JSEditor';
 import ServerEditor from './Containers/ServerEditor';
 import DatabaseEditor from './Containers/DatabaseEditor';
+import SignUp from './Containers/SignUp'; 
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import AppContainer from './Containers/AppContainer';
 import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
 import {Provider} from 'react-redux';
+import {toggleLogIn, setUserId} from './reducers/user';
 
 const onAppEnter = () => {
   // run init
   var config = {apiKey, authDomain, databaseURL};
   firebase.initializeApp(config);
+  let user = firebase.auth().currentUser; 
+  firebase.auth().onAuthStateChanged((user) => {
+    console.log("USER IN ON APP ENTER", user); 
+    if (user){
+      let userId = user.uid; 
+      store.dispatch(setUserId(userId));
+    } else {
+      store.dispatch(setUserId('')); 
+    }
+  }) 
 };
 
 ReactDOM.render(
@@ -29,34 +41,11 @@ ReactDOM.render(
         <Route path="/javascript" component={JSEditor} />
         <Route path="/server" component={ServerEditor} />
         <Route path="/database" component={DatabaseEditor} />
+        <Route path="/signup" component={SignUp} /> 
       </Route>
     </Router>
   </Provider>,
   document.getElementById('app')
 );
 
-// bones boilerplate with auth
-// const ExampleApp = connect(
-//   ({ auth }) => ({ user: auth })
-// ) (
-//   ({ user, children }) =>
-//     <div>
-//       <nav>
-//         {user ? <WhoAmI/> : <Login/>}
-//       </nav>
-//       {children}
-//     </div>
-// )
-
-// render (
-//   <Provider store={store}>
-//     <Router history={browserHistory}>
-//       <Route path="/" component={ExampleApp}>
-//         <IndexRedirect to="/jokes" />
-//         <Route path="/jokes" component={Jokes} />
-//       </Route>
-//     </Router>
-//   </Provider>,
-//   document.getElementById('main')
-// )
 
