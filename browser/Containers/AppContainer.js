@@ -5,7 +5,6 @@ import HTMLEditor from './HTMLEditor';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
 import {toggleLogIn, setUserId} from '../reducers/user';
 import firebase from 'firebase'; 
-//var firebase = require('firebase');
 
 
 class AppContainer extends Component {
@@ -13,23 +12,11 @@ class AppContainer extends Component {
     super(props)
     this.state = {
       email: "",
-      password: "", 
-      loggedIn: false, 
+      password: ""
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
-  }
-
-  componentDidMount(){
-    let user = firebase.auth().currentUser; 
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user){
-        this.setState({loggedIn: true})
-      } else {
-        this.setState({loggedIn: false})
-      }
-    })  
   }
 
   handleSubmit(event){
@@ -85,10 +72,9 @@ class AppContainer extends Component {
                       <li><Link to="/javascript">Javascript</Link></li>
                       <li><Link to="/server">Server</Link></li>
                       <li><Link to="/database">Database</Link></li>
-                      <li><Link to="/signup">Signup</Link></li>
 
                   </ul>
-                  {this.state.loggedIn 
+                  {this.props.user.userId !== ""  
                     ? <button type="submit" className="btn btn-primary" onClick={this.handleLogout}>Sign Out</button>
                     :
                      <form className="form-inline" onSubmit={this.handleSubmit} >
@@ -107,7 +93,7 @@ class AppContainer extends Component {
                             <button type="submit" className="btn btn-primary">Sign In</button>
                           </li>
                           <li>
-                            <Link to="/signup">Sign Up</Link>
+                            <Link to="/signup"><button type="submit" className="btn btn-secondary">Sign Up</button></Link>
                           </li>
                         </ul>
                       </form>
@@ -146,11 +132,9 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(updateDatabase(...args));
         },
         handleLogIn(...args) {
-          dispatch(toggleLogIn());
           dispatch(setUserId(...args));
         },
-        handleLogOut(...args){
-          dispatch(toggleLogIn()); 
+        handleLogOut(...args){ 
           dispatch(setUserId('')); 
         }
       }
