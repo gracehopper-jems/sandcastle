@@ -14,11 +14,22 @@ import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
 import {Provider} from 'react-redux';
+import {toggleLogIn, setUserId} from './reducers/user';
 
 const onAppEnter = () => {
   // run init
   var config = {apiKey, authDomain, databaseURL};
   firebase.initializeApp(config);
+  let user = firebase.auth().currentUser; 
+  firebase.auth().onAuthStateChanged((user) => {
+    console.log("USER IN ON APP ENTER", user); 
+    if (user){
+      let userId = user.uid; 
+      store.dispatch(setUserId(userId));
+    } else {
+      store.dispatch(setUserId('')); 
+    }
+  }) 
 };
 
 ReactDOM.render(
@@ -37,28 +48,4 @@ ReactDOM.render(
   document.getElementById('app')
 );
 
-// bones boilerplate with auth
-// const ExampleApp = connect(
-//   ({ auth }) => ({ user: auth })
-// ) (
-//   ({ user, children }) =>
-//     <div>
-//       <nav>
-//         {user ? <WhoAmI/> : <Login/>}
-//       </nav>
-//       {children}
-//     </div>
-// )
-
-// render (
-//   <Provider store={store}>
-//     <Router history={browserHistory}>
-//       <Route path="/" component={ExampleApp}>
-//         <IndexRedirect to="/jokes" />
-//         <Route path="/jokes" component={Jokes} />
-//       </Route>
-//     </Router>
-//   </Provider>,
-//   document.getElementById('main')
-// )
 
