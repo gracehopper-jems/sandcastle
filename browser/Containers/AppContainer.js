@@ -6,6 +6,7 @@ import {toggleLogIn, setUserId} from '../reducers/user';
 import firebase from 'firebase';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateHTMLCSSJS } from '../reducers/code';
 import LoadingButton from './LoadingButton';
+import {browserHistory} from 'react-router';
 
 class AppContainer extends Component {
   constructor(props){
@@ -20,6 +21,7 @@ class AppContainer extends Component {
   }
 
   handleSubmit(event){
+    event.stopPropagation(); 
     event.preventDefault();
     const email = this.state.email;
     const password = this.state.password;
@@ -74,7 +76,7 @@ class AppContainer extends Component {
 
                   </ul>
                   {this.props.user.userId !== ""
-                    ? <button type="submit" className="btn btn-primary" onClick={this.handleLogout}>Sign Out</button>
+                    ? <button className="btn btn-primary nav navbar-nav navbar-right" onClick={this.handleLogout}>Sign Out</button>
                     :
                      <form className="form-inline" onSubmit={this.handleSubmit} >
                         <ul className="nav navbar-nav navbar-right">
@@ -92,7 +94,7 @@ class AppContainer extends Component {
                             <button type="submit" className="btn btn-primary">Sign In</button>
                           </li>
                           <li>
-                            <Link to="/signup"><button type="submit" className="btn btn-secondary">Sign Up</button></Link>
+                            <button type="submit" className="btn btn-info" onClick={ () => browserHistory.push('/signup') } >Sign Up</button>
                           </li>
                         </ul>
                       </form>
