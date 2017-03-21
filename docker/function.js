@@ -20,7 +20,7 @@ const dockerFunc = () => {
           console.log(`chdir: ${err}`);
         }
 
-        // check that we can do docker-compose down and delete user-app folder
+        //check that we can do docker-compose down and delete user-app folder
         setTimeout(() => {
             console.log('timeout, docker compose down');
             exec('docker-compose down')

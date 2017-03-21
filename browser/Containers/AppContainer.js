@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { Link } from 'react-router';
+import firebase from 'firebase';
+
 import HTMLEditor from './HTMLEditor';
-import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
 import {toggleLogIn, setUserId} from '../reducers/user';
 import firebase from 'firebase'; 
-
+import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateHTMLCSSJS } from '../reducers/code';
+import LoadingButton from './LoadingButton';
 
 class AppContainer extends Component {
   constructor(props){
@@ -46,7 +48,6 @@ class AppContainer extends Component {
     const name = event.target.name;
     this.setState({ [name]: value })
   }
-
 
   render(){
 
@@ -99,8 +100,9 @@ class AppContainer extends Component {
                       </form>
                   }
               </div>
-          </nav>
-            {children}
+            </nav>
+            <LoadingButton code={this.props.code} handlers={this.props.handlers} />
+              {children}
         </div>
     );
   }
