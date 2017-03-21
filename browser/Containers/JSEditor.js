@@ -22,7 +22,8 @@ export default class JSEditor extends React.Component {
 
   init(){
     // Get Firebase Database reference.
-    var firepadRef = firebase.database().ref('/javascript');
+    const userId = this.props.user.userId;
+    var firepadRef = firebase.database().ref(`/users/${userId}/javascript`);
 
     // Create CodeMirror (with lineWrapping on).
     var codeMirror = CodeMirror(document.getElementById('javascriptFirepad'), {
