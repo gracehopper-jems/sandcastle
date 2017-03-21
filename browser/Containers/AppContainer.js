@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { Link } from 'react-router';
+import firebase from 'firebase';
+
 import HTMLEditor from './HTMLEditor';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
 import {toggleLogIn, setUserId} from '../reducers/user';
-import firebase from 'firebase'; 
-
+import LoadingButton from './LoadingButton';
 
 class AppContainer extends Component {
   constructor(props){
@@ -74,7 +75,7 @@ class AppContainer extends Component {
                       <li><Link to="/database">Database</Link></li>
 
                   </ul>
-                  {this.props.user.userId !== ""  
+                  {this.props.user.userId !== ""
                     ? <button type="submit" className="btn btn-primary" onClick={this.handleLogout}>Sign Out</button>
                     :
                      <form className="form-inline" onSubmit={this.handleSubmit} >
@@ -99,8 +100,9 @@ class AppContainer extends Component {
                       </form>
                   }
               </div>
-          </nav>
-            {children}
+            </nav>
+            <LoadingButton code={this.props.code} handlers={this.props.handlers} />
+              {children}
         </div>
     );
   }
@@ -134,8 +136,8 @@ const mapDispatchToProps = (dispatch) => {
         handleLogIn(...args) {
           dispatch(setUserId(...args));
         },
-        handleLogOut(...args){ 
-          dispatch(setUserId('')); 
+        handleLogOut(...args){
+          dispatch(setUserId(''));
         }
       }
   };
