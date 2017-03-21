@@ -2,14 +2,10 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { Link } from 'react-router';
 import HTMLEditor from './HTMLEditor';
-<<<<<<< HEAD
+
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
 import {toggleLogIn, setUserId} from '../reducers/user';
-=======
-import {toggleLogIn, setUserId} from '../reducers/user';
 import firebase from 'firebase';
-import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateHTMLCSSJS } from '../reducers/code';
->>>>>>> a41a2330dbd42b7d1603be03270f0f8b0f73e651
 import LoadingButton from './LoadingButton';
 
 class AppContainer extends Component {
