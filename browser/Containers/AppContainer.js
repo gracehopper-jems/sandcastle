@@ -4,7 +4,8 @@ import { Link } from 'react-router';
 import HTMLEditor from './HTMLEditor';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
 import {toggleLogIn, setUserId} from '../reducers/user';
-var firebase = require('firebase');
+import firebase from 'firebase'; 
+//var firebase = require('firebase');
 
 
 class AppContainer extends Component {
@@ -12,11 +13,23 @@ class AppContainer extends Component {
     super(props)
     this.state = {
       email: "",
-      password: ""
+      password: "", 
+      loggedIn: false, 
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  componentDidMount(){
+    let user = firebase.auth().currentUser; 
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user){
+        this.setState({loggedIn: true})
+      } else {
+        this.setState({loggedIn: false})
+      }
+    })  
   }
 
   handleSubmit(event){
@@ -24,15 +37,21 @@ class AppContainer extends Component {
     const email = this.state.email;
     const password = this.state.password;
     firebase.auth().signInWithEmailAndPassword(email, password)
-    .catch(console.error)
-    const user = firebase.auth().currentUser;
-    const userId = user.uid;
-    this.props.handlers.handleLogIn(userId);
+    .then( () => {
+      const user = firebase.auth().currentUser;
+      const userId = user.uid;
+      this.props.handlers.handleLogIn(userId);
+    })
+    .catch(err => alert("Invalid log in!"))
   }
 
   handleLogout(event) {
     event.preventDefault();
-    this.props.handlers.handleLogIn();
+    firebase.auth().signOut()
+    .then(() => {
+      this.props.handlers.handleLogOut();
+    })
+    .catch(console.error)
   }
 
   handleChange(event){
@@ -44,7 +63,6 @@ class AppContainer extends Component {
 
   render(){
 
-    console.log("PROPS", this.props);
     const children = React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {
         code: this.props.code,
@@ -70,7 +88,7 @@ class AppContainer extends Component {
                       <li><Link to="/signup">Signup</Link></li>
 
                   </ul>
-                  {this.props.user.loggedIn
+                  {this.state.loggedIn 
                     ? <button type="submit" className="btn btn-primary" onClick={this.handleLogout}>Sign Out</button>
                     :
                      <form className="form-inline" onSubmit={this.handleSubmit} >
@@ -82,7 +100,7 @@ class AppContainer extends Component {
                           <li>
                             <label className="sr-only" htmlFor="inlineFormInputGroup">Password</label>
                             <div className="input-group mb-2 mr-sm-2 mb-sm-0">
-                              <input name="password" type="text" className="form-control" id="inlineFormInputGroup" placeholder="Password" onChange={this.handleChange}/>
+                              <input name="password" type="password" className="form-control" id="inlineFormInputGroup" placeholder="Password" onChange={this.handleChange}/>
                             </div>
                           </li>
                           <li>
@@ -131,6 +149,10 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(toggleLogIn());
           dispatch(setUserId(...args));
         },
+        handleLogOut(...args){
+          dispatch(toggleLogIn()); 
+          dispatch(setUserId('')); 
+        }
       }
   };
 };
