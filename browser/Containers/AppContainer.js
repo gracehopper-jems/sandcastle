@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { Link } from 'react-router';
 import HTMLEditor from './HTMLEditor';
-<<<<<<< HEAD
+import CSSEditor from './CSSEditor';
+import JSEditor from './JSEditor';
+import ServerEditor from './ServerEditor';
+import DatabaseEditor from './DatabaseEditor';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
 import {toggleLogIn, setUserId} from '../reducers/user';
-=======
-import {toggleLogIn, setUserId} from '../reducers/user';
 import firebase from 'firebase';
-import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateHTMLCSSJS } from '../reducers/code';
->>>>>>> a41a2330dbd42b7d1603be03270f0f8b0f73e651
 import LoadingButton from './LoadingButton';
 
 class AppContainer extends Component {
@@ -17,11 +16,13 @@ class AppContainer extends Component {
     super(props)
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      currentFirepad: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    // this.onListClick = this.onListClick.bind(this);
   }
 
   handleSubmit(event){
@@ -52,19 +53,51 @@ class AppContainer extends Component {
     this.setState({ [name]: value })
   }
 
+  // onListClick(id) {
+  //   console.log('is this working?');
+  //   console.log('id', id);
+  //   if (id === 'html') this.setState({ currentFirepad: <HTMLEditor /> });
+  //   if (id === 'css') this.setState({ currentFirepad: <CSSEditor /> });
+  //   if (id === 'js') this.setState({ currentFirepad: <JSEditor /> });
+  //   if (id === 'server') this.setState({ currentFirepad: <ServerEditor /> });
+  //   if (id === 'db') this.setState({ currentFirepad: <DatabaseEditor /> });
+  // }
+
+  onHTMLClick() {
+    this.setState({ currentFirepad: <HTMLEditor user={this.props.user} code={this.props.code} handlers={this.props.handlers} /> });
+    console.log(this.state);
+  }
+  onCSSClick() {
+  this.setState({ currentFirepad: <CSSEditor user={this.props.user} code={this.props.code} handlers={this.props.handlers} /> });
+  console.log(this.state);
+  }
+  onJSClick() {
+  this.setState({ currentFirepad: <JSEditor user={this.props.user} code={this.props.code} handlers={this.props.handlers} /> });
+  console.log(this.state);
+  }
+  onServerClick() {
+  this.setState({ currentFirepad: <ServerEditor user={this.props.user} code={this.props.code} handlers={this.props.handlers} /> });
+  console.log(this.state);
+  }
+  onDatabaseClick() {
+  this.setState({ currentFirepad: <DatabaseEditor user={this.props.user} code={this.props.code} handlers={this.props.handlers} /> });
+  console.log(this.state);
+  }
 
   render(){
 
-    const children = React.Children.map(this.props.children, (child) => {
-      return React.cloneElement(child, {
-        code: this.props.code,
-        handlers: this.props.handlers,
-        user: this.props.user
-      })
-    });
+    // const children = React.Children.map(this.props.children, (child) => {
+    //   return React.cloneElement(child, {
+    //     code: this.props.code,
+    //     handlers: this.props.handlers,
+    //     user: this.props.user
+    //   })
+    // });
 
+    console.log('react kids', this.props.children);
+    let FirepadDisplay = this.state.currentFirepad;
 
-    return(
+    return (
         <div>
             <nav className="navbar navbar-default">
               <div className="container-fluid">
@@ -72,12 +105,16 @@ class AppContainer extends Component {
                       <Link className="navbar-brand" to="/">Text Editor</Link>
                   </div>
                   <ul className="nav navbar-nav nav-tabs">
-                      <li><Link to="/html">HTML</Link></li>
-                      <li><Link to="/css">CSS</Link></li>
+              <li><a href="#" id="html" onClick={() => this.onHTMLClick()} >HTML</a></li>
+                      {/*<li><Link to="/css">CSS</Link></li>
                       <li><Link to="/javascript">Javascript</Link></li>
                       <li><Link to="/server">Server</Link></li>
-                      <li><Link to="/database">Database</Link></li>
-
+                      <li><Link to="/database">Database</Link></li>*/}
+                      <li><a href="#" id="css"
+                      onClick={() => this.onCSSClick()}>CSS</a></li>
+                      <li><a href="#" id="js" onClick={() => this.onJSClick()}>JS</a></li>
+                      <li><a href="#" id="server" onClick={() =>this.onServerClick()}>Server</a></li>
+                      <li><a href="#" id="db" onClick={() => this.onDatabaseClick()}>Database</a></li>
                   </ul>
                   {this.props.user.userId !== ""
                     ? <button type="submit" className="btn btn-primary" onClick={this.handleLogout}>Sign Out</button>
@@ -106,7 +143,10 @@ class AppContainer extends Component {
               </div>
             </nav>
             <LoadingButton code={this.props.code} handlers={this.props.handlers} />
-              {children}
+            {/*children*/}
+            {console.log('chitlins', children)}
+            {console.log(this.state)}
+            {this.state.currentFirepad}
         </div>
     );
   }

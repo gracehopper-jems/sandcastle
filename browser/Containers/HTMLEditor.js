@@ -87,8 +87,8 @@ export default class HTMLEditor extends React.Component {
               type="button"
               className="btn btn-info"
               onClick={this.handleSave}>SAVE HTML</button>
-          </div>
-          <div className="col-md-6">
+             </div>
+             <div className="col-md-6">
             <Iframe code={this.props.code} />
           </div>
         </div>

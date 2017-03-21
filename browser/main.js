@@ -38,11 +38,11 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={AppContainer} onEnter={onAppEnter}>
-        <Route path="/html" component={HTMLEditor} />
+{    /*    <Route path="/html" component={HTMLEditor} />
         <Route path="/css" component={CSSEditor} />
         <Route path="/javascript" component={JSEditor} />
         <Route path="/server" component={ServerEditor} />
-        <Route path="/database" component={DatabaseEditor} />
+        <Route path="/database" component={DatabaseEditor} />*/}
         <Route path="/signup" component={SignUp} />
       </Route>
     </Router>
