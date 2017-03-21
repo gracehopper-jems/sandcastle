@@ -6,7 +6,6 @@ import firebase from 'firebase';
 import HTMLEditor from './HTMLEditor';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateHTMLCSSJS } from '../reducers/code';
 import LoadingButton from './LoadingButton';
-import SaveButton from './SaveButton';
 
 class AppContainer extends Component {
   constructor(props){
