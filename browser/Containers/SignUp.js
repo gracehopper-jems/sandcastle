@@ -1,5 +1,6 @@
 import React, {Component} from 'react'; 
 import firebase from 'firebase';
+import { browserHistory } from 'react-router'; 
 
 export default class SignUp extends Component {
 	constructor(props){
@@ -18,8 +19,16 @@ export default class SignUp extends Component {
 		event.preventDefault(); 
 		const email = this.state.email; 
 		const password = this.state.password; 
-		console.log("FIREBASE AUTH", firebase.auth());  
 		firebase.auth().createUserWithEmailAndPassword(email, password)
+		.then( () => {
+			firebase.auth().signInWithEmailAndPassword(email, password)
+		})
+		.then( () => {
+	      const user = firebase.auth().currentUser;
+	      const userId = user.uid;
+	      this.props.handlers.handleLogIn(userId);
+    	})
+    	.then( () => browserHistory.push('/'))
 		.catch(console.error) 
 	};
 
@@ -57,7 +66,7 @@ export default class SignUp extends Component {
 		          	<div className="form-group">
 		                <label htmlFor="title" className="col-sm-2 control-label">Password</label>
 		                <div className="col-sm-10">
-		                    <input name="password" type="text" className="form-control" onChange={this.handleChange} />
+		                    <input name="password" type="password" className="form-control" onChange={this.handleChange} />
 		                </div>
 		            </div>
 
