@@ -56,7 +56,7 @@ export default class JSEditor extends React.Component {
       // and true when their edit has been saved to Firebase.
       if (isSynced) {
          self.setState({
-         text: cssFirepad.getText()
+         text: firepad.getText()
         })
       }
     });

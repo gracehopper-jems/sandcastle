@@ -20,7 +20,7 @@ export default class CSSEditor extends React.Component {
 
   init(){
     // Get Firebase Database reference.
-    var cssFirepadRef = firebase.database().ref('/css');
+    var firepadRef = firebase.database().ref('/css');
 
     // Create CodeMirror (with lineWrapping on).
     var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
@@ -37,31 +37,31 @@ export default class CSSEditor extends React.Component {
       });
 
     // Create Firepad (with rich text toolbar and shortcuts enabled).
-      let cssFirepad = Firepad.fromCodeMirror(cssFirepadRef, codeMirror, {
+      let firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
         richTextShortcuts: false,
         richTextToolbar: false,
         defaultText: 'CSS here!'
       });
 
       const self = this;
-      cssFirepad.on('ready', function() {
+      firepad.on('ready', function() {
         // Firepad is ready.
        self.setState({
-         text: cssFirepad.getText()
+         text: firepad.getText()
        })
       });
-      cssFirepad.on('synced', function(isSynced) {
+      firepad.on('synced', function(isSynced) {
         // isSynced will be false immediately after the user edits the pad,
         // and true when their edit has been saved to Firebase.
         if (isSynced) {
          self.setState({
-         text: cssFirepad.getText()
+         text: firepad.getText()
         })
         }
       });
   }
 
-    handleSave(){
+  handleSave(){
     const self = this;
     self.props.handlers.handleCSSUpdate(this.state.text);
   }
