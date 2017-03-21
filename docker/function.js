@@ -20,18 +20,18 @@ const dockerFunc = () => {
           console.log(`chdir: ${err}`);
         }
 
-        // check that we can do docker-compose down and delete user-app folder
-        // setTimeout(() => {
-        //     console.log('timeout, docker compose down');
-        //     exec('docker-compose down')
-        //     .then(() => {
-        //         process.chdir('../');
-        //         console.log(`Changed working directory: ${process.cwd()}`);
-        //         console.log('deleting user-app folder');
-        //         exec('rm -r user-app');
-        //     })
-        //     .catch(console.error);
-        // }, 10000);
+        //check that we can do docker-compose down and delete user-app folder
+        setTimeout(() => {
+            console.log('timeout, docker compose down');
+            exec('docker-compose down')
+            .then(() => {
+                process.chdir('../');
+                console.log(`Changed working directory: ${process.cwd()}`);
+                console.log('deleting user-app folder');
+                exec('rm -r user-app');
+            })
+            .catch(console.error);
+        }, 60000);
 
         console.log("reading package.json");
         return readFile(path.join(__dirname,'./package.json'), 'utf8')
