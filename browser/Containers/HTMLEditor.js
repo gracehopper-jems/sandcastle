@@ -1,14 +1,16 @@
 import React from 'react';
 import firebase from 'firebase';
 
+import Iframe from './Iframe';
+
 export default class HTMLEditor extends React.Component {
 
   constructor(props){
     super(props)
     this.init = this.init.bind(this);
     this.handleSave = this.handleSave.bind(this);
-    this.createMarkup = this.createMarkup.bind(this);
-    this.MyComponent = this.MyComponent.bind(this);
+    // this.createMarkup = this.createMarkup.bind(this);
+    // this.MyComponent = this.MyComponent.bind(this);
     this.state = {
       text: null
     }
@@ -67,16 +69,15 @@ export default class HTMLEditor extends React.Component {
     this.props.handlers.handleHTMLUpdate(this.state.text);
   }
 
-    createMarkup(text) {
-    return {__html: text};
-  }
+  //   createMarkup(text) {
+  //   return {__html: text};
+  // }
 
-   MyComponent() {
-    return <div dangerouslySetInnerHTML={this.createMarkup(this.state.text)} />;
-  }
+  //  MyComponent() {
+  //   return <div dangerouslySetInnerHTML={this.createMarkup(this.state.text)} />;
+  // }
 
   render() {
-    console.log('props in html', this.props);
     return (
       <div className="container-fluid">
         <div className="row">
@@ -88,7 +89,7 @@ export default class HTMLEditor extends React.Component {
               onClick={this.handleSave}>SAVE HTML</button>
           </div>
           <div className="col-md-6">
-            {this.MyComponent()}
+            <Iframe code={this.props.code} />
           </div>
         </div>
       </div>

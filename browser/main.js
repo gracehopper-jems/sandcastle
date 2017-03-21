@@ -17,10 +17,10 @@ import {Provider} from 'react-redux';
 import {toggleLogIn, setUserId} from './reducers/user';
 
 const onAppEnter = () => {
-  // initialize();
   // run init
   var config = {apiKey, authDomain, databaseURL};
   firebase.initializeApp(config);
+
 
   let user = firebase.auth().currentUser; 
   firebase.auth().onAuthStateChanged((user) => {
