@@ -17,21 +17,9 @@ import { Provider } from 'react-redux';
 // import { initialize } from './firepads';
 
 const onAppEnter = () => {
-  // initialize();
   // run init
   var config = {apiKey, authDomain, databaseURL};
   firebase.initializeApp(config);
-  // // var htmlFirepadRef = firebase.database().ref('/html');
-  // // var jsFirepadRef = firebase.database().ref('/javascript');
-  // // var serverFirepadRef = firebase.database().ref('/server');
-  // // var databaseFirepadRef = firebase.database().ref('/database');
-  // let cssFirepad = Firepad.fromCodeMirror(cssFirepadRef, codeMirror, {
-  //   richTextShortcuts: false,
-  //   richTextToolbar: false,
-  //   defaultText: 'CSS here!'
-  // });
-  // store.dispatch(updateCSS(cssFirepad.getText()));
-  // console.log(cssFirepad.getText());
 };
 
 ReactDOM.render(

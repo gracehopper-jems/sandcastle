@@ -2,6 +2,7 @@ import React from 'react';
 import firebase from 'firebase';
 
 // import { cssFirepad } from '../firepads';
+import Iframe from './Iframe';
 
 export default class CSSEditor extends React.Component {
 
@@ -9,8 +10,8 @@ export default class CSSEditor extends React.Component {
     super(props)
     this.init = this.init.bind(this);
     this.handleSave = this.handleSave.bind(this);
-    this.createMarkup = this.createMarkup.bind(this);
-    this.MyComponent = this.MyComponent.bind(this);
+    // this.createMarkup = this.createMarkup.bind(this);
+    // this.MyComponent = this.MyComponent.bind(this);
     this.state = {
       text: null
     }
@@ -67,16 +68,15 @@ export default class CSSEditor extends React.Component {
     this.props.handlers.handleCSSUpdate(this.state.text);
   }
 
-  createMarkup(text) {
-    return {__html: text};
-  }
+  // createMarkup(text) {
+  //   return {__html: text};
+  // }
 
-   MyComponent() {
-    return <div dangerouslySetInnerHTML={this.createMarkup(this.state.text)} />;
-  }
+  //  MyComponent() {
+  //   return <div dangerouslySetInnerHTML={this.createMarkup(this.state.text)} />;
+  // }
 
   render() {
-    console.log('state in css', this.state);
     return (
       <div className="container-fluid">
         <div className="row">
@@ -88,7 +88,7 @@ export default class CSSEditor extends React.Component {
               onClick={this.handleSave}>SAVE CSS</button>
           </div>
           <div className="col-md-6">
-          {this.MyComponent()}
+            <Iframe code={this.props.code} />
           </div>
         </div>
       </div>

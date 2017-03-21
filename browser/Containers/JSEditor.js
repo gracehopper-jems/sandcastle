@@ -1,6 +1,8 @@
 import React from 'react';
 import firebase from 'firebase';
 
+import Iframe from './Iframe';
+
 export default class JSEditor extends React.Component {
 
   constructor(props){
@@ -80,7 +82,7 @@ export default class JSEditor extends React.Component {
               onClick={this.handleSave}>SAVE JS</button>
           </div>
           <div className="col-md-6">
-            <img src="https://storage.googleapis.com/material-design/publish/material_v_10/assets/0Bx4BSt6jniD7MG80dmpHT0RidGs/style_icons_system_intro_principles_actionable.png"></img>
+            <Iframe code={this.props.code} />
           </div>
         </div>
       </div>
