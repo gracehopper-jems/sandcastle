@@ -8,14 +8,14 @@ body {
   position: relative;
 }
 
-/*.container {
+.container {
   display: flex;
   justify-content: space-around;
   flex-direction: row;
   align-items: center;
   flex: 1;
 }
-*/
+
 
 #html-firepad-container, #css-firepad-container, #js-firepad-container, #server-firepad-container, #db-firepad-container {
   width: 100%;
@@ -28,7 +28,7 @@ body {
   flex: 1;
 }*/
 
-img {
+#frame {
   width: 45vw;
   height: 85vh;
 }
@@ -47,4 +47,12 @@ img {
 .navbar-default .navbar-nav > li > a:focus {
     color: #4CAF50;
     font-weight: bold;
+}
+
+.giant-container {
+  display: flex;
+}
+
+.editor-container, .iframe-container {
+  width: 50%;
 }

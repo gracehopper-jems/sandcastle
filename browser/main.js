@@ -17,6 +17,7 @@ import {Provider} from 'react-redux';
 import { toggleLogIn, setUserId } from './reducers/user';
 import makeFirepads from './firepads';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase } from './reducers/code';
+import makeIframe from './makeIframe';
 
 
 const onAppEnter = () => {
@@ -26,7 +27,9 @@ const onAppEnter = () => {
   firebase.initializeApp(config);
 
   let user = firebase.auth().currentUser;
-  let displayFirepads = false;
+  let madeFirepads = false;
+  let madeIframe = false;
+
   firebase.auth().onAuthStateChanged((user) => {
     console.log("USER IN ON APP ENTER", user);
     if (user) {
@@ -35,10 +38,10 @@ const onAppEnter = () => {
     } else {
       store.dispatch(setUserId(''));
     }
-    if (displayFirepads === false) {
+    if (madeFirepads === false) {
 
       let pads = makeFirepads();
-      displayFirepads = true;
+      madeFirepads = true;
       pads.forEach((pad, i) => {
         pad.on('ready', () => {
           if (i === 0) store.dispatch(updateHTML(pad.getText()));
@@ -47,6 +50,10 @@ const onAppEnter = () => {
           if (i === 3) store.dispatch(updateServer(pad.getText()));
           if (i === 4) store.dispatch(updateDatabase(pad.getText()));
           console.log('STORE', store.getState());
+          if (madeIframe === false) {
+            makeIframe();
+            madeIframe = true;
+          }
         });
         pad.on('synced', isSynced => {
           if (isSynced) {
