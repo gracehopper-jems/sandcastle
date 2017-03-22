@@ -2,19 +2,25 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { Link } from 'react-router';
 import HTMLEditor from './HTMLEditor';
+import CSSEditor from './CSSEditor';
+import JSEditor from './JSEditor';
+import ServerEditor from './ServerEditor';
+import DatabaseEditor from './DatabaseEditor';
+import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
 import {toggleLogIn, setUserId} from '../reducers/user';
 import firebase from 'firebase';
-import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateHTMLCSSJS } from '../reducers/code';
 import LoadingButton from './LoadingButton';
 import BackendButton from '../Components/BackendButton';
 import {browserHistory} from 'react-router';
+
 
 class AppContainer extends Component {
   constructor(props){
     super(props)
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      currentFirepad: 'html'
     }
     this.handleSignin = this.handleSignin.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -57,31 +63,58 @@ class AppContainer extends Component {
     browserHistory.push('/signup');
   }
 
+  onHTMLClick() {
+    this.setState({ currentFirepad: 'html' });
+  }
+  onCSSClick() {
+    this.setState({ currentFirepad: 'css' });
+  }
+  onJSClick() {
+    this.setState({ currentFirepad: 'js' });
+  }
+  onServerClick() {
+    this.setState({ currentFirepad: 'server' });
+  }
+  onDatabaseClick() {
+    this.setState({ currentFirepad: 'db' });
+  }
+
   render(){
 
-    const children = React.Children.map(this.props.children, (child) => {
-      return React.cloneElement(child, {
-        code: this.props.code,
-        handlers: this.props.handlers,
-        user: this.props.user
-      })
-    });
+    let htmlDisplay = this.state.currentFirepad === 'html' ? 'block' : 'none';
+    console.log('htmldisplay', htmlDisplay);
 
+    let cssDisplay = this.state.currentFirepad === 'css' ? 'block' : 'none';
 
-    return(
+    let jsDisplay = this.state.currentFirepad === 'js' ? 'block' : 'none';
+
+    let serverDisplay = this.state.currentFirepad === 'server' ? 'block' : 'none';
+
+    let dbDisplay = this.state.currentFirepad === 'db' ? 'block' : 'none';
+
+    return (
         <div>
             <nav className="navbar navbar-default">
               <div className="container-fluid">
                   <div className="navbar-header">
                       <Link className="navbar-brand" to="/">Text Editor</Link>
                   </div>
+
                   <ul className="nav navbar-nav nav-tabs">
-                      <li><Link to="/html">HTML</Link></li>
-                      <li><Link to="/css">CSS</Link></li>
-                      <li><Link to="/javascript">Javascript</Link></li>
-                      <li><Link to="/server">Server</Link></li>
-                      <li><Link to="/database">Database</Link></li>
+
+                    <li><a href="#" id="html" onClick={() => this.onHTMLClick()} >HTML</a></li>
+
+                    <li><a href="#" id="css" onClick={() => this.onCSSClick()}>CSS</a></li>
+
+                    <li><a href="#" id="js" onClick={() => this.onJSClick()}>JS</a></li>
+
+                    <li><a href="#" id="server" onClick={() => this.onServerClick()}>Server</a></li>
+
+                    <li><a href="#" id="db" onClick={() => this.onDatabaseClick
+                    ()}>Database</a></li>
+
                   </ul>
+
                   {this.props.user.userId !== ""
                     ?
                     <ul className="nav navbar-nav navbar-right">
@@ -113,9 +146,32 @@ class AppContainer extends Component {
                   }
               </div>
             </nav>
+
             <LoadingButton code={this.props.code} handlers={this.props.handlers} />
             <BackendButton code={this.props.code} handlers={this.props.handlers} user={this.props.user}/>
-            {children}
+
+          <div className='giant-container'>
+              <div className='editor-container'>
+                <HTMLEditor style={{ display: htmlDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+
+                <CSSEditor style={{ display: cssDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+
+                <JSEditor style={{ display: jsDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+
+                <ServerEditor style={{ display: serverDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+
+                <DatabaseEditor style={{ display: dbDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+              </div>
+              <div className='iframe-container'>
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div id="frame" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
         </div>
     );
   }

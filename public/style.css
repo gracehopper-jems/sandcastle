@@ -8,39 +8,19 @@ body {
   position: relative;
 }
 
-/*.container {
+.container {
   display: flex;
   justify-content: space-around;
   flex-direction: row;
   align-items: center;
   flex: 1;
 }
-*/
-#firepad-container {
+
+
+#html-firepad-container, #css-firepad-container, #js-firepad-container, #server-firepad-container, #db-firepad-container {
   width: 100%;
   height: 85vh;
   /*height: 0;
-  width: 0;*/
-}
-
-#htmlFirepad {
-  width: 100%;
-  height: 85vh;
-  /*height: 0;
-  width: 0;*/
-}
-
-#cssFirepad {
-  width: 100%;
-  height: 85vh;
-    /*height: 0;
-  width: 0;*/
-}
-
-#javascriptFirepad {
-  width: 100%;
-  height: 85vh;
-    /*height: 0;
   width: 0;*/
 }
 
@@ -48,7 +28,7 @@ body {
   flex: 1;
 }*/
 
-img {
+#frame {
   width: 45vw;
   height: 85vh;
 }
@@ -67,4 +47,12 @@ img {
 .navbar-default .navbar-nav > li > a:focus {
     color: #4CAF50;
     font-weight: bold;
+}
+
+.giant-container {
+  display: flex;
+}
+
+.editor-container, .iframe-container {
+  width: 50%;
 }

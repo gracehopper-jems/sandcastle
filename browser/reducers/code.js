@@ -31,12 +31,6 @@ const reducer = (state = initialState, action) => {
       newState.databaseString = action.databaseString;
       return newState;
 
-    case RECEIVE_HTML_CSS_JS:
-      newState.htmlString = action.htmlString;
-      newState.cssString = action.cssString;
-      newState.jsString = action.jsString;
-      return newState;
-
     default:
       return state;
   }
@@ -48,7 +42,6 @@ const RECEIVE_CSS = 'RECEIVE_CSS';
 const RECEIVE_JS = 'RECEIVE_JS';
 const RECEIVE_SERVER = 'RECEIVE_SERVER';
 const RECEIVE_DATABASE = 'RECEIVE_DATABASE';
-const RECEIVE_HTML_CSS_JS = 'RECEIVE_HTML_CSS_JS';
 
 // action creators
 export const receiveHTML = htmlString => ({
@@ -76,12 +69,7 @@ export const receiveDatabase = databaseString => ({
   databaseString
 });
 
-export const receiveHTMLCSSJS = (htmlString, cssString, jsString) => ({
-  type: RECEIVE_HTML_CSS_JS,
-  htmlString,
-  cssString,
-  jsString
-});
+
 
 export const updateHTML = (...args) => {
   return receiveHTML(...args);
@@ -101,10 +89,6 @@ export const updateServer = (...args) => {
 
 export const updateDatabase = (...args) => {
   return receiveDatabase(...args);
-};
-
-export const updateHTMLCSSJS = (...args) => {
-  return receiveHTMLCSSJS(...args);
 };
 
 export default reducer;
