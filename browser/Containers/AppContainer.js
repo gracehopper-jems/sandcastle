@@ -11,13 +11,14 @@ import {toggleLogIn, setUserId} from '../reducers/user';
 import firebase from 'firebase';
 import LoadingButton from './LoadingButton';
 
+
 class AppContainer extends Component {
   constructor(props){
     super(props)
     this.state = {
       email: "",
       password: "",
-      currentFirepad: ''
+      currentFirepad: 'html'
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -81,14 +82,6 @@ class AppContainer extends Component {
 
   render(){
 
-    // const children = React.Children.map(this.props.children, (child) => {
-    //   return React.cloneElement(child, {
-    //     code: this.props.code,
-    //     handlers: this.props.handlers,
-    //     user: this.props.user
-    //   })
-    // });
-
     let htmlDisplay = this.state.currentFirepad === 'html' ? 'block' : 'none';
     console.log('htmldisplay', htmlDisplay);
 
@@ -149,19 +142,31 @@ class AppContainer extends Component {
                   }
               </div>
             </nav>
+
             <LoadingButton code={this.props.code} handlers={this.props.handlers} />
-            {/*children*/}
 
-            <HTMLEditor style={{ display: htmlDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+          <div className='giant-container'>
+              <div className='editor-container'>
+                <HTMLEditor style={{ display: htmlDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
 
-            <CSSEditor style={{ display: cssDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+                <CSSEditor style={{ display: cssDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
 
-            <JSEditor style={{ display: jsDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+                <JSEditor style={{ display: jsDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
 
-            <ServerEditor style={{ display: serverDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+                <ServerEditor style={{ display: serverDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
 
-            <DatabaseEditor style={{ display: dbDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
-
+                <DatabaseEditor style={{ display: dbDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+              </div>
+              <div className='iframe-container'>
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div id="frame" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
         </div>
     );
   }
