@@ -24,7 +24,6 @@ export default class LoadingButton extends Component {
 		}
 
 		render() {
-			console.log('props for loading button', this.props);
 			let isLoading = this.state.isLoading;
 			return (
 			  <div>
