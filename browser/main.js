@@ -26,7 +26,7 @@ const onAppEnter = () => {
   firebase.initializeApp(config);
 
   let user = firebase.auth().currentUser;
-
+  let displayFirepads = false;
   firebase.auth().onAuthStateChanged((user) => {
     console.log("USER IN ON APP ENTER", user);
     if (user) {
@@ -35,43 +35,38 @@ const onAppEnter = () => {
     } else {
       store.dispatch(setUserId(''));
     }
-    let pads = makeFirepads();
-    pads.forEach((pad, i) => {
-      pad.on('ready', () => {
-        // console.log('DA TEXT', pad.getText());
-        if (i === 0) store.dispatch(updateHTML(pad.getText()));
-        if (i === 1) store.dispatch(updateCSS(pad.getText()));
-        if (i === 2) store.dispatch(updateJS(pad.getText()));
-        if (i === 3) store.dispatch(updateServer(pad.getText()));
-        if (i === 4) store.dispatch(updateDatabase(pad.getText()));
+    if (displayFirepads === false) {
+
+      let pads = makeFirepads();
+      displayFirepads = true;
+      pads.forEach((pad, i) => {
+        pad.on('ready', () => {
+          if (i === 0) store.dispatch(updateHTML(pad.getText()));
+          if (i === 1) store.dispatch(updateCSS(pad.getText()));
+          if (i === 2) store.dispatch(updateJS(pad.getText()));
+          if (i === 3) store.dispatch(updateServer(pad.getText()));
+          if (i === 4) store.dispatch(updateDatabase(pad.getText()));
+          console.log('STORE', store.getState());
+        });
+        pad.on('synced', isSynced => {
+          if (isSynced) {
+            if (i === 0) store.dispatch(updateHTML(pad.getText()));
+            if (i === 1) store.dispatch(updateCSS(pad.getText()));
+            if (i === 2) store.dispatch(updateJS(pad.getText()));
+            if (i === 3) store.dispatch(updateServer(pad.getText()));
+            if (i === 4) store.dispatch(updateDatabase(pad.getText()));
+            console.log('STORE', store.getState());
+          }
+        });
       });
-      // store.dispatch(initializeFirepad(pad));
-    });
+    }
   });
-
-  // if (store.getState().user.userId !== '') {
-  // }
-
-
-
-  // let pads = makeFirepads();
-
-  // pads.forEach(pad => {
-  //   console.log(pad);
-  //   // store.dispatch(initializeFirepad(pad));
-  // })
-
 };
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={AppContainer} onEnter={onAppEnter}>
-{    /*    <Route path="/html" component={HTMLEditor} />
-        <Route path="/css" component={CSSEditor} />
-        <Route path="/javascript" component={JSEditor} />
-        <Route path="/server" component={ServerEditor} />
-        <Route path="/database" component={DatabaseEditor} />*/}
         <Route path="/signup" component={SignUp} />
       </Route>
     </Router>
