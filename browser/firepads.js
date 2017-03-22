@@ -1,17 +1,10 @@
 import firebase from 'firebase';
-import {apiKey, authDomain, databaseURL} from '../secrets';
 
-// export function initialize() {
-	// var config = { apiKey, authDomain, databaseURL };
-	// firebase.initializeApp(config);
-// // }
 import store from './store';
 
 
 export default function makeFirepads() {
 	let userId = store.getState().user.userId;
-	console.log('GOT HERE', userId);
-
 
 	var cssFirepadRef = firebase.database().ref(`/users/${userId}/css`);
 	var htmlFirepadRef = firebase.database().ref(`/users/${userId}/html`);
@@ -35,21 +28,6 @@ export default function makeFirepads() {
 			hint: true,
 		});
 	});
-
-	// export const codeMirror = CodeMirror(document.getElementById(firepadId), {
-	// 		lineWrapping: true,
-	// 		lineNumbers: true,
-	// 		mode: 'css',
-	// 		matchBrackets: true,
-	// 		autoCloseBrackets: true,
-	// 		// matchTags: true,
-	// 		autoCloseTags: true,
-	// 		toggleComment: true,
-	// 		foldCode: true,
-	// 		hint: true,
-	// });
-
-	console.log('fires', fires);
 
 	const htmlFirepad = Firepad.fromCodeMirror(htmlFirepadRef, fires[0], {
 		richTextShortcuts: false,
