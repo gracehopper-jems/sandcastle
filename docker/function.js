@@ -1,19 +1,62 @@
 const Promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
+const _ = require('lodash');
 
-const dockerFunc = () => {
+// dummy data
+const userId = 'abc123';
+const serverPort = 3001;
+const postgresPort = 6542;
+// include timestamp in future if time
+
+const dockerComposeStr = `db:
+  image: postgres
+  ports:
+    - <%= postgresPort %>:5432
+  environment:
+    POSTGRES_USER: username
+    POSTGRES_PASSWORD: pgpassword
+    POSTGRES_DB: docker-test
+docker-test:
+  build: .
+  ports:
+    - <%= serverPort %>:8080
+  links:
+    - db
+  environment:
+    SEQ_DB: docker-test
+    SEQ_USER: username
+    SEQ_PW: pgpassword
+    PORT: 8080
+    DATABASE_URL: postgres://username:pgpassword@db:5432/docker-test`;
+
+
+const dockerFunc = (userId, serverPort, postgresPort) => {
+const dockerCompose = _.template(dockerComposeStr);
     //promisified child process exec
     const exec = Promise.promisify(require('child_process').exec);
+    const spawn = Promise.promisify(require('child_process').spawn);
     const writeFile = Promise.promisify(fs.writeFile);
     const readFile = Promise.promisify(fs.readFile);
 
+    const promisifiedDockerComposeUp = new Promise(function (resolve, reject) {
+
+        const runningProcess = require('child_process').spawn('docker-compose', ['up']);
+        runningProcess.stdout.on('data', v => {
+            console.log(v.toString());
+        });
+        runningProcess.stderr.on('data', e => reject(e));
+        runningProcess.on('exit', statusCode => statusCode === 0 ? resolve() : reject());
+
+    })
+
+
     //create user app folder
-    exec('mkdir user-app')
+    exec(`mkdir ${userId}-app`)
     .then(() => {
         //change current working directory
         try {
-          process.chdir('./user-app');
+          process.chdir(`./${userId}-app`);
           console.log(`Changed working directory: ${process.cwd()}`);
         }
         catch (err) {
@@ -21,6 +64,7 @@ const dockerFunc = () => {
         }
 
         //check that we can do docker-compose down and delete user-app folder
+        // in future run this in separate function when user reload their app on frontend
         setTimeout(() => {
             console.log('timeout, docker compose down');
             exec('docker-compose down')
@@ -28,10 +72,10 @@ const dockerFunc = () => {
                 process.chdir('../');
                 console.log(`Changed working directory: ${process.cwd()}`);
                 console.log('deleting user-app folder');
-                exec('rm -r user-app');
+                exec(`rm -r ${userId}-app`);
             })
             .catch(console.error);
-        }, 60000);
+        }, 20000);
 
         console.log("reading package.json");
         return readFile(path.join(__dirname,'./package.json'), 'utf8')
@@ -67,14 +111,13 @@ const dockerFunc = () => {
         console.log('creating the user routes');
         return writeFile('userRoutes.js', userRoutes);
     })
+    // .then(() => {
+    //     console.log("reading docker-compose");
+    //     return readFile(path.join(__dirname,'./docker-compose.yml'), 'utf8')
+    // })
     .then(() => {
-        console.log("reading docker-compose");
-        return readFile(path.join(__dirname,'./docker-compose.yml'), 'utf8')
-    })
-    .then((dockerCompose) => {
         // write docker-compose to user-app folder
-        console.log('creating docker-compose');
-        return writeFile('docker-compose.yml', dockerCompose);
+        return writeFile('docker-compose.yml', dockerCompose({'serverPort': serverPort, 'postgresPort': postgresPort}));
     })
     .then(() => {
         console.log("reading Dockerfile");
@@ -89,15 +132,19 @@ const dockerFunc = () => {
       // build docker container
      console.log('building docker container')
       return exec('docker-compose build');
+      //******error: Unhandled rejection (<docker_db_1 is up-to-date>, no stack trace) ????
     })
     .then(() => {
         // run docker container
-        console.log('running docker-compose up');
-        return exec('docker-compose up');
+        // console.log('running docker-compose up');
+        // return exec('docker-compose up');
+        return promisifiedDockerComposeUp;
+
+        //****** returns random buffer????
     })
     .catch(console.error);
 
 
 };
 
-dockerFunc();
+dockerFunc(userId, serverPort, postgresPort);

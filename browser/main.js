@@ -27,6 +27,7 @@ const onAppEnter = () => {
   firebase.initializeApp(config);
 
   let user = firebase.auth().currentUser;
+
   let madeFirepads = false;
   let madeIframe = false;
 
@@ -37,6 +38,7 @@ const onAppEnter = () => {
       store.dispatch(setUserId(userId));
     } else {
       store.dispatch(setUserId(''));
+
     }
     if (madeFirepads === false) {
 
