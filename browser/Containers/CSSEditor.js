@@ -27,7 +27,7 @@ export default class CSSEditor extends React.Component {
     var firepadRef = firebase.database().ref(`/users/${userId}/css`);
 
     // Create CodeMirror (with lineWrapping on).
-   var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
+   var codeMirror = CodeMirror(document.getElementById('css-firepad-container'), {
         lineWrapping: true,
         lineNumbers: true,
         mode: 'css',
@@ -68,21 +68,14 @@ export default class CSSEditor extends React.Component {
   handleSave(){
     this.props.handlers.handleCSSUpdate(this.state.text);
   }
-
-  // createMarkup(text) {
-  //   return {__html: text};
-  // }
-
-  //  MyComponent() {
-  //   return <div dangerouslySetInnerHTML={this.createMarkup(this.state.text)} />;
-  // }
+  
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid" style={this.props.style}>
         <div className="row">
           <div className="col-md-6">
-            <div id="firepad-container"></div>
+            <div id="css-firepad-container"></div>
             <button
               type="button"
               className="btn btn-info"

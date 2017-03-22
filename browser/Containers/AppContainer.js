@@ -65,23 +65,18 @@ class AppContainer extends Component {
 
   onHTMLClick() {
     this.setState({ currentFirepad: 'html' });
-    console.log(this.state);
   }
   onCSSClick() {
-  this.setState({ currentFirepad: 'css' });
-  console.log(this.state);
+    this.setState({ currentFirepad: 'css' });
   }
   onJSClick() {
-  this.setState({ currentFirepad: <JSEditor user={this.props.user} code={this.props.code} handlers={this.props.handlers} /> });
-  console.log(this.state);
+    this.setState({ currentFirepad: 'js' });
   }
   onServerClick() {
-  this.setState({ currentFirepad: <ServerEditor user={this.props.user} code={this.props.code} handlers={this.props.handlers} /> });
-  console.log(this.state);
+    this.setState({ currentFirepad: 'server' });
   }
   onDatabaseClick() {
-  this.setState({ currentFirepad: <DatabaseEditor user={this.props.user} code={this.props.code} handlers={this.props.handlers} /> });
-  console.log(this.state);
+    this.setState({ currentFirepad: 'db' });
   }
 
   render(){
@@ -94,7 +89,16 @@ class AppContainer extends Component {
     //   })
     // });
 
-    // let FirepadDisplay = this.state.currentFirepad;
+    let htmlDisplay = this.state.currentFirepad === 'html' ? 'block' : 'none';
+    console.log('htmldisplay', htmlDisplay);
+
+    let cssDisplay = this.state.currentFirepad === 'css' ? 'block' : 'none';
+
+    let jsDisplay = this.state.currentFirepad === 'js' ? 'block' : 'none';
+
+    let serverDisplay = this.state.currentFirepad === 'server' ? 'block' : 'none';
+
+    let dbDisplay = this.state.currentFirepad === 'db' ? 'block' : 'none';
 
     return (
         <div>
@@ -103,18 +107,22 @@ class AppContainer extends Component {
                   <div className="navbar-header">
                       <Link className="navbar-brand" to="/">Text Editor</Link>
                   </div>
+
                   <ul className="nav navbar-nav nav-tabs">
-              <li><a href="#" id="html" onClick={() => this.onHTMLClick()} >HTML</a></li>
-                      {/*<li><Link to="/css">CSS</Link></li>
-                      <li><Link to="/javascript">Javascript</Link></li>
-                      <li><Link to="/server">Server</Link></li>
-                      <li><Link to="/database">Database</Link></li>*/}
-                      <li><a href="#" id="css"
-                      onClick={() => this.onCSSClick()}>CSS</a></li>
-                      <li><a href="#" id="js" onClick={() => this.onJSClick()}>JS</a></li>
-                      <li><a href="#" id="server" onClick={() =>this.onServerClick()}>Server</a></li>
-                      <li><a href="#" id="db" onClick={() => this.onDatabaseClick()}>Database</a></li>
+
+                    <li><a href="#" id="html" onClick={() => this.onHTMLClick()} >HTML</a></li>
+
+                    <li><a href="#" id="css" onClick={() => this.onCSSClick()}>CSS</a></li>
+
+                    <li><a href="#" id="js" onClick={() => this.onJSClick()}>JS</a></li>
+
+                    <li><a href="#" id="server" onClick={() => this.onServerClick()}>Server</a></li>
+
+                    <li><a href="#" id="db" onClick={() => this.onDatabaseClick
+                    ()}>Database</a></li>
+
                   </ul>
+
                   {this.props.user.userId !== ""
                     ? <button type="submit" className="btn btn-primary" onClick={this.handleLogout}>Sign Out</button>
                     :
@@ -143,12 +151,17 @@ class AppContainer extends Component {
             </nav>
             <LoadingButton code={this.props.code} handlers={this.props.handlers} />
             {/*children*/}
-            {console.log(this.state)}
-            {/*this.state.currentFirepad*/}
 
-            <HTMLEditor style={{ display: this.state.currentFirepad === 'html' ? 'block' : 'none' }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+            <HTMLEditor style={{ display: htmlDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
 
-            <CSSEditor style={{ display: this.state.currentFirepad === 'css' ? 'block' : 'none' }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+            <CSSEditor style={{ display: cssDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+
+            <JSEditor style={{ display: jsDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+
+            <ServerEditor style={{ display: serverDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+
+            <DatabaseEditor style={{ display: dbDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+
         </div>
     );
   }
