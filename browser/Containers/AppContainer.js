@@ -6,6 +6,7 @@ import {toggleLogIn, setUserId} from '../reducers/user';
 import firebase from 'firebase';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateHTMLCSSJS } from '../reducers/code';
 import LoadingButton from './LoadingButton';
+import BackendButton from '../Components/BackendButton';
 
 class AppContainer extends Component {
   constructor(props){
@@ -100,7 +101,8 @@ class AppContainer extends Component {
               </div>
             </nav>
             <LoadingButton code={this.props.code} handlers={this.props.handlers} />
-              {children}
+            <BackendButton code={this.props.code} handlers={this.props.handlers} user={this.props.user}/>
+            {children}
         </div>
     );
   }

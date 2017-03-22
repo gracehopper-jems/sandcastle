@@ -27,12 +27,14 @@ export default class LoadingButton extends Component {
 			console.log('props for loading button', this.props);
 			let isLoading = this.state.isLoading;
 			return (
-				<Button
-					bsStyle="primary"
-					disabled={isLoading}
-					onClick={!isLoading ? this.handleClick : null}>
-					{isLoading ? 'Running your code...' : 'Run'}
-				</Button>
+			  <div>
+					<Button
+						bsStyle="primary"
+						disabled={isLoading}
+						onClick={!isLoading ? this.handleClick : null}>
+						{isLoading ? 'Running your code...' : 'Run'}
+					</Button>
+				</div>
 			);
 		}
 }
