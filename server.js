@@ -33,7 +33,10 @@ module.exports = app
     const userId = req.body.userId;
     const userRoutes = req.body.userRoutes;
     const userModels = req.body.userModels;
+    console.log('POSTING TO CONTAINER')
     runContainer(userId, 3001, 6542, userRoutes, userModels);
+    // send res after docker compose up
+    res.send('posted to container')
   })
 
   // Send index.html for anything else.

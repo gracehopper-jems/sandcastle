@@ -33,44 +33,26 @@ docker-test:
 
 const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) => {
     const dockerCompose = _.template(dockerComposeStr);
-    //promisified child process exec
     const exec = Promise.promisify(require('child_process').exec);
-    // const spawn = Promise.promisify(require('child_process').spawn);
     const writeFile = Promise.promisify(fs.writeFile);
     const readFile = Promise.promisify(fs.readFile);
 
-    const promisifiedDockerComposeUp = new Promise(function (resolve, reject) {
-        const runningProcess = require('child_process').spawn('docker-compose', ['up']);
-        runningProcess.stdout.on('data', v => {
-            console.log(v.toString());
-        });
-        runningProcess.stderr.on('data', e => reject(e));
-        runningProcess.on('exit', statusCode => statusCode === 0 ? resolve() : reject());
-    });
-
-    // const promisifiedMkdir = new Promise(function (resolve, reject) {
-    //     require('child_process').exec(`mkdir docker/${userId}-app`, function(error, stdout, stderr) {
-    //         if (error) {
-    //             reject('=====mkdirerror');
-    //         }
-    //         resolve('success');
-    //     })
-    // });
-
-    // const promisifiedDockerComposeBuild = new Promise(function (resolve, reject) {
-    //     require('child_process').exec(`docker-compose build`, function(error, stdout, stderr) {
-    //         if (error) {
-    //             reject('=====dockercomposebuilderror');
-    //         }
-    //         resolve('success');
-    //     })
-    // });
-
-
+    function promisifiedMkDir () {
+        return new Promise(function(resolve, reject) {
+            const runningProcess = require('child_process').exec('mkdir', [`docker/${userId}-app`], (error, stdout, stderr) => {
+                if (error) {
+                    console.log('MKDIR ERROR', error);
+                    reject(error);
+                }
+                resolve('SUCCESS!!!!');
+            });
+        })
+    }
+    console.log('RUNNING CONTAINER')
     // currently in text-editor folder
     //create user app folder in docker folder
     exec(`mkdir docker/${userId}-app`)
-    // promisifiedMkdir
+    // promisifiedMkDir()
     .then(() => {
         //change current working directory
         try {
@@ -83,17 +65,17 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
 
         // check that we can do docker-compose down and delete user-app folder
         // in future run this in separate function when user reload their app on frontend
-        // setTimeout(() => {
-        //     console.log('timeout, docker compose down');
-        //     exec('docker-compose down')
-        //     .then(() => {
-        //         process.chdir('../');
-        //         console.log(`Changed working directory: ${process.cwd()}`);
-        //         console.log('deleting user-app folder');
-        //         exec(`rm -r ${userId}-app`);
-        //     })
-        //     .catch(console.error);
-        // }, 70000);
+        setTimeout(() => {
+            console.log('timeout, docker compose down');
+            exec('docker-compose down')
+            .then(() => {
+                process.chdir('../');
+                console.log(`Changed working directory: ${process.cwd()}`);
+                console.log('deleting user-app folder');
+                exec(`rm -r ${userId}-app`);
+            })
+            .catch(console.error);
+        }, 60000);
 
         console.log("reading package.json");
         return readFile(path.join(__dirname,'./package.json'), 'utf8')
@@ -146,19 +128,29 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
         console.log('creating docker file');
         return writeFile('Dockerfile', dockerFile);
     })
-    // .then(() => {
-    //   // build docker container
-    //  console.log('building docker container')
-    //   // return exec('docker-compose build');
-    //   return promisifiedDockerComposeBuild;
-    //   //******error: Unhandled rejection (<docker_db_1 is up-to-date>, no stack trace) ????
-    // })
+    .then(() => {
+        // build docker container
+        console.log('building docker container')
+        return exec('docker-compose build');
+        //******error: Unhandled rejection (<docker_db_1 is up-to-date>, no stack trace) ????
+    })
     .then(() => {
         // run docker container
         console.log('running docker-compose up');
-        // return exec('docker-compose up');
-        return promisifiedDockerComposeUp;
-
+        return new Promise(function (resolve, reject) {
+            const runningProcess = require('child_process').spawn('docker-compose', ['up']);
+            runningProcess.stdout.on('data', v => {
+                console.log(v.toString());
+            });
+            runningProcess.stderr.on('data', e => {
+                console.log('ERRORRRRR', e.toString());
+                // reject(e)
+            });
+            runningProcess.on('exit', statusCode => {
+                console.log('status code', statusCode);
+                return statusCode === 0 ? resolve() : reject();
+            });
+        });
         //****** returns random buffer????
     })
     .catch(console.error);
