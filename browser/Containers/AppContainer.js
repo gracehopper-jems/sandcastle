@@ -79,10 +79,14 @@ class AppContainer extends Component {
                       <li><Link to="/javascript">Javascript</Link></li>
                       <li><Link to="/server">Server</Link></li>
                       <li><Link to="/database">Database</Link></li>
-
                   </ul>
                   {this.props.user.userId !== ""
-                    ? <button className="btn btn-primary nav navbar-nav navbar-right" onClick={this.handleLogout}>Sign Out</button>
+                    ?
+                    <ul className="nav navbar-nav navbar-right">
+                    <li>
+                    <button className="btn btn-primary" onClick={this.handleLogout}>Sign Out</button>
+                    </li>
+                    </ul>
                     :
                      <form className="form-inline" onSubmit={this.handleSubmit} >
                         <ul className="nav navbar-nav navbar-right">
