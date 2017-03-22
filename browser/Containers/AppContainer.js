@@ -7,6 +7,7 @@ import firebase from 'firebase';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateHTMLCSSJS } from '../reducers/code';
 import LoadingButton from './LoadingButton';
 import BackendButton from '../Components/BackendButton';
+import {browserHistory} from 'react-router';
 
 class AppContainer extends Component {
   constructor(props){
@@ -15,37 +16,45 @@ class AppContainer extends Component {
       email: "",
       password: ""
     }
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSignin = this.handleSignin.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
+    this.handleSignout = this.handleSignout.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
   }
 
-  handleSubmit(event){
+  handleChange(event){
+    const value = event.target.value;
+    const name = event.target.name;
+    this.setState({ [name]: value });
+  }
+
+  handleSignin(event){
     event.preventDefault();
     const email = this.state.email;
     const password = this.state.password;
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then( () => {
       const user = firebase.auth().currentUser;
+      console.log('user on sign in', user)
       const userId = user.uid;
-      this.props.handlers.handleLogIn(userId);
+      this.props.handlers.handleSignin(userId);
     })
     .catch(err => alert("Invalid log in!"))
   }
 
-  handleLogout(event) {
+  handleSignout(event) {
     event.preventDefault();
+    this.setState({email: '', password: ''});
     firebase.auth().signOut()
     .then(() => {
-      this.props.handlers.handleLogOut();
+      this.props.handlers.handleSignout();
     })
     .catch(console.error)
   }
 
-  handleChange(event){
-    const value = event.target.value;
-    const name = event.target.name;
-    this.setState({ [name]: value })
+  handleSignup(event) {
+    event.preventDefault();
+    browserHistory.push('/signup');
   }
 
   render(){
@@ -72,12 +81,16 @@ class AppContainer extends Component {
                       <li><Link to="/javascript">Javascript</Link></li>
                       <li><Link to="/server">Server</Link></li>
                       <li><Link to="/database">Database</Link></li>
-
                   </ul>
                   {this.props.user.userId !== ""
-                    ? <button type="submit" className="btn btn-primary" onClick={this.handleLogout}>Sign Out</button>
+                    ?
+                    <ul className="nav navbar-nav navbar-right">
+                    <li>
+                    <button className="btn btn-primary" onClick={this.handleSignout}>Sign Out</button>
+                    </li>
+                    </ul>
                     :
-                     <form className="form-inline" onSubmit={this.handleSubmit} >
+                     <form className="form-inline" onSubmit={this.handleSignin} >
                         <ul className="nav navbar-nav navbar-right">
                           <li>
                             <label className="sr-only" htmlFor="inlineFormInput">Email</label>
@@ -93,7 +106,7 @@ class AppContainer extends Component {
                             <button type="submit" className="btn btn-primary">Sign In</button>
                           </li>
                           <li>
-                            <Link to="/signup"><button type="submit" className="btn btn-secondary">Sign Up</button></Link>
+                            <button type="submit" className="btn btn-info" onClick={this.handleSignup} >Sign Up</button>
                           </li>
                         </ul>
                       </form>
@@ -133,10 +146,10 @@ const mapDispatchToProps = (dispatch) => {
         handleDatabaseUpdate(...args) {
           dispatch(updateDatabase(...args));
         },
-        handleLogIn(...args) {
+        handleSignin(...args) {
           dispatch(setUserId(...args));
         },
-        handleLogOut(...args){
+        handleSignout(...args){
           dispatch(setUserId(''));
         }
       }
