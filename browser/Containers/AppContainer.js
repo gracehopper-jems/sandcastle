@@ -15,20 +15,21 @@ class AppContainer extends Component {
       email: "",
       password: ""
     }
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSignin = this.handleSignin.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
   }
 
-  handleSubmit(event){
-    // event.stopPropagation();
+  handleSignin(event){
     event.preventDefault();
     const email = this.state.email;
     const password = this.state.password;
+    console.log('state email', this.state.email)
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then( () => {
       const user = firebase.auth().currentUser;
+      console.log('user on sign in', user)
       const userId = user.uid;
       this.props.handlers.handleLogIn(userId);
     })
@@ -37,6 +38,7 @@ class AppContainer extends Component {
 
   handleLogout(event) {
     event.preventDefault();
+    this.setState({email: '', password: ''});
     firebase.auth().signOut()
     .then(() => {
       this.props.handlers.handleLogOut();
@@ -88,7 +90,7 @@ class AppContainer extends Component {
                     </li>
                     </ul>
                     :
-                     <form className="form-inline" onSubmit={this.handleSubmit} >
+                     <form className="form-inline" onSubmit={this.handleSignin} >
                         <ul className="nav navbar-nav navbar-right">
                           <li>
                             <label className="sr-only" htmlFor="inlineFormInput">Email</label>
