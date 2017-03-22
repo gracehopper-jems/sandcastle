@@ -71,7 +71,6 @@ export default class JSEditor extends React.Component {
 
 
   render() {
-    console.log('props in js', this.props);
     return (
       <div className="container-fluid">
         <div className="row">
