@@ -27,7 +27,7 @@ export default class JSEditor extends React.Component {
     var firepadRef = firebase.database().ref(`/users/${userId}/javascript`);
 
     // Create CodeMirror (with lineWrapping on).
-    var codeMirror = CodeMirror(document.getElementById('javascriptFirepad'), {
+    var codeMirror = CodeMirror(document.getElementById('js-firepad-container'), {
         lineWrapping: true,
         lineNumbers: true,
         mode: 'javascript',
@@ -74,10 +74,10 @@ export default class JSEditor extends React.Component {
   render() {
     console.log('props in js', this.props);
     return (
-      <div className="container-fluid">
+      <div className="container-fluid" style={this.props.style}>
         <div className="row">
           <div className="col-md-6">
-            <div id="javascriptFirepad"></div>
+            <div id="js-firepad-container"></div>
             <button
               type="button"
               className="btn btn-info"

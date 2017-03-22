@@ -14,24 +14,53 @@ import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
 import {Provider} from 'react-redux';
-import {toggleLogIn, setUserId} from './reducers/user';
+import { toggleLogIn, setUserId } from './reducers/user';
+import makeFirepads from './firepads';
+import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase } from './reducers/code';
+
 
 const onAppEnter = () => {
   // run init
-  var config = {apiKey, authDomain, databaseURL};
+  var config = { apiKey, authDomain, databaseURL };
+
   firebase.initializeApp(config);
 
   let user = firebase.auth().currentUser;
 
   firebase.auth().onAuthStateChanged((user) => {
     console.log("USER IN ON APP ENTER", user);
-    if (user){
+    if (user) {
       let userId = user.uid;
       store.dispatch(setUserId(userId));
     } else {
       store.dispatch(setUserId(''));
     }
-  })
+    let pads = makeFirepads();
+    pads.forEach((pad, i) => {
+      pad.on('ready', () => {
+        // console.log('DA TEXT', pad.getText());
+        if (i === 0) store.dispatch(updateHTML(pad.getText()));
+        if (i === 1) store.dispatch(updateCSS(pad.getText()));
+        if (i === 2) store.dispatch(updateJS(pad.getText()));
+        if (i === 3) store.dispatch(updateServer(pad.getText()));
+        if (i === 4) store.dispatch(updateDatabase(pad.getText()));
+      });
+      // store.dispatch(initializeFirepad(pad));
+    });
+  });
+
+  // if (store.getState().user.userId !== '') {
+  // }
+
+
+
+  // let pads = makeFirepads();
+
+  // pads.forEach(pad => {
+  //   console.log(pad);
+  //   // store.dispatch(initializeFirepad(pad));
+  // })
+
 };
 
 ReactDOM.render(

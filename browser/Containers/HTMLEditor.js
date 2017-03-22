@@ -26,7 +26,7 @@ export default class HTMLEditor extends React.Component {
     var firepadRef = firebase.database().ref(`/users/${userId}/html`);
 
     // Create CodeMirror (with lineWrapping on).
-    var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
+    var codeMirror = CodeMirror(document.getElementById('html-firepad-container'), {
         lineWrapping: true,
         lineNumbers: true,
         mode: 'xml',
@@ -78,11 +78,12 @@ export default class HTMLEditor extends React.Component {
   // }
 
   render() {
+    console.log('in html editor', this.props);
     return (
-      <div className="container-fluid">
+      <div className="container-fluid" style={this.props.style} >
         <div className="row">
           <div className="col-md-6">
-            <div id="firepad-container"></div>
+            <div id="html-firepad-container"></div>
             <button
               type="button"
               className="btn btn-info"

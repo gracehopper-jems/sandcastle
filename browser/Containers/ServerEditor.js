@@ -1,6 +1,8 @@
 import React from 'react';
 import firebase from 'firebase';
 
+import Iframe from './Iframe';
+
 export default class ServerEditor extends React.Component {
 
   constructor(props){
@@ -22,7 +24,7 @@ export default class ServerEditor extends React.Component {
     var firepadRef = firebase.database().ref(`/users/${userId}/server`);
 
     // Create CodeMirror (with lineWrapping on).
-   var codeMirror = CodeMirror(document.getElementById('firepad-container'), {
+   var codeMirror = CodeMirror(document.getElementById('server-firepad-container'), {
         lineWrapping: true,
         lineNumbers: true,
         mode: 'javascript',
@@ -66,17 +68,17 @@ export default class ServerEditor extends React.Component {
 
   render () {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid" style={this.props.style}>
         <div className="row">
           <div className="col-md-6">
-            <div id="firepad-container"></div>
+            <div id="server-firepad-container"></div>
             <button
               type="button"
               className="btn btn-info"
               onClick={this.handleSave}>SAVE Server</button>
           </div>
           <div className="col-md-6">
-            <img src="https://storage.googleapis.com/material-design/publish/material_v_10/assets/0Bx4BSt6jniD7MG80dmpHT0RidGs/style_icons_system_intro_principles_actionable.png"></img>
+           <Iframe code={this.props.code} />
           </div>
         </div>
       </div>
