@@ -18,10 +18,11 @@ class AppContainer extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
   }
 
   handleSubmit(event){
-    event.stopPropagation(); 
+    // event.stopPropagation();
     event.preventDefault();
     const email = this.state.email;
     const password = this.state.password;
@@ -46,7 +47,12 @@ class AppContainer extends Component {
   handleChange(event){
     const value = event.target.value;
     const name = event.target.name;
-    this.setState({ [name]: value })
+    this.setState({ [name]: value });
+  }
+
+  handleSignup(event) {
+    event.preventDefault();
+    browserHistory.push('/signup');
   }
 
   render(){
@@ -94,7 +100,7 @@ class AppContainer extends Component {
                             <button type="submit" className="btn btn-primary">Sign In</button>
                           </li>
                           <li>
-                            <button type="submit" className="btn btn-info" onClick={ () => browserHistory.push('/signup') } >Sign Up</button>
+                            <button type="submit" className="btn btn-info" onClick={this.handleSignup} >Sign Up</button>
                           </li>
                         </ul>
                       </form>
