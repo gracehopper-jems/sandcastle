@@ -3,7 +3,7 @@ import React from 'react';
 
 export const IframeTabs = () => {
   return (
-    <Tabs defaultActiveKey={2} id="IframeTabContainer">
+    <Tabs defaultActiveKey={1} id="IframeTabContainer">
       <Tab eventKey={1} title="Browser View">
         <div id="frame" />
       </Tab>
