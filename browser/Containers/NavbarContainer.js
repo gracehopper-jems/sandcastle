@@ -3,7 +3,8 @@ import { Link, browserHistory } from 'react-router';
 import LoadingButton from './LoadingButton';
 import BackendButton from '../Components/BackendButton';
 import firebase from 'firebase';
-import axios from 'axios'; 
+import axios from 'axios';
+import { Modal, Button } from 'react-bootstrap';
 
 export default class NavbarContainer extends Component {
     constructor(props){
@@ -11,7 +12,7 @@ export default class NavbarContainer extends Component {
         this.state = {
             email: "",
             password: "",
-            currentFirepad: 'html'
+            signup: false,
         }
     this.handleSignin = this.handleSignin.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -50,7 +51,7 @@ export default class NavbarContainer extends Component {
     firebase.auth().signOut()
     .then(() => {
         this.props.handlers.handleSignout();
-        axios.get('/removeUser') 
+        axios.get('/removeUser')
         .then(() => {
             console.log('removing userid');
         })
@@ -60,7 +61,8 @@ export default class NavbarContainer extends Component {
 
   handleSignup(event) {
     event.preventDefault();
-    browserHistory.push('/signup');
+    //browserHistory.push('/signup');
+    this.setState({signup: true})
   }
 
 render(){
@@ -81,10 +83,29 @@ render(){
                   </div>
 
                   <ul className="nav navbar-nav nav-tabs">
-                    <li><a href="#" id="html" onClick={() => this.onHTMLClick()} >HTML</a></li>
                     <li><a><LoadingButton code={this.props.code} handlers={this.props.handlers} /></a></li>
                     <li><a><BackendButton code={this.props.code} handlers={this.props.handlers} user={this.props.user}/></a></li>
-                    {children} {/*this is where the signup form shows up*/}
+
+                    {this.state.signup ?
+                      (<div className="static-modal">
+                        <Modal.Dialog>
+                          <Modal.Header>
+                            <Modal.Title>Sign up</Modal.Title>
+                          </Modal.Header>
+
+                          <Modal.Body>
+                            {children} {/*this is where the signup form shows up*/}
+                          </Modal.Body>
+
+                          <Modal.Footer>
+                            <Button onClick={() => this.setState({signup: false})}>Close </Button>
+                            <Button bsStyle="primary" onClick={() => this.setState({signup: false})}>Save changes</Button>
+                          </Modal.Footer>
+
+                        </Modal.Dialog>
+                      </div>) : null
+                  }
+
                   </ul>
 
                   {
