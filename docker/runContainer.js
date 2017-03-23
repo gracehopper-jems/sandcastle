@@ -45,19 +45,19 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
           console.log(`chdir: ${err}`);
         }
 
-        // check that we can do docker-compose down and delete user-app folder
-        // in future run this in separate function when user reload their app on frontend
-        // setTimeout(() => {
-        //     console.log('timeout, docker compose down');
-        //     exec('docker-compose down')
-        //     .then(() => {
-        //         process.chdir('../');
-        //         console.log(`Changed working directory: ${process.cwd()}`);
-        //         console.log('deleting user-app folder');
-        //         exec(`rm -r ${userId}-app`);
-        //     })
-        //     .catch(console.error);
-        // }, 100000);
+        check that we can do docker-compose down and delete user-app folder
+        in future run this in separate function when user reload their app on frontend
+        setTimeout(() => {
+            console.log('timeout, docker compose down');
+            exec('docker-compose down')
+            .then(() => {
+                process.chdir('../');
+                console.log(`Changed working directory: ${process.cwd()}`);
+                console.log('deleting user-app folder');
+                exec(`rm -r ${userId}-app`);
+            })
+            .catch(console.error);
+        }, 100000);
 
         console.log("reading package.json");
         return readFile(path.join(__dirname,'./package.json'), 'utf8')

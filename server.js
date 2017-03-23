@@ -40,12 +40,25 @@ module.exports = app
     res.send('posted to container')
   })
 
-  // run a command in container terminal and receive the result
+  // run a get request in container terminal and receive the result
   .get('/containerTest', (req, res, next) => {
-    const containerId = '9d1946bbed94';
+    const containerId = '094b57f4215a';
     const exec = Promise.promisify(require('child_process').exec);
 
     exec(`docker exec ${containerId} curl http://localhost:8080/test`)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch(console.error);
+  })
+
+  // run a post request in container terminal and receive result
+  // docker container id is hardcoded in, might need to be changed when running bc container id can change
+  .get('/containerPostTest', (req, res, next) => {
+    const containerId = '094b57f4215a';
+    const exec = Promise.promisify(require('child_process').exec);
+
+    exec(`docker exec ${containerId} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ada"}' http://localhost:8080/test2`)
     .then((result) => {
       res.send(result);
     })

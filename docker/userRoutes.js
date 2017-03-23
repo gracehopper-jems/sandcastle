@@ -28,5 +28,17 @@ router.get('/test', (req, res) => {
         .catch(console.error);
 });
 
+// still working on this
+router.post('/test2', (req, res) => {
+    res.status(200).send('post req.body', req.body)
+    // models.Sandcastle.create({
+    //         name: req.body.name
+    //     })
+    //     .then((test) => {
+    //         res.json(test);
+    //     })
+    //     .catch(console.error);
+});
+
 /* And we would provide this for them to make sure they are exporting their router correctly */
 module.exports = router;
