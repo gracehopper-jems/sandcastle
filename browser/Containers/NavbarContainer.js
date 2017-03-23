@@ -3,6 +3,7 @@ import { Link, browserHistory } from 'react-router';
 import LoadingButton from './LoadingButton';
 import BackendButton from '../Components/BackendButton';
 import firebase from 'firebase';
+import axios from 'axios'; 
 
 export default class NavbarContainer extends Component {
     constructor(props){
@@ -33,6 +34,12 @@ export default class NavbarContainer extends Component {
             console.log('user on sign in', user)
             const userId = user.uid;
             this.props.handlers.handleSignin(userId);
+
+            axios.post('/setUser', {userId: userId})
+            .then(() => {
+                console.log('posting userid');
+            })
+            .catch(console.error);
         })
         .catch(err => alert("Invalid log in!"))
     }
@@ -42,10 +49,14 @@ export default class NavbarContainer extends Component {
     this.setState({email: '', password: ''});
     firebase.auth().signOut()
     .then(() => {
-      this.props.handlers.handleSignout();
+        this.props.handlers.handleSignout();
+        axios.get('/removeUser') 
+        .then(() => {
+            console.log('removing userid');
+        })
     })
     .catch(console.error)
-  }
+}
 
   handleSignup(event) {
     event.preventDefault();
