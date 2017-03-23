@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import store from './store';
 
 
-const makeIframe = () => {
+const makeFrontendIframe = () => {
 	let state = store.getState();
 	// Create a new blank iframe
 	var newIframe = document.createElement('iframe');
@@ -33,5 +33,5 @@ const makeIframe = () => {
 	newIframe.contentWindow.document.close();
 };
 
-export default makeIframe;
+export default makeFrontendIframe;
 

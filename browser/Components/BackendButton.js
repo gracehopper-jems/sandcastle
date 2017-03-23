@@ -15,7 +15,9 @@ const BackendButton = (props) => {
 
   return (
     <div>
-      <button className="btn btn-info" onClick={handleClick}>Run Backend</button>
+      <a href="#"
+        onClick={handleClick}>Run Backend
+      </a>
     </div>
   )
 }
