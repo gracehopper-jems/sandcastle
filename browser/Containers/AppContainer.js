@@ -1,18 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import HTMLEditor from './HTMLEditor';
 import CSSEditor from './CSSEditor';
 import JSEditor from './JSEditor';
 import ServerEditor from './ServerEditor';
 import DatabaseEditor from './DatabaseEditor';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
-import {toggleLogIn, setUserId} from '../reducers/user';
+import {setUserId} from '../reducers/user';
 import firebase from 'firebase';
 import LoadingButton from './LoadingButton';
 import BackendButton from '../Components/BackendButton';
-import {browserHistory} from 'react-router';
-
 
 class AppContainer extends Component {
   constructor(props){
