@@ -7,7 +7,7 @@
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "start watch": "webpack -w & nodemon server.js"
+    "start-watch": "webpack -w & nodemon server.js"
   },
   "keywords": [],
   "author": "",
