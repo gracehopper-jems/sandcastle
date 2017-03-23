@@ -60,7 +60,6 @@ class AppContainer extends Component {
 
   handleSignup(event) {
     event.preventDefault();
-    console.log('signing up')
     browserHistory.push('/signup');
   }
 
