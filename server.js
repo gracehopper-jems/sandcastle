@@ -5,10 +5,14 @@ const {resolve} = require('path');
 const PrettyError = require('pretty-error');
 const finalHandler = require('finalhandler');
 const runContainer = require('./docker/runContainer');
+const session = require('express-session')
 // PrettyError docs: https://www.npmjs.com/package/pretty-error
 const Promise = require('bluebird');
 
 const app = express();
+
+//const containerId = '094b57f4215a';
+const exec = Promise.promisify(require('child_process').exec);
 
 // Pretty error prints errors all pretty.
 const prettyError = new PrettyError();
@@ -18,6 +22,8 @@ prettyError.skipNodeFiles()
 
 // Skip all the trace lines about express' core and sub-modules.
 prettyError.skipPackage('express')
+
+
 
 module.exports = app
   // Body parsing middleware
@@ -29,6 +35,11 @@ module.exports = app
 
   // Serve our api - ./api also requires in ../db, which syncs with our database
   // .use('/api', require('./api'))
+    .post('setUser', (req, res, next) => {
+        const userId = req.body.userId; 
+        // ADD THE SESSION OBJECT HERE !!!!!!!!!!!!!!!!!!!!
+
+    })
 
   .post('/container', (req, res, next) => {
     const userId = req.body.userId;
@@ -42,28 +53,47 @@ module.exports = app
 
   // run a get request in container terminal and receive the result
   .get('/containerTest', (req, res, next) => {
-    const containerId = '094b57f4215a';
-    const exec = Promise.promisify(require('child_process').exec);
-
-    exec(`docker exec ${containerId} curl http://localhost:8080/test`)
+    // the container's name is the user id plus `app_docker-test_1`
+    const containerName = `${userId}app_docker-test_1`; 
+    exec(`docker ps -aqf "name=${containerName}"`)
+    .then( (containerId) => {
+      console.log("CONTAINER ID IS:", containerId); 
+      exec(`docker exec ${containerId} curl http://localhost:8080/test`)
+    })
     .then((result) => {
       res.send(result);
     })
     .catch(console.error);
-  })
+    })
+
+
 
   // run a post request in container terminal and receive result
   // docker container id is hardcoded in, might need to be changed when running bc container id can change
-  .get('/containerPostTest', (req, res, next) => {
-    const containerId = '094b57f4215a';
-    const exec = Promise.promisify(require('child_process').exec);
+  // .get('/containerPostTest', (req, res, next) => {
+  //   const containerId = '094b57f4215a';
+  //   const exec = Promise.promisify(require('child_process').exec);
 
-    exec(`docker exec ${containerId} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ada"}' http://localhost:8080/test2`)
-    .then((result) => {
-      res.send(result);
+  //   exec(`docker exec ${containerId} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ada"}' http://localhost:8080/test2`)
+  //   .then((result) => {
+  //     res.send(result);
+  //   })
+  //   .catch(console.error);
+  // })
+
+
+    .get('/containerPostTest', (req, res, next) => {
+        const containerName = `${userId}app_docker-test_1`; 
+        exec(`docker ps -aqf "name=${containerName}"`)
+        .then( (containerId) => {
+            console.log("CONTAINER ID IS:", containerId); 
+            exec(`docker exec ${containerId} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ada"}' http://localhost:8080/test2`)
+        })
+        .then((result) => {
+            res.send(result);
+        })
+        .catch(console.error);
     })
-    .catch(console.error);
-  })
 
   // Send index.html for anything else.
   .get('/*', (_, res) => res.sendFile(resolve(__dirname, 'public', 'index.html')))
