@@ -1,14 +1,12 @@
 /* We would have to have this already provided for them on their blank text editor */
-
 const express = require('express');
-const models = require('./models');
+const models = require('./userModels');
 const router = express.Router();
 
-/* 
+/*
 And then they would write out their models below:
-**Note: the following is just a hardcoded test I made for us to use** 
+**Note: the following is just a hardcoded test I made for us to use**
  */
-
 router.get('/', (req, res) => {
     models.Sandcastle.create({
             name: 'jems'
@@ -28,6 +26,18 @@ router.get('/test', (req, res) => {
             res.json(test);
         })
         .catch(console.error);
+});
+
+// still working on this
+router.post('/test2', (req, res) => {
+    res.status(200).send('post req.body', req.body)
+    // models.Sandcastle.create({
+    //         name: req.body.name
+    //     })
+    //     .then((test) => {
+    //         res.json(test);
+    //     })
+    //     .catch(console.error);
 });
 
 /* And we would provide this for them to make sure they are exporting their router correctly */

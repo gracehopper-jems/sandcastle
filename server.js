@@ -4,7 +4,9 @@ const bodyParser = require('body-parser');
 const {resolve} = require('path');
 const PrettyError = require('pretty-error');
 const finalHandler = require('finalhandler');
+const runContainer = require('./docker/runContainer');
 // PrettyError docs: https://www.npmjs.com/package/pretty-error
+const Promise = require('bluebird');
 
 const app = express();
 
@@ -27,6 +29,41 @@ module.exports = app
 
   // Serve our api - ./api also requires in ../db, which syncs with our database
   // .use('/api', require('./api'))
+
+  .post('/container', (req, res, next) => {
+    const userId = req.body.userId;
+    const userRoutes = req.body.userRoutes;
+    const userModels = req.body.userModels;
+    console.log('POSTING TO CONTAINER')
+    runContainer(userId, 3001, 6542, userRoutes, userModels);
+    // send res after docker compose up
+    res.send('posted to container')
+  })
+
+  // run a get request in container terminal and receive the result
+  .get('/containerTest', (req, res, next) => {
+    const containerId = '094b57f4215a';
+    const exec = Promise.promisify(require('child_process').exec);
+
+    exec(`docker exec ${containerId} curl http://localhost:8080/test`)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch(console.error);
+  })
+
+  // run a post request in container terminal and receive result
+  // docker container id is hardcoded in, might need to be changed when running bc container id can change
+  .get('/containerPostTest', (req, res, next) => {
+    const containerId = '094b57f4215a';
+    const exec = Promise.promisify(require('child_process').exec);
+
+    exec(`docker exec ${containerId} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ada"}' http://localhost:8080/test2`)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch(console.error);
+  })
 
   // Send index.html for anything else.
   .get('/*', (_, res) => res.sendFile(resolve(__dirname, 'public', 'index.html')))

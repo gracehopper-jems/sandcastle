@@ -1,17 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import HTMLEditor from './HTMLEditor';
 import CSSEditor from './CSSEditor';
 import JSEditor from './JSEditor';
 import ServerEditor from './ServerEditor';
 import DatabaseEditor from './DatabaseEditor';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
-import {toggleLogIn, setUserId} from '../reducers/user';
+import {setUserId} from '../reducers/user';
 import firebase from 'firebase';
 import LoadingButton from './LoadingButton';
-import {browserHistory} from 'react-router';
-
+import BackendButton from '../Components/BackendButton';
 
 class AppContainer extends Component {
   constructor(props){
@@ -62,16 +61,6 @@ class AppContainer extends Component {
     browserHistory.push('/signup');
   }
 
-  // onListClick(id) {
-  //   console.log('is this working?');
-  //   console.log('id', id);
-  //   if (id === 'html') this.setState({ currentFirepad: <HTMLEditor /> });
-  //   if (id === 'css') this.setState({ currentFirepad: <CSSEditor /> });
-  //   if (id === 'js') this.setState({ currentFirepad: <JSEditor /> });
-  //   if (id === 'server') this.setState({ currentFirepad: <ServerEditor /> });
-  //   if (id === 'db') this.setState({ currentFirepad: <DatabaseEditor /> });
-  // }
-
   onHTMLClick() {
     this.setState({ currentFirepad: 'html' });
   }
@@ -91,15 +80,19 @@ class AppContainer extends Component {
   render(){
 
     let htmlDisplay = this.state.currentFirepad === 'html' ? 'block' : 'none';
-    console.log('htmldisplay', htmlDisplay);
-
     let cssDisplay = this.state.currentFirepad === 'css' ? 'block' : 'none';
-
     let jsDisplay = this.state.currentFirepad === 'js' ? 'block' : 'none';
-
     let serverDisplay = this.state.currentFirepad === 'server' ? 'block' : 'none';
-
     let dbDisplay = this.state.currentFirepad === 'db' ? 'block' : 'none';
+
+
+    const children = React.Children.map(this.props.children, (child) => {
+      return React.cloneElement(child, {
+        code: this.props.code,
+        handlers: this.props.handlers,
+        user: this.props.user
+      })
+    });
 
     return (
         <div>
@@ -112,16 +105,11 @@ class AppContainer extends Component {
                   <ul className="nav navbar-nav nav-tabs">
 
                     <li><a href="#" id="html" onClick={() => this.onHTMLClick()} >HTML</a></li>
-
                     <li><a href="#" id="css" onClick={() => this.onCSSClick()}>CSS</a></li>
-
                     <li><a href="#" id="js" onClick={() => this.onJSClick()}>JS</a></li>
-
                     <li><a href="#" id="server" onClick={() => this.onServerClick()}>Server</a></li>
+                    <li><a href="#" id="db" onClick={() => this.onDatabaseClick()}>Database</a></li>
 
-                    <li><a href="#" id="db" onClick={() => this.onDatabaseClick
-                    ()}>Database</a></li>
-                    
                   </ul>
 
                   {this.props.user.userId !== ""
@@ -157,6 +145,8 @@ class AppContainer extends Component {
             </nav>
 
             <LoadingButton code={this.props.code} handlers={this.props.handlers} />
+            <BackendButton code={this.props.code} handlers={this.props.handlers} user={this.props.user}/>
+            {children}
 
           <div className='giant-container'>
               <div className='editor-container'>
