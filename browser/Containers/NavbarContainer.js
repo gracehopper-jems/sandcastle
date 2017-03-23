@@ -61,7 +61,7 @@ export default class NavbarContainer extends Component {
 
   handleSignup(event) {
     event.preventDefault();
-    //browserHistory.push('/signup');
+    browserHistory.push('/signup');
     this.setState({signup: true})
   }
 
