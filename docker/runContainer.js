@@ -3,11 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
 
-// dummy data
-const serverPort = 3001;
-const postgresPort = 6542;
-// include timestamp in future if time
-
 const dockerComposeStr = `db:
   image: postgres
   ports:
@@ -38,6 +33,7 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
 
     // currently in text-editor folder
     //create user app folder in docker folder
+    // include timestamp in folder in future if time
     exec(`mkdir docker/${userId}-app`)
     .then(() => {
         //change current working directory
