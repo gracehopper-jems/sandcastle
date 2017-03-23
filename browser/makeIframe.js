@@ -4,7 +4,6 @@ import store from './store';
 
 const makeIframe = () => {
 	let state = store.getState();
-	console.log('STATE IN IFRAME', state);
 	// Create a new blank iframe
 	var newIframe = document.createElement('iframe');
 	// Set attributes for iFrame (do whatever suits)
@@ -12,11 +11,10 @@ const makeIframe = () => {
 	// This for the src makes it 'friendly'
 	newIframe.src = 'about:blank';
 
-	// Use whatever method is needed to insert the iframe where you want it
+	// Use whatever method is needed to insertx the iframe where you want it
 	document.getElementById('frame').appendChild(newIframe);
 	// Make this reference your hidden div containing the markup you want to insert
 	let getHTML = state.code.htmlString;
-	console.log('DA CODE', state.code);
 
 	// List any CSS you want to reference within the iframe
 	// var CSS = '<link rel="stylesheet" href="https://external.com/css/styles.css">';

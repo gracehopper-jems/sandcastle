@@ -2,11 +2,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HTMLEditor from './Containers/HTMLEditor';
-import CSSEditor from './Containers/CSSEditor';
-import JSEditor from './Containers/JSEditor';
-import ServerEditor from './Containers/ServerEditor';
-import DatabaseEditor from './Containers/DatabaseEditor';
 import SignUp from './Containers/SignUp';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import AppContainer from './Containers/AppContainer';
@@ -21,9 +16,8 @@ import makeIframe from './makeIframe';
 
 
 const onAppEnter = () => {
-  // run init
+  // initialize firebase
   var config = { apiKey, authDomain, databaseURL };
-
   firebase.initializeApp(config);
 
   let user = firebase.auth().currentUser;
@@ -51,7 +45,6 @@ const onAppEnter = () => {
           if (i === 2) store.dispatch(updateJS(pad.getText()));
           if (i === 3) store.dispatch(updateServer(pad.getText()));
           if (i === 4) store.dispatch(updateDatabase(pad.getText()));
-          console.log('STORE', store.getState());
           if (madeIframe === false) {
             makeIframe();
             madeIframe = true;
@@ -64,7 +57,6 @@ const onAppEnter = () => {
             if (i === 2) store.dispatch(updateJS(pad.getText()));
             if (i === 3) store.dispatch(updateServer(pad.getText()));
             if (i === 4) store.dispatch(updateDatabase(pad.getText()));
-            console.log('STORE', store.getState());
           }
         });
       });
