@@ -3,12 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
 
-// dummy data
-const userId = 'abc123';
-const serverPort = 3001;
-const postgresPort = 6542;
-// include timestamp in future if time
-
 const dockerComposeStr = `db:
   image: postgres
   ports:
@@ -31,39 +25,27 @@ docker-test:
     DATABASE_URL: postgres://username:pgpassword@db:5432/docker-test`;
 
 
-const dockerFunc = (userId, serverPort, postgresPort) => {
-const dockerCompose = _.template(dockerComposeStr);
-    //promisified child process exec
+const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) => {
+    const dockerCompose = _.template(dockerComposeStr);
     const exec = Promise.promisify(require('child_process').exec);
-    const spawn = Promise.promisify(require('child_process').spawn);
     const writeFile = Promise.promisify(fs.writeFile);
     const readFile = Promise.promisify(fs.readFile);
 
-    const promisifiedDockerComposeUp = new Promise(function (resolve, reject) {
-
-        const runningProcess = require('child_process').spawn('docker-compose', ['up']);
-        runningProcess.stdout.on('data', v => {
-            console.log(v.toString());
-        });
-        runningProcess.stderr.on('data', e => reject(e));
-        runningProcess.on('exit', statusCode => statusCode === 0 ? resolve() : reject());
-
-    })
-
-
-    //create user app folder
-    exec(`mkdir ${userId}-app`)
+    // currently in text-editor folder
+    //create user app folder in docker folder
+    // include timestamp in folder in future if time
+    exec(`mkdir docker/${userId}-app`)
     .then(() => {
         //change current working directory
         try {
-          process.chdir(`./${userId}-app`);
+          process.chdir(`docker/${userId}-app`);
           console.log(`Changed working directory: ${process.cwd()}`);
         }
         catch (err) {
           console.log(`chdir: ${err}`);
         }
 
-        //check that we can do docker-compose down and delete user-app folder
+        // check that we can do docker-compose down and delete user-app folder
         // in future run this in separate function when user reload their app on frontend
         setTimeout(() => {
             console.log('timeout, docker compose down');
@@ -75,7 +57,7 @@ const dockerCompose = _.template(dockerComposeStr);
                 exec(`rm -r ${userId}-app`);
             })
             .catch(console.error);
-        }, 20000);
+        }, 200000);
 
         console.log("reading package.json");
         return readFile(path.join(__dirname,'./package.json'), 'utf8')
@@ -86,35 +68,23 @@ const dockerCompose = _.template(dockerComposeStr);
     })
     .then(() => {
         console.log("reading user server");
-        return readFile(path.join(__dirname,'./server.js'), 'utf8')
+        return readFile(path.join(__dirname,'./userServer.js'), 'utf8')
     })
     .then((userServer) => {
         // write user server to user-app folder
         console.log('creating the server');
-        return writeFile('server.js', userServer);
+        return writeFile('userServer.js', userServer);
     })
     .then(() => {
-        console.log("reading user models");
-        return readFile(path.join(__dirname,'./models.js'), 'utf8')
-    })
-    .then((userModels) => {
         // write user models to user-app folder
         console.log('creating the user models');
-        return writeFile('models.js', userModels);
+        return writeFile('userModels.js', userModels);
     })
     .then(() => {
-        console.log("reading user routes");
-        return readFile(path.join(__dirname,'./userRoutes.js'), 'utf8')
-    })
-    .then((userRoutes) => {
         // write user routes to user-app folder
         console.log('creating the user routes');
         return writeFile('userRoutes.js', userRoutes);
     })
-    // .then(() => {
-    //     console.log("reading docker-compose");
-    //     return readFile(path.join(__dirname,'./docker-compose.yml'), 'utf8')
-    // })
     .then(() => {
         // write docker-compose to user-app folder
         return writeFile('docker-compose.yml', dockerCompose({'serverPort': serverPort, 'postgresPort': postgresPort}));
@@ -129,22 +99,32 @@ const dockerCompose = _.template(dockerComposeStr);
         return writeFile('Dockerfile', dockerFile);
     })
     .then(() => {
-      // build docker container
-     console.log('building docker container')
-      return exec('docker-compose build');
-      //******error: Unhandled rejection (<docker_db_1 is up-to-date>, no stack trace) ????
+        // build docker container
+        console.log('building docker container')
+        return exec('docker-compose build');
     })
     .then(() => {
         // run docker container
-        // console.log('running docker-compose up');
-        // return exec('docker-compose up');
-        return promisifiedDockerComposeUp;
-
-        //****** returns random buffer????
+        console.log('running docker-compose up');
+        return new Promise(function (resolve, reject) {
+            // might not need stdio?
+            const runningProcess = require('child_process').spawn('docker-compose', ['up'], {stdio: ['pipe', 'pipe', 'pipe']});
+            // console.log('stdin', runningProcess.stdin);
+            runningProcess.stdout.on('data', v => {
+                console.log(v.toString());
+            });
+            runningProcess.stderr.on('data', e => {
+                console.log(e.toString());
+            });
+            runningProcess.on('exit', statusCode => {
+                console.log('status code', statusCode);
+                return statusCode === 0 ? resolve() : reject();
+            });
+        });
     })
     .catch(console.error);
 
 
 };
 
-dockerFunc(userId, serverPort, postgresPort);
+module.exports = runContainer;

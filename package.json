@@ -5,8 +5,10 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack",
+    "build-watch": "npm run build -- -w",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack -w & nodemon server.js"
+    "start": "node server.js",
+    "start-watch": "webpack -w & nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +21,7 @@
     "babel-preset-react": "^6.23.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
+    "browserify": "^14.1.0",
     "codemirror": "^5.24.2",
     "express": "^4.14.0",
     "finalhandler": "^1.0.0",
