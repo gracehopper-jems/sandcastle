@@ -45,8 +45,8 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
           console.log(`chdir: ${err}`);
         }
 
-        check that we can do docker-compose down and delete user-app folder
-        in future run this in separate function when user reload their app on frontend
+        // check that we can do docker-compose down and delete user-app folder
+        // in future run this in separate function when user reload their app on frontend
         setTimeout(() => {
             console.log('timeout, docker compose down');
             exec('docker-compose down')
