@@ -9,7 +9,8 @@ export default class SignUp extends Component {
 			firstname: "",
 			lastname: "",
 			email: "",
-			password: ""
+			password: "", 
+			signedUp: false 
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -17,19 +18,25 @@ export default class SignUp extends Component {
 
 	handleSubmit(event){
 		event.preventDefault();
+		this.setState( { signedUp: true } ); 
 		const email = this.state.email;
 		const password = this.state.password;
 		firebase.auth().createUserWithEmailAndPassword(email, password)
+		.then(() => firebase.auth().signInWithEmailAndPassword(email, password))
 		.then( () => {
-			firebase.auth().signInWithEmailAndPassword(email, password)
-		})
-		.then( () => {
-	      const user = firebase.auth().currentUser;
-	      const userId = user.uid;
-	      this.props.handlers.handleLogIn(userId);
-    	})
-    	.then( () => browserHistory.push('/'))
-		.catch(console.error)
+            const user = firebase.auth().currentUser;
+            console.log('user on sign in', user)
+            const userId = user.uid;
+            this.props.handlers.handleSignin(userId);
+
+            axios.post('/setUser', {userId: userId})
+            .then(() => {
+                console.log('posting userid');
+            })
+            .catch(console.error);
+        })
+        .catch(err => alert("Invalid sign up!"))
+    }
 	};
 
 	handleChange(event){
@@ -39,11 +46,14 @@ export default class SignUp extends Component {
 	}
 
 	render(){
+	return (
+		<div> 
+		{ this.state.signedUp ?
 
-			return (
-      <div className="container-fluid">
+			( <div>Thanks for signing up! Please log into begin your first project.</div>)
+			: ( <div className="container-fluid">
 				<div className="row">
-			        <form onSubmit={this.handleSubmit} >
+			        <form>
 			            <div className="form-group">
 			                <label htmlFor="title" className="col-sm-2 control-label">First Name</label>
 			                <div className="col-sm-10">
@@ -70,13 +80,15 @@ export default class SignUp extends Component {
 			            </div>
 
 			            <div className="col-sm-offset-2 col-sm-10">
-			                <button type="submit" className="btn btn-primary">Sign Up</button>
+			                <button onClick={this.handleSubmit} type="submit" className="btn btn-primary">Sign Up</button>
 			            </div>
 			        </form>
 		        </div>
 			    </div>
+			  ) 
+		} 
+		</div> 
 		)
-
 
 	}
 

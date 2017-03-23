@@ -18,6 +18,7 @@ export default class NavbarContainer extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this); 
 }
     handleChange(event){
         const value = event.target.value;
@@ -61,11 +62,18 @@ export default class NavbarContainer extends Component {
 
   handleSignup(event) {
     event.preventDefault();
-    //browserHistory.push('/signup');
+    browserHistory.push('/signup');
     this.setState({signup: true})
   }
 
+  handleSubmit(event){
+    event.preventDefault(); 
+    this.setState({signup: false}); 
+    browserHistory.push('/');
+  }
+
 render(){
+    console.log("this.props.children", this.props.children); 
     const children = React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {
         code: this.props.code,
@@ -98,8 +106,7 @@ render(){
                           </Modal.Body>
 
                           <Modal.Footer>
-                            <Button onClick={() => this.setState({signup: false})}>Close </Button>
-                            <Button bsStyle="primary" onClick={() => this.setState({signup: false})}>Save changes</Button>
+                            <Button onClick={this.handleSubmit}>Close</Button>
                           </Modal.Footer>
 
                         </Modal.Dialog>
@@ -109,7 +116,7 @@ render(){
                   </ul>
 
                   {
-            this.props.user.userId !== ''
+            this.props.user.userId !== '' // this is where the sign out button is coming from 
                 ?
                 <ul className="nav navbar-nav navbar-right">
                     <li>
