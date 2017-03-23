@@ -50,13 +50,57 @@ export default function makeFirepads() {
 	const serverFirepad = Firepad.fromCodeMirror(serverFirepadRef, fires[3], {
 		richTextShortcuts: false,
 		richTextToolbar: false,
-		defaultText: 'SERVER CODE HERE!'
+		defaultText: `/* We would have to have this already provided for them on their blank text editor */
+			const express = require('express');
+			const models = require('./userModels');
+			const router = express.Router();
+
+			/*
+			And then they would write out their models below:
+			**Note: the following is just a hardcoded test I made for us to use**
+			 */
+			router.get('/', (req, res) => {
+			    models.Sandcastle.create({
+			            name: 'jems'
+			        })
+			        .then(() => {
+			            res.write('Made the first post to your database!')
+			            res.end();
+			        })
+			        .catch(console.error);
+			});
+
+			router.get('/test', (req, res) => {
+			    models.Sandcastle.create({
+			            name: 'test of second route'
+			        })
+			        .then((test) => {
+			            res.json(test);
+			        })
+			        .catch(console.error);
+			});
+
+			/* And we would provide this for them to make sure they are exporting their router correctly */
+			module.exports = router;`
 	});
 
 	const databaseFirepad = Firepad.fromCodeMirror(databaseFirepadRef, fires[4], {
 		richTextShortcuts: false,
 		richTextToolbar: false,
-		defaultText: 'MODELS HERE!'
+		defaultText: `/* We would need to provide the below for them  at the start of their empty file */
+			const Sequelize = require('sequelize');
+			const db = new Sequelize(process.env.DATABASE_URL);
+
+			/* they would right out their models within our online text editor like below (again, below is just a hard-coded test) */
+			const Sandcastle = db.define('Sandcastle', {
+			    name: Sequelize.STRING
+			})
+
+			/* and then we would have to provide the module.exports for them too I think */
+			module.exports = {
+			    db: db, // we would provide this for them
+			    Sandcastle: Sandcastle // but they would have to add in all the tables they defined
+			}`
 	});
 
 	let allFirepads = [htmlFirepad, cssFirepad, jsFirepad, serverFirepad, databaseFirepad];

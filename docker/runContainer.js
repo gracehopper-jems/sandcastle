@@ -4,7 +4,6 @@ const path = require('path');
 const _ = require('lodash');
 
 // dummy data
-// const userId = 'abc123';
 const serverPort = 3001;
 const postgresPort = 6542;
 // include timestamp in future if time
@@ -37,22 +36,9 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
     const writeFile = Promise.promisify(fs.writeFile);
     const readFile = Promise.promisify(fs.readFile);
 
-    function promisifiedMkDir () {
-        return new Promise(function(resolve, reject) {
-            const runningProcess = require('child_process').exec('mkdir', [`docker/${userId}-app`], (error, stdout, stderr) => {
-                if (error) {
-                    console.log('MKDIR ERROR', error);
-                    reject(error);
-                }
-                resolve('SUCCESS!!!!');
-            });
-        })
-    }
-    console.log('RUNNING CONTAINER')
     // currently in text-editor folder
     //create user app folder in docker folder
     exec(`mkdir docker/${userId}-app`)
-    // promisifiedMkDir()
     .then(() => {
         //change current working directory
         try {
@@ -86,35 +72,23 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
     })
     .then(() => {
         console.log("reading user server");
-        return readFile(path.join(__dirname,'./server.js'), 'utf8')
+        return readFile(path.join(__dirname,'./userServer.js'), 'utf8')
     })
     .then((userServer) => {
         // write user server to user-app folder
         console.log('creating the server');
-        return writeFile('server.js', userServer);
+        return writeFile('userServer.js', userServer);
     })
-    // .then(() => {
-    //     console.log("reading user models");
-    //     return readFile(path.join(__dirname,'./models.js'), 'utf8')
-    // })
     .then(() => {
         // write user models to user-app folder
         console.log('creating the user models');
-        return writeFile('models.js', userModels);
+        return writeFile('userModels.js', userModels);
     })
-    // .then(() => {
-    //     console.log("reading user routes");
-    //     return readFile(path.join(__dirname,'./userRoutes.js'), 'utf8')
-    // })
     .then(() => {
         // write user routes to user-app folder
         console.log('creating the user routes');
         return writeFile('userRoutes.js', userRoutes);
     })
-    // .then(() => {
-    //     console.log("reading docker-compose");
-    //     return readFile(path.join(__dirname,'./docker-compose.yml'), 'utf8')
-    // })
     .then(() => {
         // write docker-compose to user-app folder
         return writeFile('docker-compose.yml', dockerCompose({'serverPort': serverPort, 'postgresPort': postgresPort}));
@@ -132,7 +106,6 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
         // build docker container
         console.log('building docker container')
         return exec('docker-compose build');
-        //******error: Unhandled rejection (<docker_db_1 is up-to-date>, no stack trace) ????
     })
     .then(() => {
         // run docker container
@@ -143,20 +116,17 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
                 console.log(v.toString());
             });
             runningProcess.stderr.on('data', e => {
-                console.log('ERRORRRRR', e.toString());
-                // reject(e)
+                console.log(e.toString());
             });
             runningProcess.on('exit', statusCode => {
                 console.log('status code', statusCode);
                 return statusCode === 0 ? resolve() : reject();
             });
         });
-        //****** returns random buffer????
     })
     .catch(console.error);
 
 
 };
 
-// dockerFunc(userId, serverPort, postgresPort);
 module.exports = runContainer;

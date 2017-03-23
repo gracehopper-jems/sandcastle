@@ -1,14 +1,12 @@
 /* We would have to have this already provided for them on their blank text editor */
-
 const express = require('express');
-const models = require('./models');
+const models = require('./userModels');
 const router = express.Router();
 
-/* 
+/*
 And then they would write out their models below:
-**Note: the following is just a hardcoded test I made for us to use** 
+**Note: the following is just a hardcoded test I made for us to use**
  */
-
 router.get('/', (req, res) => {
     models.Sandcastle.create({
             name: 'jems'

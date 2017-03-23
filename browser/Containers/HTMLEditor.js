@@ -1,7 +1,6 @@
 import React from 'react';
 
 const HTMLEditor = props => {
-  console.log('in html editor', props);
   return (
     <div className="container-fluid" style={props.style} >
       <div className="row">

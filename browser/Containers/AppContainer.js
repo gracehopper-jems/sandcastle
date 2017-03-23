@@ -60,6 +60,7 @@ class AppContainer extends Component {
 
   handleSignup(event) {
     event.preventDefault();
+    console.log('signing up')
     browserHistory.push('/signup');
   }
 
@@ -82,15 +83,19 @@ class AppContainer extends Component {
   render(){
 
     let htmlDisplay = this.state.currentFirepad === 'html' ? 'block' : 'none';
-    console.log('htmldisplay', htmlDisplay);
-
     let cssDisplay = this.state.currentFirepad === 'css' ? 'block' : 'none';
-
     let jsDisplay = this.state.currentFirepad === 'js' ? 'block' : 'none';
-
     let serverDisplay = this.state.currentFirepad === 'server' ? 'block' : 'none';
-
     let dbDisplay = this.state.currentFirepad === 'db' ? 'block' : 'none';
+
+
+    const children = React.Children.map(this.props.children, (child) => {
+      return React.cloneElement(child, {
+        code: this.props.code,
+        handlers: this.props.handlers,
+        user: this.props.user
+      })
+    });
 
     return (
         <div>
@@ -103,15 +108,10 @@ class AppContainer extends Component {
                   <ul className="nav navbar-nav nav-tabs">
 
                     <li><a href="#" id="html" onClick={() => this.onHTMLClick()} >HTML</a></li>
-
                     <li><a href="#" id="css" onClick={() => this.onCSSClick()}>CSS</a></li>
-
                     <li><a href="#" id="js" onClick={() => this.onJSClick()}>JS</a></li>
-
                     <li><a href="#" id="server" onClick={() => this.onServerClick()}>Server</a></li>
-
-                    <li><a href="#" id="db" onClick={() => this.onDatabaseClick
-                    ()}>Database</a></li>
+                    <li><a href="#" id="db" onClick={() => this.onDatabaseClick()}>Database</a></li>
 
                   </ul>
 
@@ -149,6 +149,7 @@ class AppContainer extends Component {
 
             <LoadingButton code={this.props.code} handlers={this.props.handlers} />
             <BackendButton code={this.props.code} handlers={this.props.handlers} user={this.props.user}/>
+            {children}
 
           <div className='giant-container'>
               <div className='editor-container'>
