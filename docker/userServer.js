@@ -1,11 +1,10 @@
 'use strict';
 const retry = require('retry');
 const pg = require('pg');
-const models = require('./models');
+const models = require('./userModels');
 const db = models.db;
 const express = require('express');
 const userRoutes = require('./userRoutes');
-
 const operation = retry.operation({ retries: 3 });
 
 // Constants

@@ -1,7 +1,6 @@
 import React from 'react';
 
 const ServerEditor = props => {
-  console.log('props in server', props);
   return (
     <div className="container-fluid" style={props.style}>
       <div className="row">
