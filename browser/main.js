@@ -38,14 +38,31 @@ const onAppEnter = () => {
 
       let pads = makeFirepads();
       madeFirepads = true;
+      let count = 0;
       pads.forEach((pad, i) => {
         pad.on('ready', () => {
-          if (i === 0) store.dispatch(updateHTML(pad.getText()));
-          if (i === 1) store.dispatch(updateCSS(pad.getText()));
-          if (i === 2) store.dispatch(updateJS(pad.getText()));
-          if (i === 3) store.dispatch(updateServer(pad.getText()));
-          if (i === 4) store.dispatch(updateDatabase(pad.getText()));
-          if (madeIframe === false) {
+          if (i === 0) {
+            store.dispatch(updateHTML(pad.getText()));
+            count++;
+          }
+          if (i === 1) {
+            store.dispatch(updateCSS(pad.getText()));
+            count++;
+          }
+          if (i === 2) {
+            store.dispatch(updateJS(pad.getText()));
+            count++;
+          }
+          if (i === 3) {
+            store.dispatch(updateServer(pad.getText()));
+            count++;
+          }
+          if (i === 4) {
+            store.dispatch(updateDatabase(pad.getText()));
+            count++;
+          }
+          console.log('STORE', store.getState());
+          if (madeIframe === false && count === 5) {
             makeIframe();
             madeIframe = true;
           }
@@ -63,6 +80,8 @@ const onAppEnter = () => {
     }
   });
 };
+
+
 
 ReactDOM.render(
   <Provider store={store}>
