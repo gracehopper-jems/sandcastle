@@ -27,12 +27,11 @@ export default class LoadingButton extends Component {
 			let isLoading = this.state.isLoading;
 			return (
 			  <div>
-					<a href="#"
-						// bsStyle="primary"
+					<li
 						disabled={isLoading}
 						onClick={!isLoading ? this.handleClick : null}>
 						{isLoading ? 'Building your frontend...' : 'Run Frontend'}
-					</a>
+					</li>
 				</div>
 			);
 		}

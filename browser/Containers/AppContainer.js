@@ -19,7 +19,7 @@ class AppContainer extends Component {
   render(){
     return (
         <div>
-          <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} />
+          <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} />
           <div className='giant-container'>
               <div className='editor-container'>
                 <FirepadTabs />
