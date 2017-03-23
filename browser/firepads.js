@@ -47,6 +47,7 @@ export default function makeFirepads() {
 		defaultText: 'JS HERE!'
 	});
 
+	// added boilerplate for userroutes and usermodels
 	const serverFirepad = Firepad.fromCodeMirror(serverFirepadRef, fires[3], {
 		richTextShortcuts: false,
 		richTextToolbar: false,
@@ -80,8 +81,19 @@ export default function makeFirepads() {
 			        .catch(console.error);
 			});
 
+			router.post('/test2', (req, res) => {
+			    models.Sandcastle.create({
+			            name: req.body.name
+			        })
+			        .then((test) => {
+			            res.json(test);
+			        })
+			        .catch(console.error);
+			});
+
 			/* And we would provide this for them to make sure they are exporting their router correctly */
-			module.exports = router;`
+			module.exports = router;
+			`
 	});
 
 	const databaseFirepad = Firepad.fromCodeMirror(databaseFirepadRef, fires[4], {
