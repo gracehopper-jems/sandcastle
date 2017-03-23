@@ -6,7 +6,7 @@ const BackendButton = (props) => {
   function handleClick (event) {
     event.preventDefault();
 
-    axios.post('/container', {userId: props.user.userId,userRoutes: props.code.serverString, userModels: props.code.databaseString})
+    axios.post('/container', {userRoutes: props.code.serverString, userModels: props.code.databaseString})
     .then(() => {
       console.log('running container');
     })
