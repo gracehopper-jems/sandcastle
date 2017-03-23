@@ -2,83 +2,137 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { Link } from 'react-router';
 import HTMLEditor from './HTMLEditor';
-
+import CSSEditor from './CSSEditor';
+import JSEditor from './JSEditor';
+import ServerEditor from './ServerEditor';
+import DatabaseEditor from './DatabaseEditor';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
 import {toggleLogIn, setUserId} from '../reducers/user';
 import firebase from 'firebase';
 import LoadingButton from './LoadingButton';
+import {browserHistory} from 'react-router';
+
 
 class AppContainer extends Component {
   constructor(props){
     super(props)
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      currentFirepad: 'html'
     }
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSignin = this.handleSignin.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
+    this.handleSignout = this.handleSignout.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
   }
 
-  handleSubmit(event){
+  handleChange(event){
+    const value = event.target.value;
+    const name = event.target.name;
+    this.setState({ [name]: value });
+  }
+
+  handleSignin(event){
     event.preventDefault();
     const email = this.state.email;
     const password = this.state.password;
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then( () => {
       const user = firebase.auth().currentUser;
+      console.log('user on sign in', user)
       const userId = user.uid;
-      this.props.handlers.handleLogIn(userId);
+      this.props.handlers.handleSignin(userId);
     })
     .catch(err => alert("Invalid log in!"))
   }
 
-  handleLogout(event) {
+  handleSignout(event) {
     event.preventDefault();
+    this.setState({email: '', password: ''});
     firebase.auth().signOut()
     .then(() => {
-      this.props.handlers.handleLogOut();
+      this.props.handlers.handleSignout();
     })
     .catch(console.error)
   }
 
-  handleChange(event){
-    const value = event.target.value;
-    const name = event.target.name;
-    this.setState({ [name]: value })
+  handleSignup(event) {
+    event.preventDefault();
+    browserHistory.push('/signup');
   }
 
+  // onListClick(id) {
+  //   console.log('is this working?');
+  //   console.log('id', id);
+  //   if (id === 'html') this.setState({ currentFirepad: <HTMLEditor /> });
+  //   if (id === 'css') this.setState({ currentFirepad: <CSSEditor /> });
+  //   if (id === 'js') this.setState({ currentFirepad: <JSEditor /> });
+  //   if (id === 'server') this.setState({ currentFirepad: <ServerEditor /> });
+  //   if (id === 'db') this.setState({ currentFirepad: <DatabaseEditor /> });
+  // }
+
+  onHTMLClick() {
+    this.setState({ currentFirepad: 'html' });
+  }
+  onCSSClick() {
+    this.setState({ currentFirepad: 'css' });
+  }
+  onJSClick() {
+    this.setState({ currentFirepad: 'js' });
+  }
+  onServerClick() {
+    this.setState({ currentFirepad: 'server' });
+  }
+  onDatabaseClick() {
+    this.setState({ currentFirepad: 'db' });
+  }
 
   render(){
 
-    const children = React.Children.map(this.props.children, (child) => {
-      return React.cloneElement(child, {
-        code: this.props.code,
-        handlers: this.props.handlers,
-        user: this.props.user
-      })
-    });
+    let htmlDisplay = this.state.currentFirepad === 'html' ? 'block' : 'none';
+    console.log('htmldisplay', htmlDisplay);
 
+    let cssDisplay = this.state.currentFirepad === 'css' ? 'block' : 'none';
 
-    return(
+    let jsDisplay = this.state.currentFirepad === 'js' ? 'block' : 'none';
+
+    let serverDisplay = this.state.currentFirepad === 'server' ? 'block' : 'none';
+
+    let dbDisplay = this.state.currentFirepad === 'db' ? 'block' : 'none';
+
+    return (
         <div>
             <nav className="navbar navbar-default">
               <div className="container-fluid">
                   <div className="navbar-header">
                       <Link className="navbar-brand" to="/">Text Editor</Link>
                   </div>
+
                   <ul className="nav navbar-nav nav-tabs">
-                      <li><Link to="/html">HTML</Link></li>
-                      <li><Link to="/css">CSS</Link></li>
-                      <li><Link to="/javascript">Javascript</Link></li>
-                      <li><Link to="/server">Server</Link></li>
-                      <li><Link to="/database">Database</Link></li>
+
+                    <li><a href="#" id="html" onClick={() => this.onHTMLClick()} >HTML</a></li>
+
+                    <li><a href="#" id="css" onClick={() => this.onCSSClick()}>CSS</a></li>
+
+                    <li><a href="#" id="js" onClick={() => this.onJSClick()}>JS</a></li>
+
+                    <li><a href="#" id="server" onClick={() => this.onServerClick()}>Server</a></li>
+
+                    <li><a href="#" id="db" onClick={() => this.onDatabaseClick
+                    ()}>Database</a></li>
 
                   </ul>
+
                   {this.props.user.userId !== ""
-                    ? <button type="submit" className="btn btn-primary" onClick={this.handleLogout}>Sign Out</button>
+                    ?
+                    <ul className="nav navbar-nav navbar-right">
+                    <li>
+                    <button className="btn btn-primary" onClick={this.handleSignout}>Sign Out</button>
+                    </li>
+                    </ul>
                     :
-                     <form className="form-inline" onSubmit={this.handleSubmit} >
+                     <form className="form-inline" onSubmit={this.handleSignin} >
                         <ul className="nav navbar-nav navbar-right">
                           <li>
                             <label className="sr-only" htmlFor="inlineFormInput">Email</label>
@@ -94,15 +148,38 @@ class AppContainer extends Component {
                             <button type="submit" className="btn btn-primary">Sign In</button>
                           </li>
                           <li>
-                            <Link to="/signup"><button type="submit" className="btn btn-secondary">Sign Up</button></Link>
+                            <button type="submit" className="btn btn-info" onClick={this.handleSignup} >Sign Up</button>
                           </li>
                         </ul>
                       </form>
                   }
               </div>
             </nav>
+
             <LoadingButton code={this.props.code} handlers={this.props.handlers} />
-              {children}
+
+          <div className='giant-container'>
+              <div className='editor-container'>
+                <HTMLEditor style={{ display: htmlDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+
+                <CSSEditor style={{ display: cssDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+
+                <JSEditor style={{ display: jsDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+
+                <ServerEditor style={{ display: serverDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+
+                <DatabaseEditor style={{ display: dbDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+              </div>
+              <div className='iframe-container'>
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div id="frame" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
         </div>
     );
   }
@@ -133,10 +210,10 @@ const mapDispatchToProps = (dispatch) => {
         handleDatabaseUpdate(...args) {
           dispatch(updateDatabase(...args));
         },
-        handleLogIn(...args) {
+        handleSignin(...args) {
           dispatch(setUserId(...args));
         },
-        handleLogOut(...args){
+        handleSignout(...args){
           dispatch(setUserId(''));
         }
       }
