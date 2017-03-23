@@ -43,9 +43,6 @@ export default class SignUp extends Component {
 			return (
       <div className="container-fluid">
 				<div className="row">
-						<div className="col-md-6">
-			        <h3>Sign Up</h3>
-			        <hr/>
 			        <form onSubmit={this.handleSubmit} >
 			            <div className="form-group">
 			                <label htmlFor="title" className="col-sm-2 control-label">First Name</label>
@@ -78,7 +75,6 @@ export default class SignUp extends Component {
 			        </form>
 		        </div>
 			    </div>
-		    </div>
 		)
 
 
