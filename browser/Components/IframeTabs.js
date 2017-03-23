@@ -8,7 +8,7 @@ export const IframeTabs = () => {
         <div id="frame" />
       </Tab>
       <Tab eventKey={2} title="Server View">
-        <iframe id="serveriframe" src="http://localhost:3000"></iframe>
+        <iframe id="serveriframe" src="http://localhost:3000/containerTest"></iframe>
         </Tab>
       <Tab eventKey={3} title="Database View">Database</Tab>
     </Tabs>
