@@ -12,7 +12,7 @@ import {Provider} from 'react-redux';
 import { toggleLogIn, setUserId } from './reducers/user';
 import makeFirepads from './firepads';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase } from './reducers/code';
-import makeIframe from './makeIframe';
+import makeFrontendIframe from './makeFrontendIframe';
 
 
 const onAppEnter = () => {
@@ -23,7 +23,7 @@ const onAppEnter = () => {
   let user = firebase.auth().currentUser;
 
   let madeFirepads = false;
-  let madeIframe = false;
+  let madeFrontendIframe = false;
 
   firebase.auth().onAuthStateChanged((user) => {
     console.log("USER IN ON APP ENTER", user);
@@ -62,9 +62,9 @@ const onAppEnter = () => {
             count++;
           }
           console.log('STORE', store.getState());
-          if (madeIframe === false && count === 5) {
-            makeIframe();
-            madeIframe = true;
+          if (madeFrontendIframe === false && count === 5) {
+            makeFrontendIframe();
+            madeFrontendIframe = true;
           }
         });
         pad.on('synced', isSynced => {

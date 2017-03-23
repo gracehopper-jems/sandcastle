@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { Link, browserHistory } from 'react-router';
-import HTMLEditor from './HTMLEditor';
-import CSSEditor from './CSSEditor';
-import JSEditor from './JSEditor';
-import ServerEditor from './ServerEditor';
-import DatabaseEditor from './DatabaseEditor';
+// import HTMLEditor from './HTMLEditor';
+// import CSSEditor from './CSSEditor';
+// import JSEditor from './JSEditor';
+// import ServerEditor from './ServerEditor';
+// import DatabaseEditor from './DatabaseEditor';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
 import {setUserId} from '../reducers/user';
 import firebase from 'firebase';
 import LoadingButton from './LoadingButton';
 import BackendButton from '../Components/BackendButton';
+import { IframeTabs } from '../Components/IframeTabs';
+import { FirepadTabs } from '../Components/FirepadTabs';
 
 class AppContainer extends Component {
   constructor(props){
@@ -150,7 +152,7 @@ class AppContainer extends Component {
 
           <div className='giant-container'>
               <div className='editor-container'>
-                <HTMLEditor style={{ display: htmlDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+                {/*<HTMLEditor style={{ display: htmlDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
 
                 <CSSEditor style={{ display: cssDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
 
@@ -158,13 +160,15 @@ class AppContainer extends Component {
 
                 <ServerEditor style={{ display: serverDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
 
-                <DatabaseEditor style={{ display: dbDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />
+              <DatabaseEditor style={{ display: dbDisplay }} user={this.props.user} code={this.props.code} handlers={this.props.handlers} />*/}
+              <FirepadTabs />
               </div>
               <div className='iframe-container'>
                 <div className="container-fluid">
                   <div className="row">
                     <div className="col-md-6">
-                      <div id="frame" />
+                      {/*<div id="frame" />*/}
+                        <IframeTabs />
                     </div>
                   </div>
                 </div>
