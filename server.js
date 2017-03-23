@@ -37,9 +37,16 @@ module.exports = app
 
   // adding userid to req.session
   .post('/setUser', (req, res, next) => {
+      console.log("SETTING USER"); 
+      console.log("REQ BODY USER ID", req.body.userId); 
       const userId = req.body.userId;
       req.session.userId = userId;
       res.sendStatus(200);
+  })
+
+  .get('/removeUser', (req, res, next) => {
+    req.session.destroy(); 
+    res.sendStatus(200);
   })
 
   .post('/container', (req, res, next) => {
