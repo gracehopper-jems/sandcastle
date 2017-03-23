@@ -47,17 +47,17 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
 
         // check that we can do docker-compose down and delete user-app folder
         // in future run this in separate function when user reload their app on frontend
-        setTimeout(() => {
-            console.log('timeout, docker compose down');
-            exec('docker-compose down')
-            .then(() => {
-                process.chdir('../');
-                console.log(`Changed working directory: ${process.cwd()}`);
-                console.log('deleting user-app folder');
-                exec(`rm -r ${userId}-app`);
-            })
-            .catch(console.error);
-        }, 60000);
+        // setTimeout(() => {
+        //     console.log('timeout, docker compose down');
+        //     exec('docker-compose down')
+        //     .then(() => {
+        //         process.chdir('../');
+        //         console.log(`Changed working directory: ${process.cwd()}`);
+        //         console.log('deleting user-app folder');
+        //         exec(`rm -r ${userId}-app`);
+        //     })
+        //     .catch(console.error);
+        // }, 100000);
 
         console.log("reading package.json");
         return readFile(path.join(__dirname,'./package.json'), 'utf8')
@@ -107,7 +107,9 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
         // run docker container
         console.log('running docker-compose up');
         return new Promise(function (resolve, reject) {
-            const runningProcess = require('child_process').spawn('docker-compose', ['up']);
+            // might not need stdio?
+            const runningProcess = require('child_process').spawn('docker-compose', ['up'], {stdio: ['pipe', 'pipe', 'pipe']});
+            // console.log('stdin', runningProcess.stdin);
             runningProcess.stdout.on('data', v => {
                 console.log(v.toString());
             });

@@ -6,6 +6,7 @@ const PrettyError = require('pretty-error');
 const finalHandler = require('finalhandler');
 const runContainer = require('./docker/runContainer');
 // PrettyError docs: https://www.npmjs.com/package/pretty-error
+const Promise = require('bluebird');
 
 const app = express();
 
@@ -37,6 +38,18 @@ module.exports = app
     runContainer(userId, 3001, 6542, userRoutes, userModels);
     // send res after docker compose up
     res.send('posted to container')
+  })
+
+  // run a command in container terminal and receive the result
+  .get('/containerTest', (req, res, next) => {
+    const containerId = '9d1946bbed94';
+    const exec = Promise.promisify(require('child_process').exec);
+
+    exec(`docker exec ${containerId} curl http://localhost:8080/test`)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch(console.error);
   })
 
   // Send index.html for anything else.
