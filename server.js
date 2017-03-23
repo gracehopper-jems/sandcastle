@@ -23,8 +23,6 @@ prettyError.skipNodeFiles()
 // Skip all the trace lines about express' core and sub-modules.
 prettyError.skipPackage('express')
 
-
-
 module.exports = app
   // Body parsing middleware
   .use(bodyParser.urlencoded({ extended: true }))
@@ -35,11 +33,17 @@ module.exports = app
 
   // Serve our api - ./api also requires in ../db, which syncs with our database
   // .use('/api', require('./api'))
-    .post('setUser', (req, res, next) => {
-        const userId = req.body.userId; 
-        // ADD THE SESSION OBJECT HERE !!!!!!!!!!!!!!!!!!!!
 
-    })
+  // express session
+  .use(session({secret: '1234567890QWERTY'}))
+
+  // adding userid to req.session
+  .post('/setUser', (req, res, next) => {
+      const userId = req.body.userId;
+      req.session.userId = userId;
+      console.log('req.session', req.session)
+      res.sendStatus(200);
+  })
 
   .post('/container', (req, res, next) => {
     const userId = req.body.userId;
@@ -54,17 +58,18 @@ module.exports = app
   // run a get request in container terminal and receive the result
   .get('/containerTest', (req, res, next) => {
     // the container's name is the user id plus `app_docker-test_1`
-    const containerName = `${userId}app_docker-test_1`; 
+    const userId = req.session.userId;
+    const containerName = `${userId.toLowerCase()}app_docker-test_1`;
+    console.log('container name', containerName);
     exec(`docker ps -aqf "name=${containerName}"`)
     .then( (containerId) => {
-      console.log("CONTAINER ID IS:", containerId); 
-      exec(`docker exec ${containerId} curl http://localhost:8080/test`)
+      return exec('docker exec ' + containerId.trim() + ' curl http://localhost:8080/test');
     })
     .then((result) => {
       res.send(result);
     })
     .catch(console.error);
-    })
+  })
 
 
 
@@ -83,10 +88,10 @@ module.exports = app
 
 
     .get('/containerPostTest', (req, res, next) => {
-        const containerName = `${userId}app_docker-test_1`; 
+        const containerName = `${userId}app_docker-test_1`;
         exec(`docker ps -aqf "name=${containerName}"`)
         .then( (containerId) => {
-            console.log("CONTAINER ID IS:", containerId); 
+            console.log("CONTAINER ID IS:", containerId);
             exec(`docker exec ${containerId} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ada"}' http://localhost:8080/test2`)
         })
         .then((result) => {

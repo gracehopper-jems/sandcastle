@@ -12,11 +12,11 @@ const BackendButton = (props) => {
     })
     .catch(console.error);
 
-    axios.get(`/userId/:${props.user.userId}`)
-    .then(() => {
-      console.log("Sending back the user id!")
-    })
-    .catch(console.error); 
+    // axios.get(`/userId/:${props.user.userId}`)
+    // .then(() => {
+    //   console.log("Sending back the user id!")
+    // })
+    // .catch(console.error);
   }
 
   return (

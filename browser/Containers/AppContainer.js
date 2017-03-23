@@ -11,7 +11,7 @@ import {setUserId} from '../reducers/user';
 import firebase from 'firebase';
 import LoadingButton from './LoadingButton';
 import BackendButton from '../Components/BackendButton';
-import axios from 'axios'; 
+import axios from 'axios';
 
 class AppContainer extends Component {
   constructor(props){
@@ -43,12 +43,14 @@ class AppContainer extends Component {
       console.log('user on sign in', user)
       const userId = user.uid;
       this.props.handlers.handleSignin(userId);
-      return userId; 
+
+      axios.post('/setUser', {userId: userId})
+      .then(() => {
+        console.log('posting userid');
+      })
+      .catch(console.error);
     })
     .catch(err => alert("Invalid log in!"))
-    .then((userId) => {  axios.post('/setUser', {userId: userId} })
-    })
-    .catch(console.error) 
   }
 
   handleSignout(event) {
