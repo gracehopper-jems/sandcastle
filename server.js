@@ -6,15 +6,13 @@ const PrettyError = require('pretty-error');
 const finalHandler = require('finalhandler');
 const runContainer = require('./docker/runContainer');
 const session = require('express-session')
-// PrettyError docs: https://www.npmjs.com/package/pretty-error
 const Promise = require('bluebird');
 
 const app = express();
 
-//const containerId = '094b57f4215a';
 const exec = Promise.promisify(require('child_process').exec);
 
-// Pretty error prints errors all pretty.
+// Pretty error prints errors all pretty. PrettyError docs: https://www.npmjs.com/package/pretty-error
 const prettyError = new PrettyError();
 
 // Skip events.js and http.js and similar core node files.
@@ -41,15 +39,13 @@ module.exports = app
   .post('/setUser', (req, res, next) => {
       const userId = req.body.userId;
       req.session.userId = userId;
-      console.log('req.session', req.session)
       res.sendStatus(200);
   })
 
   .post('/container', (req, res, next) => {
-    const userId = req.body.userId;
+    const userId = req.session.userId.toLowerCase(); 
     const userRoutes = req.body.userRoutes;
     const userModels = req.body.userModels;
-    console.log('POSTING TO CONTAINER')
     runContainer(userId, 3001, 6542, userRoutes, userModels);
     // send res after docker compose up
     res.send('posted to container')
@@ -58,8 +54,8 @@ module.exports = app
   // run a get request in container terminal and receive the result
   .get('/containerTest', (req, res, next) => {
     // the container's name is the user id plus `app_docker-test_1`
-    const userId = req.session.userId;
-    const containerName = `${userId.toLowerCase()}app_docker-test_1`;
+    const userId = req.session.userId.toLowerCase();
+    const containerName = `${userId}app_docker-test_1`;
     console.log('container name', containerName);
     exec(`docker ps -aqf "name=${containerName}"`)
     .then( (containerId) => {
@@ -71,28 +67,12 @@ module.exports = app
     .catch(console.error);
   })
 
-
-
-  // run a post request in container terminal and receive result
-  // docker container id is hardcoded in, might need to be changed when running bc container id can change
-  // .get('/containerPostTest', (req, res, next) => {
-  //   const containerId = '094b57f4215a';
-  //   const exec = Promise.promisify(require('child_process').exec);
-
-  //   exec(`docker exec ${containerId} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ada"}' http://localhost:8080/test2`)
-  //   .then((result) => {
-  //     res.send(result);
-  //   })
-  //   .catch(console.error);
-  // })
-
-
     .get('/containerPostTest', (req, res, next) => {
+        const userId = req.session.userId.toLowerCase(); 
         const containerName = `${userId}app_docker-test_1`;
         exec(`docker ps -aqf "name=${containerName}"`)
         .then( (containerId) => {
-            console.log("CONTAINER ID IS:", containerId);
-            exec(`docker exec ${containerId} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ada"}' http://localhost:8080/test2`)
+            return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ada"}' http://localhost:8080/test2`)
         })
         .then((result) => {
             res.send(result);
