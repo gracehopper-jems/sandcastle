@@ -8,21 +8,21 @@ import DatabaseEditor from '../Containers/DatabaseEditor';
 
 export const FirepadTabs = (props) => {
   return (
-    <Tabs defaultActiveKey={2} id="FirepadTabContainer">
+    <Tabs defaultActiveKey={1} id="FirepadTabContainer">
       <Tab eventKey={1} title="HTML">
-        <HTMLEditor user={props.user} code={props.code} handlers={props.handlers} />
+        <HTMLEditor />
         </Tab>
       <Tab eventKey={2} title="CSS">
-        <CSSEditor user={props.user} code={props.code} handlers={props.handlers} />
+        <CSSEditor />
         </Tab>
       <Tab eventKey={3} title="JS">
-        <JSEditor user={props.user} code={props.code} handlers={props.handlers} />
+        <JSEditor />
       </Tab>
       <Tab eventKey={4} title="Server">
-        <ServerEditor user={props.user} code={props.code} handlers={props.handlers} />
+        <ServerEditor />
       </Tab>
       <Tab eventKey={5} title="Database">
-        <DatabaseEditor user={props.user} code={props.code} handlers={props.handlers} />
+        <DatabaseEditor />
       </Tab>
     </Tabs>
   )
