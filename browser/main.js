@@ -2,11 +2,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HTMLEditor from './Containers/HTMLEditor';
-import CSSEditor from './Containers/CSSEditor';
-import JSEditor from './Containers/JSEditor';
-import ServerEditor from './Containers/ServerEditor';
-import DatabaseEditor from './Containers/DatabaseEditor';
 import SignUp from './Containers/SignUp';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import AppContainer from './Containers/AppContainer';
@@ -17,19 +12,18 @@ import {Provider} from 'react-redux';
 import { toggleLogIn, setUserId } from './reducers/user';
 import makeFirepads from './firepads';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase } from './reducers/code';
-import makeIframe from './makeIframe';
+import makeFrontendIframe from './makeFrontendIframe';
 
 
 const onAppEnter = () => {
-  // run init
+  // initialize firebase
   var config = { apiKey, authDomain, databaseURL };
-
   firebase.initializeApp(config);
 
   let user = firebase.auth().currentUser;
 
   let madeFirepads = false;
-  let madeIframe = false;
+  let madeFrontendIframe = false;
 
   firebase.auth().onAuthStateChanged((user) => {
     console.log("USER IN ON APP ENTER", user);
@@ -44,17 +38,33 @@ const onAppEnter = () => {
 
       let pads = makeFirepads();
       madeFirepads = true;
+      let count = 0;
       pads.forEach((pad, i) => {
         pad.on('ready', () => {
-          if (i === 0) store.dispatch(updateHTML(pad.getText()));
-          if (i === 1) store.dispatch(updateCSS(pad.getText()));
-          if (i === 2) store.dispatch(updateJS(pad.getText()));
-          if (i === 3) store.dispatch(updateServer(pad.getText()));
-          if (i === 4) store.dispatch(updateDatabase(pad.getText()));
+          if (i === 0) {
+            store.dispatch(updateHTML(pad.getText()));
+            count++;
+          }
+          if (i === 1) {
+            store.dispatch(updateCSS(pad.getText()));
+            count++;
+          }
+          if (i === 2) {
+            store.dispatch(updateJS(pad.getText()));
+            count++;
+          }
+          if (i === 3) {
+            store.dispatch(updateServer(pad.getText()));
+            count++;
+          }
+          if (i === 4) {
+            store.dispatch(updateDatabase(pad.getText()));
+            count++;
+          }
           console.log('STORE', store.getState());
-          if (madeIframe === false) {
-            makeIframe();
-            madeIframe = true;
+          if (madeFrontendIframe === false && count === 5) {
+            makeFrontendIframe();
+            madeFrontendIframe = true;
           }
         });
         pad.on('synced', isSynced => {
@@ -64,13 +74,14 @@ const onAppEnter = () => {
             if (i === 2) store.dispatch(updateJS(pad.getText()));
             if (i === 3) store.dispatch(updateServer(pad.getText()));
             if (i === 4) store.dispatch(updateDatabase(pad.getText()));
-            console.log('STORE', store.getState());
           }
         });
       });
     }
   });
 };
+
+
 
 ReactDOM.render(
   <Provider store={store}>
