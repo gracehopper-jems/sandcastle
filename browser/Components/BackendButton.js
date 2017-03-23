@@ -6,17 +6,11 @@ const BackendButton = (props) => {
   function handleClick (event) {
     event.preventDefault();
 
-    axios.post('/container', {userId: props.user.userId,userRoutes: props.code.serverString, userModels: props.code.databaseString})
+    axios.post('/container', {userRoutes: props.code.serverString, userModels: props.code.databaseString})
     .then(() => {
       console.log('running container');
     })
     .catch(console.error);
-
-    // axios.get(`/userId/:${props.user.userId}`)
-    // .then(() => {
-    //   console.log("Sending back the user id!")
-    // })
-    // .catch(console.error);
   }
 
   return (
