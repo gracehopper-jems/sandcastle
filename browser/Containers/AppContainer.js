@@ -9,6 +9,7 @@ import BackendButton from '../Components/BackendButton';
 import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';
 import NavbarContainer from './NavbarContainer'
+import SignUp from './SignUp'
 import axios from 'axios';
 
 class AppContainer extends Component {
@@ -17,12 +18,13 @@ class AppContainer extends Component {
   }
 
   render(){
+    //console.log("APP CONTAINER CHILDREN", this.props.children); 
     return (
         <div>
           <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} />
           <div className='giant-container'>
               <div className='editor-container'>
-                <FirepadTabs />
+                <FirepadTabs codemirror={this.props.codemirror} />
               </div>
               <div className='iframe-container'>
                 <div className="container-fluid">
@@ -43,6 +45,7 @@ const mapStateToProps = (state) => {
   return {
     code: state.code,
     user: state.user,
+    codemirror: state.codemirror
   };
 };
 

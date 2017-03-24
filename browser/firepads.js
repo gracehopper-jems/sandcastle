@@ -12,7 +12,13 @@ export default function makeFirepads() {
 	var serverFirepadRef = firebase.database().ref(`/users/${userId}/server`);
 	var databaseFirepadRef = firebase.database().ref(`/users/${userId}/database`);
 
-	let firepads = [{ id: 'html-firepad-container', mode: 'xml' }, { id: 'css-firepad-container', mode: 'css'}, { id: 'js-firepad-container', mode: 'javascript'}, {id: 'server-firepad-container', mode: 'javascript'}, {id: 'db-firepad-container', mode: 'javascript'}];
+	let firepads = [
+		{ id: 'html-firepad-container', mode: 'xml' },
+		{ id: 'css-firepad-container', mode: 'css'},
+		{ id: 'js-firepad-container', mode: 'javascript'},
+		{id: 'server-firepad-container', mode: 'javascript'},
+		{id: 'db-firepad-container', mode: 'javascript'}
+	];
 
 	let fires = firepads.map(firepad => {
 		return CodeMirror(document.getElementById(firepad.id), {
@@ -26,6 +32,7 @@ export default function makeFirepads() {
 			toggleComment: true,
 			foldCode: true,
 			hint: true,
+			autoRefresh: true,
 		});
 	});
 
@@ -115,8 +122,11 @@ export default function makeFirepads() {
 			}`
 	});
 
-	let allFirepads = [htmlFirepad, cssFirepad, jsFirepad, serverFirepad, databaseFirepad];
-
+	let allFirepads = [[htmlFirepad, cssFirepad, jsFirepad, serverFirepad, databaseFirepad], fires];
+	// setTimeout(() => {
+	// 	console.log('got here');
+	// 	fires[1].refresh();
+	// }, 3000);
 	return allFirepads;
 }
 
