@@ -18,7 +18,7 @@ class AppContainer extends Component {
   }
 
   render(){
-    console.log("APP CONTAINER CHILDREN", this.props.children); 
+    //console.log("APP CONTAINER CHILDREN", this.props.children); 
     return (
         <div>
           <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} />

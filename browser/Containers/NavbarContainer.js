@@ -33,7 +33,6 @@ export default class NavbarContainer extends Component {
         firebase.auth().signInWithEmailAndPassword(email, password)
         .then( () => {
             const user = firebase.auth().currentUser;
-            console.log('user on sign in', user)
             const userId = user.uid;
             this.props.handlers.handleSignin(userId);
 
@@ -73,7 +72,6 @@ export default class NavbarContainer extends Component {
   }
 
 render(){
-    console.log("this.props.children", this.props.children); 
     const children = React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {
         code: this.props.code,
@@ -98,11 +96,11 @@ render(){
                       (<div className="static-modal">
                         <Modal.Dialog>
                           <Modal.Header>
-                            <Modal.Title>Sign up</Modal.Title>
+                            <Modal.Title>Sign Up</Modal.Title>
                           </Modal.Header>
 
                           <Modal.Body>
-                            {children} {/*this is where the signup form shows up*/}
+                             {children} {/*this is where the signup form shows up*/}
                           </Modal.Body>
 
                           <Modal.Footer>
@@ -116,7 +114,7 @@ render(){
                   </ul>
 
                   {
-            this.props.user.userId !== '' // this is where the sign out button is coming from 
+            this.props.user.userId !== '' 
                 ?
                 <ul className="nav navbar-nav navbar-right">
                     <li>
