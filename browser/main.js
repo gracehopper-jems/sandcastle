@@ -14,9 +14,10 @@ import makeFirepads from './firepads';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase } from './reducers/code';
 import { handleCodeMirrorInstances } from './reducers/codemirror';
 import makeFrontendIframe from './makeFrontendIframe';
-
+import axios from 'axios'; 
 
 const onAppEnter = () => {
+
   // initialize firebase
   var config = { apiKey, authDomain, databaseURL };
   firebase.initializeApp(config);
@@ -30,7 +31,14 @@ const onAppEnter = () => {
     console.log("USER IN ON APP ENTER", user);
     if (user) {
       let userId = user.uid;
-      store.dispatch(setUserId(userId));
+      store.dispatch(setUserId(userId))
+
+      axios.post('/setUser', {userId: userId})
+      .then(() => {
+          console.log('posting userid');
+      })
+      .catch(console.error);
+
     } else {
       store.dispatch(setUserId(''));
 
