@@ -40,7 +40,12 @@ const onAppEnter = () => {
       let pads = makeFirepads();
 
       const codeMirrorInstances = pads[1];
-      store.dispatch(handleCodeMirrorInstances(codeMirrorInstances));
+      // store.dispatch(handleCodeMirrorInstances(codeMirrorInstances));
+
+      setInterval(() => {
+        console.log('refreshing code mirrors');
+        pads[1].forEach(pad => {pad.refresh();});
+      }, 1000);
 
       madeFirepads = true;
       let count = 0;
@@ -66,7 +71,6 @@ const onAppEnter = () => {
             store.dispatch(updateDatabase(pad.getText()));
             count++;
           }
-          console.log('STORE', store.getState());
           if (madeFrontendIframe === false && count === 5) {
             makeFrontendIframe();
             madeFrontendIframe = true;
