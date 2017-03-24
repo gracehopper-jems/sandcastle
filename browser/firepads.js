@@ -115,7 +115,7 @@ export default function makeFirepads() {
 			}`
 	});
 
-	let allFirepads = [htmlFirepad, cssFirepad, jsFirepad, serverFirepad, databaseFirepad];
+	let allFirepads = [[htmlFirepad, cssFirepad, jsFirepad, serverFirepad, databaseFirepad], fires];
 
 	return allFirepads;
 }

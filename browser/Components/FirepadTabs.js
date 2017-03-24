@@ -7,7 +7,17 @@ import ServerEditor from '../Containers/ServerEditor';
 import DatabaseEditor from '../Containers/DatabaseEditor';
 
 export const FirepadTabs = (props) => {
+  console.log('props', props)
+  const handleClick = (event) => {
+    console.log('event', event.target.text);
+    setTimeout(() => {
+      console.log('in set timeout');
+      props.codemirror[1].refresh();
+    }, 1)
+  }
+
   return (
+    <div onClick={handleClick}>
     <Tabs defaultActiveKey={1} id="FirepadTabContainer">
       <Tab eventKey={1} title="HTML">
         <HTMLEditor />
@@ -25,5 +35,6 @@ export const FirepadTabs = (props) => {
         <DatabaseEditor />
       </Tab>
     </Tabs>
+    </div>
   )
 };
