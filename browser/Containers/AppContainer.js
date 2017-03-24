@@ -8,7 +8,8 @@ import LoadingButton from './LoadingButton';
 import BackendButton from '../Components/BackendButton';
 import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';
-import NavbarContainer from './NavbarContainer'
+import NavbarContainer from './NavbarContainer'; 
+import WelcomeMessage from '../Components/WelcomeMessage'; 
 import SignUp from './SignUp'
 import axios from 'axios';
 
@@ -18,11 +19,13 @@ class AppContainer extends Component {
   }
 
   render(){
-    //console.log("APP CONTAINER CHILDREN", this.props.children); 
     return (
         <div>
           <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} />
-          <div className='giant-container'>
+          {this.props.user.userId === "" 
+          ? (<WelcomeMessage />)
+              : 
+              (<div className='giant-container'>
               <div className='editor-container'>
                 <FirepadTabs codemirror={this.props.codemirror} />
               </div>
@@ -35,8 +38,9 @@ class AppContainer extends Component {
                   </div>
                 </div>
               </div>
-          </div>
-        </div>
+            </div>)  
+            }
+          </div> 
     );
   }
 }

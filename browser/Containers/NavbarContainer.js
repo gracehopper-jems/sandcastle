@@ -55,6 +55,7 @@ export default class NavbarContainer extends Component {
         .then(() => {
             console.log('removing userid');
         })
+        .then(() => window.location.reload())
     })
     .catch(console.error)
 }
@@ -85,7 +86,7 @@ render(){
         <nav className="navbar navbar-default">
               <div className="container-fluid">
                   <div className="navbar-header">
-                      <Link className="navbar-brand" to="/">Text Editor</Link>
+                      <Link className="navbar-brand" to="/">Sandcastle</Link>
                   </div>
 
                   <ul className="nav navbar-nav nav-tabs">
