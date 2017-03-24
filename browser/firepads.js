@@ -12,7 +12,13 @@ export default function makeFirepads() {
 	var serverFirepadRef = firebase.database().ref(`/users/${userId}/server`);
 	var databaseFirepadRef = firebase.database().ref(`/users/${userId}/database`);
 
-	let firepads = [{ id: 'html-firepad-container', mode: 'xml' }, { id: 'css-firepad-container', mode: 'css'}, { id: 'js-firepad-container', mode: 'javascript'}, {id: 'server-firepad-container', mode: 'javascript'}, {id: 'db-firepad-container', mode: 'javascript'}];
+	let firepads = [
+		{ id: 'html-firepad-container', mode: 'xml' },
+		{ id: 'css-firepad-container', mode: 'css'},
+		{ id: 'js-firepad-container', mode: 'javascript'},
+		{id: 'server-firepad-container', mode: 'javascript'},
+		{id: 'db-firepad-container', mode: 'javascript'}
+	];
 
 	let fires = firepads.map(firepad => {
 		return CodeMirror(document.getElementById(firepad.id), {
