@@ -116,7 +116,10 @@ export default function makeFirepads() {
 	});
 
 	let allFirepads = [[htmlFirepad, cssFirepad, jsFirepad, serverFirepad, databaseFirepad], fires];
-
+	// setTimeout(() => {
+	// 	console.log('got here');
+	// 	fires[1].refresh();
+	// }, 3000);
 	return allFirepads;
 }
 
