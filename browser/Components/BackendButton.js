@@ -1,26 +1,47 @@
-import React from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
 
-const BackendButton = (props) => {
+class BackendButton extends Component {
 
-  function handleClick (event) {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoading: false
+    };
+
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick (event) {
     event.preventDefault();
+    this.setState({isLoading: true});
 
-    axios.post('/container', {userRoutes: props.code.serverString, userModels: props.code.databaseString})
+    axios.post('/container', {userRoutes: this.props.code.serverString, userModels: this.props.code.databaseString})
     .then(() => {
       console.log('running container');
     })
     .catch(console.error);
+
+    setTimeout(() => {
+        // Completed of async action, set loading state back
+        this.setState({isLoading: false});
+      }, 5000);
   }
 
-  return (
-    <div>
-      <li
-        onClick={handleClick}>Run Backend
-      </li>
-    </div>
-  )
+  render(){
+    let isLoading = this.state.isLoading;
+    return (
+      <div
+        disabled={isLoading}
+        onClick={!isLoading? this.handleClick: null}>
+        {isLoading ? 'Running your backend...' : 'Run Backend'}
+      </div>
+    )
 }
+
+}
+
 
 export default BackendButton;
 

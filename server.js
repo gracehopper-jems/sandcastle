@@ -33,7 +33,11 @@ module.exports = app
   // .use('/api', require('./api'))
 
   // express session
-  .use(session({secret: '1234567890QWERTY'}))
+  .use(session({
+      secret: '1234567890QWERTY',
+      resave: true,
+      saveUninitialized: true
+    }))
 
   // adding userid to req.session
   .post('/setUser', (req, res, next) => {
@@ -50,31 +54,46 @@ module.exports = app
   })
 
   .post('/container', (req, res, next) => {
-    const userId = req.session.userId.toLowerCase();
-    const userRoutes = req.body.userRoutes;
-    const userModels = req.body.userModels;
-    runContainer(userId, 3001, 6542, userRoutes, userModels);
-    // send res after docker compose up
-    res.send('posted to container')
+    if (req.session.userId){
+      const userId = req.session.userId.toLowerCase();
+      const userRoutes = req.body.userRoutes;
+      const userModels = req.body.userModels;
+      runContainer(userId, 3001, 6542, userRoutes, userModels);
+      // send res after docker compose up
+      res.send('posted to container')
+    }
+  })
+
+  .post('/postWomanGetPath', (req, res, next) => {
+    req.session.path = req.body.path;
+    console.log('======got to POST PATH')
+    res.send('path now on session');
   })
 
   // run a get request in container terminal and receive the result
-  .get('/postWomanGetPath', (req, res, next) => {
+  .get('/containerGet', (req, res, next) => {
     // the container's name is the user id plus `app_docker-test_1`
-    const userId = req.session.userId.toLowerCase();
-    const containerName = `${userId}app_docker-test_1`;
-    console.log('container name', containerName);
-    exec(`docker ps -aqf "name=${containerName}"`)
-    .then( (containerId) => {
-      return exec('docker exec ' + containerId.trim() + ' curl http://localhost:8080/test');
+    if (req.session.userId){
+        const path = req.session.path;
+        const userId = req.session.userId.toLowerCase();
+        const containerName = `${userId}app_docker-test_1`;
+        console.log('container name', containerName);
+        // command below gets the container name's id
+        exec(`docker ps -aqf "name=${containerName}"`)
+        .then( (containerId) => {
+          return exec('docker exec ' + containerId.trim() + ' curl http://localhost:8080' + path.trim());
+        })
+        .then((result) => {
+          res.send(result);
+        })
+        .catch(console.error);
+      } else {
+        console.log("Error - No user saved on session!")
+      }
     })
-    .then((result) => {
-      res.send(result);
-    })
-    .catch(console.error);
-  })
 
     .get('/containerPostTest', (req, res, next) => {
+      if (req.session.userId){
         const userId = req.session.userId.toLowerCase();
         const containerName = `${userId}app_docker-test_1`;
         exec(`docker ps -aqf "name=${containerName}"`)
@@ -85,6 +104,9 @@ module.exports = app
             res.send(result);
         })
         .catch(console.error);
+      } else {
+        console.log("Error - No user saved on session!")
+      }
     })
 
   // Send index.html for anything else.
