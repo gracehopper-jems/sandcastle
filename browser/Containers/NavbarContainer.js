@@ -18,6 +18,7 @@ export default class NavbarContainer extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this); 
 }
     handleChange(event){
         const value = event.target.value;
@@ -32,7 +33,6 @@ export default class NavbarContainer extends Component {
         firebase.auth().signInWithEmailAndPassword(email, password)
         .then( () => {
             const user = firebase.auth().currentUser;
-            console.log('user on sign in', user)
             const userId = user.uid;
             this.props.handlers.handleSignin(userId);
 
@@ -61,8 +61,14 @@ export default class NavbarContainer extends Component {
 
   handleSignup(event) {
     event.preventDefault();
-    //browserHistory.push('/signup');
+    browserHistory.push('/signup');
     this.setState({signup: true})
+  }
+
+  handleSubmit(event){
+    event.preventDefault(); 
+    this.setState({signup: false}); 
+    browserHistory.push('/');
   }
 
 render(){
@@ -90,16 +96,15 @@ render(){
                       (<div className="static-modal">
                         <Modal.Dialog>
                           <Modal.Header>
-                            <Modal.Title>Sign up</Modal.Title>
+                            <Modal.Title>Sign Up</Modal.Title>
                           </Modal.Header>
 
                           <Modal.Body>
-                            {children} {/*this is where the signup form shows up*/}
+                             {children} {/*this is where the signup form shows up*/}
                           </Modal.Body>
 
                           <Modal.Footer>
-                            <Button onClick={() => this.setState({signup: false})}>Close </Button>
-                            <Button bsStyle="primary" onClick={() => this.setState({signup: false})}>Save changes</Button>
+                            <Button onClick={this.handleSubmit}>Close</Button>
                           </Modal.Footer>
 
                         </Modal.Dialog>
@@ -109,7 +114,7 @@ render(){
                   </ul>
 
                   {
-            this.props.user.userId !== ''
+            this.props.user.userId !== '' 
                 ?
                 <ul className="nav navbar-nav navbar-right">
                     <li>
