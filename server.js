@@ -33,7 +33,11 @@ module.exports = app
   // .use('/api', require('./api'))
 
   // express session
-  .use(session({secret: '1234567890QWERTY'}))
+  .use(session({
+      secret: '1234567890QWERTY', 
+      resave: true,
+      saveUninitialized: true
+    }))
 
   // adding userid to req.session
   .post('/setUser', (req, res, next) => {
@@ -61,20 +65,26 @@ module.exports = app
   // run a get request in container terminal and receive the result
   .get('/containerTest', (req, res, next) => {
     // the container's name is the user id plus `app_docker-test_1`
-    const userId = req.session.userId.toLowerCase();
-    const containerName = `${userId}app_docker-test_1`;
-    console.log('container name', containerName);
-    exec(`docker ps -aqf "name=${containerName}"`)
-    .then( (containerId) => {
-      return exec('docker exec ' + containerId.trim() + ' curl http://localhost:8080/test');
+    if (req.session.userId){
+        const userId = req.session.userId.toLowerCase();
+        const containerName = `${userId}app_docker-test_1`;
+        console.log('container name', containerName);
+        exec(`docker ps -aqf "name=${containerName}"`)
+        .then( (containerId) => {
+          return exec('docker exec ' + containerId.trim() + ' curl http://localhost:8080/test');
+        })
+        .then((result) => {
+          res.send(result);
+        })
+        .catch(console.error);
+      }
     })
-    .then((result) => {
-      res.send(result);
-    })
-    .catch(console.error);
-  })
+
+
 
     .get('/containerPostTest', (req, res, next) => {
+
+      if (req.session.userId){
         const userId = req.session.userId.toLowerCase(); 
         const containerName = `${userId}app_docker-test_1`;
         exec(`docker ps -aqf "name=${containerName}"`)
@@ -85,6 +95,7 @@ module.exports = app
             res.send(result);
         })
         .catch(console.error);
+      } 
     })
 
   // Send index.html for anything else.
