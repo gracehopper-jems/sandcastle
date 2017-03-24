@@ -9,9 +9,10 @@ import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
 import {Provider} from 'react-redux';
-import { toggleLogIn, setUserId } from './reducers/user';
+import { setUserId } from './reducers/user';
 import makeFirepads from './firepads';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase } from './reducers/code';
+import { handleCodeMirrorInstances } from './reducers/codemirror';
 import makeFrontendIframe from './makeFrontendIframe';
 
 
@@ -37,9 +38,13 @@ const onAppEnter = () => {
     if (madeFirepads === false) {
 
       let pads = makeFirepads();
+
+      const codeMirrorInstances = pads[1];
+      store.dispatch(handleCodeMirrorInstances(codeMirrorInstances));
+
       madeFirepads = true;
       let count = 0;
-      pads.forEach((pad, i) => {
+      pads[0].forEach((pad, i) => {
         pad.on('ready', () => {
           if (i === 0) {
             store.dispatch(updateHTML(pad.getText()));
