@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { Link, browserHistory } from 'react-router';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
+import {sendJson} from '../reducers/docker.js';
 import {setUserId} from '../reducers/user';
 import firebase from 'firebase';
 import LoadingButton from './LoadingButton';
 import BackendButton from '../Components/BackendButton';
 import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';
-import NavbarContainer from './NavbarContainer'
+import NavbarContainer from './NavbarContainer';
+import WelcomeMessage from '../Components/WelcomeMessage';
 import SignUp from './SignUp'
 import axios from 'axios';
 
@@ -18,25 +20,29 @@ class AppContainer extends Component {
   }
 
   render(){
-    //console.log("APP CONTAINER CHILDREN", this.props.children); 
+    console.log("USER ID:", this.props.user.userId);
     return (
         <div>
           <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} />
-          <div className='giant-container'>
+          {this.props.user.userId === ""
+          ? (<WelcomeMessage />)
+              :
+              (<div className='giant-container'>
               <div className='editor-container'>
-                <FirepadTabs codemirror={this.props.codemirror} />
+                <FirepadTabs />
               </div>
               <div className='iframe-container'>
                 <div className="container-fluid">
                   <div className="row">
                     <div className="col-md-6">
-                        <IframeTabs />
+                        <IframeTabs docker={this.props.docker} handlers={this.props.handlers} />
                     </div>
                   </div>
                 </div>
               </div>
+            </div>)
+            }
           </div>
-        </div>
     );
   }
 }
@@ -45,7 +51,7 @@ const mapStateToProps = (state) => {
   return {
     code: state.code,
     user: state.user,
-    codemirror: state.codemirror
+    docker: state.docker
   };
 };
 
@@ -72,6 +78,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleSignout(...args){
           dispatch(setUserId(''));
+        },
+        handleSendJson(...args){
+          dispatch(sendJson(...args));
         }
       }
   };

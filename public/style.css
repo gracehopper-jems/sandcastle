@@ -66,3 +66,7 @@ body {
 .editor-container, .iframe-container {
   width: 50%;
 }
+
+img {
+  width: 200px;
+}

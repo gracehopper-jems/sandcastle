@@ -6,10 +6,12 @@ export default class PostwomanContainer extends Component {
     constructor(props){
         super(props)
         this.state = {
-            path: '/'
+            path: '/',
+            requestType: 'GET'
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSend = this.handleSend.bind(this);
+        this.handleRequestType = this.handleRequestType.bind(this);
     }
 
     handleChange(event) {
@@ -23,28 +25,42 @@ export default class PostwomanContainer extends Component {
 
     handleSend(event) {
         event.preventDefault();
+        if (this.state.path !== '') {
+            axios.post('/postWomanGetPath', {path: this.state.path})
+            .then((res) => {
+                console.log('========response', res);
+            })
+            .then(() => {
+                return axios.get('/containerGet');
+            })
+            .then((res) => {
+                console.log('response from backend', res.data);
+                return JSON.stringify(res.data);
+            })
+            .then((jsonStr) => {
+                console.log('about to dispatch to store', jsonStr);
+                this.props.handlers.handleSendJson(jsonStr);
+            })
+            .catch(console.error);
+        }
+    }
 
-        axios.post('/postWomanGetPath', {path: this.state.path})
-        .then(() => {
-
-        })
-        .catch(console.error);
+    handleRequestType(event) {
+        console.log('event', event)
+        event.preventDefault();
+        this.setState({requestType: event.target.value})
     }
 
     render(){
-        console.log('state', this.state)
+        console.log('props', this.props)
         return (
             <div>
+                <select className="custom-select" onChange={this.handleRequestType}>
+                    <option>GET</option>
+                    <option>POST</option>
+                </select>
                 <FormGroup>
                     <InputGroup>
-                        <DropdownButton
-                        componentClass={InputGroup.Button}
-                        id="input-dropdown-addon"
-                        title="Action"
-                        >
-                        <MenuItem key="1">POST</MenuItem>
-                        <MenuItem key="2">PUT</MenuItem>
-                        </DropdownButton>
                         <FormControl type="text" value={this.state.path} onChange={this.handleChange} />
                         <InputGroup.Button>
                         <Button onClick={this.handleSend}>Send</Button>
