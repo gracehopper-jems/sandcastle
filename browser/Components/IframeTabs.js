@@ -1,5 +1,6 @@
 import { Tab, Tabs } from 'react-bootstrap';
 import React from 'react';
+import PostwomanContainer from '../Containers/PostwomanContainer';
 
 export const IframeTabs = () => {
   return (
@@ -8,6 +9,7 @@ export const IframeTabs = () => {
         <div id="frame" />
       </Tab>
       <Tab eventKey={2} title="Server View">
+      <PostwomanContainer />
         <iframe id="serveriframe" src="http://localhost:3000/containerTest"></iframe>
         </Tab>
       <Tab eventKey={3} title="Database View">Database</Tab>
