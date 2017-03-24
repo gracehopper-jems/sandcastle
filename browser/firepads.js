@@ -32,6 +32,7 @@ export default function makeFirepads() {
 			toggleComment: true,
 			foldCode: true,
 			hint: true,
+			autoRefresh: true,
 		});
 	});
 
