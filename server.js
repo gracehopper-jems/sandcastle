@@ -54,18 +54,22 @@ module.exports = app
   })
 
   .post('/container', (req, res, next) => {
+    if (req.session.userId){
+    console.log("USER ID IS 1:", req.session.userId)
     const userId = req.session.userId.toLowerCase(); 
     const userRoutes = req.body.userRoutes;
     const userModels = req.body.userModels;
     runContainer(userId, 3001, 6542, userRoutes, userModels);
     // send res after docker compose up
     res.send('posted to container')
+  } 
   })
 
   // run a get request in container terminal and receive the result
   .get('/containerTest', (req, res, next) => {
     // the container's name is the user id plus `app_docker-test_1`
     if (req.session.userId){
+      console.log("USER ID IS 2:", req.session.userId)
         const userId = req.session.userId.toLowerCase();
         const containerName = `${userId}app_docker-test_1`;
         console.log('container name', containerName);
@@ -77,10 +81,10 @@ module.exports = app
           res.send(result);
         })
         .catch(console.error);
+      } else {
+        console.log("Error - No user saved on session!")
       }
     })
-
-
 
     .get('/containerPostTest', (req, res, next) => {
 
@@ -95,7 +99,9 @@ module.exports = app
             res.send(result);
         })
         .catch(console.error);
-      } 
+      } else {
+        console.log("Error - No user saved on session!")
+      }
     })
 
   // Send index.html for anything else.
