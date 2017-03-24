@@ -57,7 +57,7 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
                 exec(`rm -r ${userId}-app`);
             })
             .catch(console.error);
-        }, 60000);
+        }, 120000);
 
         console.log("reading package.json");
         return readFile(path.join(__dirname,'./package.json'), 'utf8')

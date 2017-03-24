@@ -4,7 +4,7 @@ const rootReducer = combineReducers({
   // auth: require('./auth').default,
   code: require('./code').default,
   user: require('./user').default,
-  codemirror: require('./codemirror').default
+  docker: require('./docker').default
 });
 
 export default rootReducer;
