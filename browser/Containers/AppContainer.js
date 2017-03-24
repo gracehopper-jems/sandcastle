@@ -22,7 +22,7 @@ class AppContainer extends Component {
           <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} />
           <div className='giant-container'>
               <div className='editor-container'>
-                <FirepadTabs />
+                <FirepadTabs codemirror={this.props.codemirror} />
               </div>
               <div className='iframe-container'>
                 <div className="container-fluid">
@@ -43,6 +43,7 @@ const mapStateToProps = (state) => {
   return {
     code: state.code,
     user: state.user,
+    codemirror: state.codemirror
   };
 };
 
