@@ -4,18 +4,18 @@ import axios from 'axios';
 class BackendButton extends Component {
 
   constructor(props) {
-    super(props); 
+    super(props);
 
     this.state = {
       isLoading: false
-    }; 
+    };
 
     this.handleClick = this.handleClick.bind(this)
   }
 
   handleClick (event) {
     event.preventDefault();
-    this.setState({isLoading: true}); 
+    this.setState({isLoading: true});
 
     axios.post('/container', {userRoutes: this.props.code.serverString, userModels: this.props.code.databaseString})
     .then(() => {
@@ -32,11 +32,11 @@ class BackendButton extends Component {
   render(){
     let isLoading = this.state.isLoading;
     return (
-      <div 
+      <div
         disabled={isLoading}
         onClick={!isLoading? this.handleClick: null}>
         {isLoading ? 'Running your backend...' : 'Run Backend'}
-      </div> 
+      </div>
     )
 }
 
