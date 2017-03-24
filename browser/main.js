@@ -42,10 +42,10 @@ const onAppEnter = () => {
       const codeMirrorInstances = pads[1];
       // we can add codemirror instances to store state if necessary
       // store.dispatch(handleCodeMirrorInstances(codeMirrorInstances));
-      setInterval(() => {
+      setTimeout(() => {
         console.log('refreshing code mirrors');
         pads[1].forEach(pad => {pad.refresh();});
-      }, 500);
+      }, 1);
 
       madeFirepads = true;
       let count = 0;
