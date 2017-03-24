@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import firebase from 'firebase';
 import { browserHistory } from 'react-router';
+import axios from 'axios'; 
 
 export default class SignUp extends Component {
 	constructor(props){
@@ -25,7 +26,6 @@ export default class SignUp extends Component {
 		.then(() => firebase.auth().signInWithEmailAndPassword(email, password))
 		.then( () => {
             const user = firebase.auth().currentUser;
-            console.log('user on sign in', user)
             const userId = user.uid;
             this.props.handlers.handleSignin(userId);
 
@@ -36,8 +36,7 @@ export default class SignUp extends Component {
             .catch(console.error);
         })
         .catch(err => alert("Invalid sign up!"))
-    }
-	};
+    }; 
 
 	handleChange(event){
 		const value = event.target.value;
@@ -50,37 +49,37 @@ export default class SignUp extends Component {
 		<div> 
 		{ this.state.signedUp ?
 
-			( <div>Thanks for signing up! Please log into begin your first project.</div>)
+			( <div>Thanks for signing up! You are now logged in and can create your first project.</div>)
 			: ( <div className="container-fluid">
 				<div className="row">
 			        <form>
 			            <div className="form-group">
-			                <label htmlFor="title" className="col-sm-2 control-label">First Name</label>
-			                <div className="col-sm-10">
+			                <label htmlFor="title" className="col-sm-4 control-label">First Name</label>
+			                <div className="col-sm-6">
 			                    <input name="firstname" type="text" className="form-control" onChange={this.handleChange} />
 			                </div>
 			            </div>
 			          	<div className="form-group">
-			                <label htmlFor="title" className="col-sm-2 control-label">Last Name</label>
-			                <div className="col-sm-10">
+			                <label htmlFor="title" className="col-sm-4 control-label">Last Name</label>
+			                <div className="col-sm-6">
 			                    <input name="lastname" type="text" className="form-control" onChange={this.handleChange} />
 			                </div>
 			            </div>
 			            <div className="form-group">
-			                <label htmlFor="title" className="col-sm-2 control-label">Email</label>
-			                <div className="col-sm-10">
+			                <label htmlFor="title" className="col-sm-4 control-label">Email</label>
+			                <div className="col-sm-6">
 			                    <input name="email" type="text" className="form-control" onChange={this.handleChange} />
 			                </div>
 			            </div>
 			          	<div className="form-group">
-			                <label htmlFor="title" className="col-sm-2 control-label">Password</label>
-			                <div className="col-sm-10">
+			                <label htmlFor="title" className="col-sm-4 control-label">Password</label>
+			                <div className="col-sm-6">
 			                    <input name="password" type="password" className="form-control" onChange={this.handleChange} />
 			                </div>
 			            </div>
 
-			            <div className="col-sm-offset-2 col-sm-10">
-			                <button onClick={this.handleSubmit} type="submit" className="btn btn-primary">Sign Up</button>
+			            <div className="col-sm-offset-10 col-sm-10">
+			                <button onClick={this.handleSubmit} type="submit" className="btn btn-primary">Submit</button>
 			            </div>
 			        </form>
 		        </div>
