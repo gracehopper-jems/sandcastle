@@ -37,26 +37,18 @@ export default class PostwomanContainer extends Component {
 
         if (this.state.requestType === 'GET' && this.state.path !== '') {
             axios.post('/postWomanGetPath', {path: this.state.path})
-            .then((res) => {
-                console.log('========response', res);
-            })
             .then(() => {
                 return axios.get('/containerGet');       
             })
             .then((res) => {  
-                console.log('response from backend', res.data);
                 return JSON.stringify(res.data);
             })
             .then((jsonStr) => {
-                console.log('about to dispatch to store', jsonStr);
                 this.props.handlers.handleSendJson(jsonStr);
             })
             .catch(console.error);
         } else if (this.state.requestType === 'POST' && this.state.path !== '') {
             axios.post('/postWomanGetPath', {path: this.state.path})
-            .then((res) => {
-                console.log('========response', res);
-            })
             .then(() => {
                 return axios.post('/containerPostTest', {request: this.state.requestBody} )    
             })
@@ -64,8 +56,6 @@ export default class PostwomanContainer extends Component {
                 return JSON.stringify(res.data);
             })
             .then((jsonStr) => {
-                console.log('response from backend', jsonStr);
-                console.log('about to dispatch POST REQUEST to store', jsonStr);
                 this.props.handlers.handleSendPost(jsonStr);
             })
             .then(() => {
@@ -76,13 +66,11 @@ export default class PostwomanContainer extends Component {
     }
 
     handleRequestType(event) {
-        console.log('event', event)
         event.preventDefault();
         this.setState({requestType: event.target.value})
     }
 
     render(){
-        console.log('props', this.props)
         return (
             <div>
                 <select className="custom-select" onChange={this.handleRequestType}>
