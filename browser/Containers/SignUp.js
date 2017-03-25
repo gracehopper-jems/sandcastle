@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import firebase from 'firebase';
-import { browserHistory } from 'react-router';
-import axios from 'axios'; 
+import axios from 'axios';
 
 export default class SignUp extends Component {
 	constructor(props){
@@ -10,8 +9,8 @@ export default class SignUp extends Component {
 			firstname: "",
 			lastname: "",
 			email: "",
-			password: "", 
-			signedUp: false 
+			password: "",
+			signedUp: false
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -19,34 +18,40 @@ export default class SignUp extends Component {
 
 	handleSubmit(event){
 		event.preventDefault();
-		this.setState( { signedUp: true } ); 
 		const email = this.state.email;
 		const password = this.state.password;
-		firebase.auth().createUserWithEmailAndPassword(email, password)
-		.then(() => firebase.auth().signInWithEmailAndPassword(email, password))
-		.then( () => {
-            const user = firebase.auth().currentUser;
-            const userId = user.uid;
-            this.props.handlers.handleSignin(userId);
 
-            axios.post('/setUser', {userId: userId})
-            .then(() => {
-                console.log('posting userid');
-            })
-            .catch(console.error);
-        })
-        .catch(err => alert("Invalid sign up!"))
-    }; 
+		firebase.auth().createUserWithEmailAndPassword(email, password)
+		.then(() => {
+			console.log('was able to create user')
+			firebase.auth().signInWithEmailAndPassword(email, password)
+		})
+		.then(() => {
+	    const user = firebase.auth().currentUser;
+	    const userId = user.uid;
+	    this.props.handlers.handleSignin(userId);
+
+	    axios.post('/setUser', {userId: userId})
+	    .then(() => {
+	        console.log('posting userid and setting local state.signedup to true');
+					this.setState( { signedUp: true } );
+	    })
+	    .catch(console.error);
+    })
+    .catch(console.error)
+    // CHANGE THIS BACK LATER
+    // .catch(err => alert("Invalid sign up!"))
+    };
 
 	handleChange(event){
 		const value = event.target.value;
 		const name = event.target.name;
-		this.setState({ [name]: value })
+		this.setState({ [name]: value });
 	}
 
 	render(){
 	return (
-		<div> 
+		<div>
 		{ this.state.signedUp ?
 
 			( <div>Thanks for signing up! You are now logged in and can create your first project.</div>)
@@ -84,9 +89,9 @@ export default class SignUp extends Component {
 			        </form>
 		        </div>
 			    </div>
-			  ) 
-		} 
-		</div> 
+			  )
+		}
+		</div>
 		)
 
 	}

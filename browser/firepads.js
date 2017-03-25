@@ -1,7 +1,5 @@
 import firebase from 'firebase';
-
 import store from './store';
-
 
 export default function makeFirepads() {
 	let userId = store.getState().user.userId;
