@@ -56,6 +56,10 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
                 console.log('deleting user-app folder');
                 exec(`rm -r ${userId}-app`);
             })
+            .then(() => {
+                process.chdir('../');
+                console.log(`Changed working directory: ${process.cwd()}`);
+            })
             .catch(console.error);
         }, 120000);
 
