@@ -18,7 +18,7 @@ export default class NavbarContainer extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this); 
+    this.handleSubmit = this.handleSubmit.bind(this);
 }
     handleChange(event){
         const value = event.target.value;
@@ -42,7 +42,9 @@ export default class NavbarContainer extends Component {
             })
             .catch(console.error);
         })
-        .catch(err => alert("Invalid log in!"))
+        .catch(console.error);
+        // CHANGE THIS BACK LATER
+        // .catch(err => alert("Invalid log in!"))
     }
 
   handleSignout(event) {
@@ -67,8 +69,8 @@ export default class NavbarContainer extends Component {
   }
 
   handleSubmit(event){
-    event.preventDefault(); 
-    this.setState({signup: false}); 
+    event.preventDefault();
+    this.setState({signup: false});
     browserHistory.push('/');
   }
 
@@ -115,7 +117,7 @@ render(){
                   </ul>
 
                   {
-            this.props.user.userId !== '' 
+            this.props.user.userId !== ''
                 ?
                 <ul className="nav navbar-nav navbar-right">
                     <li>
