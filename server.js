@@ -67,6 +67,7 @@ module.exports = app
   .post('/postWomanGetPath', (req, res, next) => {
     req.session.path = req.body.path;
     console.log('======got to POST PATH')
+    console.log("path is ", req.session.path); 
     res.send('path now on session');
   })
 
@@ -92,13 +93,17 @@ module.exports = app
       }
     })
 
-    .get('/containerPostTest', (req, res, next) => {
+    .post('/containerPostTest', (req, res, next) => {
+      console.log("GOT TO POST TEST"); 
       if (req.session.userId){
+        console.log("THE REQUEST BODY IS", req.body); 
+        const requestBody = req.body.request; 
+        const path = req.session.path;
         const userId = req.session.userId.toLowerCase();
         const containerName = `${userId}app_docker-test_1`;
         exec(`docker ps -aqf "name=${containerName}"`)
         .then( (containerId) => {
-            return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ada"}' http://localhost:8080/test2`)
+            return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '${requestBody}' http://localhost:8080${path.trim()}`)
         })
         .then((result) => {
             res.send(result);
