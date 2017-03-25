@@ -39,6 +39,26 @@ const onAppEnter = () => {
       })
       .catch(console.error);
 
+      // if user is logged in add an event listener to window to check if user is leaving page
+      // send get request to server to remove container if container is running
+      window.addEventListener("beforeunload", function (e) {
+        e.preventDefault();
+        console.log('WINDOW');
+        console.log('EVENT');
+
+        axios.get('/removeContainer')
+        .then((res) => {
+          console.log('removing container');
+          console.log('res', res)
+        })
+        .catch(console.error);
+
+        // var confirmationMessage = "\o/";
+        // e.returnValue = confirmationMessage;
+        // return confirmationMessage;
+      });
+
+      // render firepads
       if (madeFirepads === false) {
 
         let pads = makeFirepads();
