@@ -30,6 +30,7 @@
     "lodash": "^4.17.4",
     "nodemon": "^1.11.0",
     "pg": "^6.1.4",
+    "portfinder": "^1.0.13",
     "pretty-error": "^2.0.3",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.8",
