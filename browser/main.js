@@ -44,9 +44,11 @@ const onAppEnter = () => {
       window.addEventListener("beforeunload", function (e) {
         e.preventDefault();
         console.log('WINDOW');
-        console.log('EVENT')
+        console.log('EVENT');
 
         // axios doesn't work in this listener because async?
+        // works if 1. user closes entire browser 2. user opens browser, runs backend, goes to another page
+        // works if user runs backend and goes to another page
         // http://stackoverflow.com/questions/14929832/send-ajax-to-server-beforeunload
         axios.get('/removeContainer')
         .then((res) => {
