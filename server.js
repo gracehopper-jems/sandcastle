@@ -42,8 +42,6 @@ module.exports = app
 
   // adding userid to req.session
   .post('/setUser', (req, res, next) => {
-      console.log("SETTING USER");
-      console.log("REQ BODY USER ID", req.body.userId);
       const userId = req.body.userId;
       req.session.userId = userId;
       res.sendStatus(200);
@@ -79,7 +77,6 @@ module.exports = app
 
   .post('/postWomanGetPath', (req, res, next) => {
     req.session.path = req.body.path;
-    console.log('======got to POST PATH')
     res.send('path now on session');
   })
 
@@ -90,7 +87,6 @@ module.exports = app
         const path = req.session.path;
         const userId = req.session.userId.toLowerCase();
         const containerName = `${userId}app_docker-test_1`;
-        console.log('container name', containerName);
         // command below gets the container name's id
         exec(`docker ps -aqf "name=${containerName}"`)
         .then( (containerId) => {
@@ -105,13 +101,15 @@ module.exports = app
       }
     })
 
-    .get('/containerPostTest', (req, res, next) => {
+    .post('/containerPostTest', (req, res, next) => {
       if (req.session.userId){
+        const requestBody = req.body.request; 
+        const path = req.session.path;
         const userId = req.session.userId.toLowerCase();
         const containerName = `${userId}app_docker-test_1`;
         exec(`docker ps -aqf "name=${containerName}"`)
         .then( (containerId) => {
-            return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"name":"ada"}' http://localhost:8080/test2`)
+            return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '${requestBody}' http://localhost:8080${path.trim()}`)
         })
         .then((result) => {
             res.send(result);
