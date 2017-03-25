@@ -7,6 +7,7 @@ import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';
 import NavbarContainer from './NavbarContainer';
 import WelcomeMessage from '../Components/WelcomeMessage';
+import axios from 'axios';
 
 class AppContainer extends Component {
   constructor(props){
@@ -15,14 +16,7 @@ class AppContainer extends Component {
 
   render(){
     console.log("USER ID:", this.props.user.userId);
-    if (this.props.user.userId) {
-      window.addEventListener("beforeunload", function (e) {
-        console.log('windowww')
-        var confirmationMessage = "\o/";
-        e.returnValue = confirmationMessage;
-        return confirmationMessage;
-      });
-    }
+
     return (
         <div>
           <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} />
