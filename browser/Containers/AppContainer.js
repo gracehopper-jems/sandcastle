@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
-import {sendJson} from '../reducers/docker.js';
+import {sendJson, sendPost} from '../reducers/docker.js';
 import {setUserId} from '../reducers/user';
 import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';
@@ -15,8 +15,6 @@ class AppContainer extends Component {
   }
 
   render(){
-    console.log("USER ID:", this.props.user.userId);
-
     return (
         <div>
           <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} />
@@ -77,7 +75,11 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleSendJson(...args){
           dispatch(sendJson(...args));
+        },
+        handleSendPost(...args){
+          dispatch(sendPost(...args));
         }
+
       }
   };
 };
