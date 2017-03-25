@@ -39,6 +39,7 @@ export default class SignUp extends Component {
 	    .catch(console.error);
     })
     .catch(console.error)
+    // CHANGE THIS BACK LATER
     // .catch(err => alert("Invalid sign up!"))
     };
 

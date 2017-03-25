@@ -43,6 +43,7 @@ export default class NavbarContainer extends Component {
             .catch(console.error);
         })
         .catch(console.error);
+        // CHANGE THIS BACK LATER
         // .catch(err => alert("Invalid log in!"))
     }
 

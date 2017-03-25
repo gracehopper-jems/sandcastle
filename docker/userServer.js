@@ -6,7 +6,7 @@ const db = models.db;
 const express = require('express');
 const userRoutes = require('./userRoutes');
 const operation = retry.operation({ retries: 3 });
-const bodyParser = require('body-parser'); 
+const bodyParser = require('body-parser');
 
 // Constants
 const PORT = 8080;
@@ -22,15 +22,15 @@ operation.attempt(function() {
         if (!e) console.log("Hello Postgres!")
 
         const server = express();
-        server.use(bodyParser.urlencoded({ extended: true })); 
-        server.use(bodyParser.json()); 
+        server.use(bodyParser.urlencoded({ extended: true }));
+        server.use(bodyParser.json());
         server.use('/', userRoutes);
 
         db.sync({ force: true })
             .then(() => {
                 server.listen(PORT, () => {
                     console.log(process.env.DATABASE_URL);
-                    console.log('Running on http://localhost:3001');
+                    console.log('Running container server on http://localhost:' + PORT);
                 });
             })
     })
