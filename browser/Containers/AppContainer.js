@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { Link, browserHistory } from 'react-router';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
-import {sendJson} from '../reducers/docker.js';
+import {sendJson, sendPost} from '../reducers/docker.js';
 import {setUserId} from '../reducers/user';
 import firebase from 'firebase';
 import LoadingButton from './LoadingButton';
@@ -81,7 +81,11 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleSendJson(...args){
           dispatch(sendJson(...args));
+        }, 
+        handleSendPost(...args){
+          dispatch(sendPost(...args));
         }
+
       }
   };
 };

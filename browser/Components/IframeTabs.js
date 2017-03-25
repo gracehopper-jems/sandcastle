@@ -14,7 +14,7 @@ export const IframeTabs = (props) => {
         <div>{props.docker ? props.docker.json : null}</div>
         {/*<iframe id="serveriframe" src="http://localhost:3000/containerGet"></iframe>*/}
       </Tab>
-      <Tab eventKey={3} title="Database View">Database</Tab>
+      <Tab eventKey={3} title="Database View">{props.docker ? props.docker.database : null}</Tab>
     </Tabs>
   )
 };
