@@ -25,21 +25,42 @@ export default class PostwomanContainer extends Component {
 
     handleSend(event) {
         event.preventDefault();
-        if (this.state.path !== '') {
+
+        if (this.state.requestType === 'GET' && this.state.path !== '') {
             axios.post('/postWomanGetPath', {path: this.state.path})
             .then((res) => {
                 console.log('========response', res);
             })
             .then(() => {
-                return axios.get('/containerGet');
+                return axios.get('/containerGet');       
             })
-            .then((res) => {
+            .then((res) => {  
                 console.log('response from backend', res.data);
                 return JSON.stringify(res.data);
             })
             .then((jsonStr) => {
                 console.log('about to dispatch to store', jsonStr);
                 this.props.handlers.handleSendJson(jsonStr);
+            })
+            .catch(console.error);
+        } else if (this.state.requestType === 'POST' && this.state.path !== '') {
+            axios.post('/postWomanGetPath', {path: this.state.path})
+            .then((res) => {
+                console.log('========response', res);
+            })
+            .then(() => {
+                return axios.get('/containerPostTest')    
+            })
+            .then((res) => {
+                return JSON.stringify(res.data);
+            })
+            .then((jsonStr) => {
+                console.log('response from backend', jsonStr);
+                console.log('about to dispatch POST REQUEST to store', jsonStr);
+                this.props.handlers.handleSendPost(jsonStr);
+            })
+            .then(() => {
+                this.props.handlers.handleSendJson("Congrats! You made a post! You can now checkout out your database.")
             })
             .catch(console.error);
         }
