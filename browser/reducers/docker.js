@@ -1,6 +1,6 @@
 const initialState = {
   json: '',
-  database: ''
+  database: [], 
 };
 
 // reducer
@@ -13,7 +13,7 @@ const reducer = (state = initialState, action) => {
       return newState;
 
     case POST_TO_DB:
-      newState.database = newState.database + action.post 
+      newState.database = newState.database.concat(action.post);   
       return newState;
 
     default:

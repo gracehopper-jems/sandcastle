@@ -20,7 +20,6 @@ class AppContainer extends Component {
   }
 
   render(){
-    console.log("USER ID:", this.props.user.userId);
     return (
         <div>
           <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} />
