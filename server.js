@@ -5,9 +5,10 @@ const {resolve} = require('path');
 const PrettyError = require('pretty-error');
 const finalHandler = require('finalhandler');
 const runContainer = require('./docker/runContainer');
-// const listener = require('./docker/listener');
+const removeContainer = require('./docker/removeContainer');
 const session = require('express-session')
 const Promise = require('bluebird');
+const portfinder = require('portfinder');
 
 const app = express();
 
@@ -57,9 +58,36 @@ module.exports = app
       const userId = req.session.userId.toLowerCase();
       const userRoutes = req.body.userRoutes;
       const userModels = req.body.userModels;
-      runContainer(userId, 3001, 6542, userRoutes, userModels);
+      let serverPort;
+      let postgresPort;
+
+      // find a port that is available
+      portfinder.getPortPromise()
+      .then((port) => {
+        serverPort = port;
+        postgresPort = port + 1;
+        console.log('server port', serverPort)
+        console.log('postgres port', postgresPort)
+      })
+      .then(() => {
+        runContainer(userId, serverPort, postgresPort, userRoutes, userModels);
+      })
+      .catch(console.error);
+
       // send res after docker compose up ?????
       res.send('posted to container')
+    } else {
+      res.send('no logged in user');
+    }
+  })
+
+  .get('/removeContainer', (req, res, next) => {
+    if (req.session.userId){
+      const userId = req.session.userId.toLowerCase();
+      removeContainer(userId);
+      res.send('removed container')
+    } else {
+      res.send('no logged in user');
     }
   })
 
@@ -91,7 +119,7 @@ module.exports = app
 
     .post('/containerPostTest', (req, res, next) => {
       if (req.session.userId){
-        const requestBody = req.body.request; 
+        const requestBody = req.body.request;
         const path = req.session.path;
         const userId = req.session.userId.toLowerCase();
         const containerName = `${userId}app_docker-test_1`;
