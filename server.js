@@ -60,6 +60,7 @@ module.exports = app
       let serverPort;
       let postgresPort;
 
+      // find a port that is available
       portfinder.getPortPromise()
       .then((port) => {
         serverPort = port;
