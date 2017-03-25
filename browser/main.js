@@ -43,20 +43,21 @@ const onAppEnter = () => {
       // send get request to server to remove container if container is running
       window.addEventListener("beforeunload", function (e) {
         e.preventDefault();
-        console.log('WINDOWWWWW');
-        console.log('sfsfsdfsdfsdfs')
+        console.log('WINDOW');
+        console.log('EVENT')
 
-        // axios not working???
-        // axios.get('/removeContainer')
-        // .then((res) => {
-        //   console.log('removing container');
-        //   console.log('res', res)
-        // })
-        // .catch(console.error);
+        // axios doesn't work in this listener because async?
+        // http://stackoverflow.com/questions/14929832/send-ajax-to-server-beforeunload
+        axios.get('/removeContainer')
+        .then((res) => {
+          console.log('removing container');
+          console.log('res', res)
+        })
+        .catch(console.error);
 
-        var confirmationMessage = "\o/";
-        e.returnValue = confirmationMessage;
-        return confirmationMessage;
+        // var confirmationMessage = "\o/";
+        // e.returnValue = confirmationMessage;
+        // return confirmationMessage;
       });
 
       // render firepads
