@@ -68,3 +68,7 @@ body {
 img {
   width: 200px;
 }
+
+table {
+  width: 100%;
+}
