@@ -16,19 +16,17 @@ body {
   flex: 1;
 }
 
-
 #html-firepad-container, #css-firepad-container, #js-firepad-container, #server-firepad-container, #db-firepad-container {
   width: 100%;
   height: 98vh;
-  /*height: 0;
-  width: 0;*/
 }
 
-/*.pagehalf {
-  flex: 1;
-}*/
-
 #frame {
+  width: 45vw;
+  height: 85vh;
+}
+
+.app-frame {
   width: 45vw;
   height: 85vh;
 }
