@@ -25,7 +25,7 @@ operation.attempt(function() {
         const server = express();
         server.use(bodyParser.urlencoded({ extended: true }));
         server.use(bodyParser.json());
-        // server.use(express.static(resolve(__dirname, 'public')))
+        server.use(express.static(resolve(__dirname, 'public')));
         server.use('/', userRoutes);
 
         db.sync({ force: true })

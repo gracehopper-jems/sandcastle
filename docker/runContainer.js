@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
+const createHTML = require('./createHTML');
 
 const dockerComposeStr = `db:
   image: postgres
@@ -32,12 +33,10 @@ const runContainer = (argsObj) => {
 
     console.log(`DIRECTORY WHEN RUN BACKEND BUTTON CLICKED: ${process.cwd()}`);
 
-    // currently in text-editor folder
+    // check current directory
     exec(`pwd`)
-    // create user app folder in docker folder
-    // include timestamp in folder in future if time
     .then((currentDirectory) => {
-        // if user app folder already exista and already inside use app folder
+        // if user app folder already exists and already inside use app folder
         if (currentDirectory.includes(`${argsObj.userId}-app`)) {
             console.log('THERE IS ALREADY A USER APP')
 
@@ -56,12 +55,15 @@ const runContainer = (argsObj) => {
                 console.log(`Changed working directory: ${process.cwd()}`);
             })
             .then(() => {
+                // create user app folder in docker folder
+                // include timestamp in folder in future if time
                 return exec(`mkdir docker/${argsObj.userId}-app`);
             })
             .catch(console.error);
 
         } else {
-        // if user app folder does not exist and inside text editor folder
+            // if user app folder does not exist and inside text editor folder
+            // create user app folder
             console.log('NO USER APP FOLDER YET');
             return exec(`mkdir docker/${argsObj.userId}-app`);
         }
@@ -104,11 +106,6 @@ const runContainer = (argsObj) => {
         return writeFile('userRoutes.js', argsObj.userRoutes);
     })
     .then(() => {
-        // write user js to user-app folder
-        console.log('creating the user js');
-        return writeFile('userJs.js', argsObj.userJS);
-    })
-    .then(() => {
         // create public directory
         console.log('making public directory');
         return exec('mkdir public');
@@ -118,12 +115,20 @@ const runContainer = (argsObj) => {
         console.log('changing into public directory')
         process.chdir('public');
 
-        // write user html to user-app folder
+        // create user html gile
+        const userHTML = createHTML(argsObj.userHTML);
+
+        // write user html to pbulic folder
         console.log('creating the user html');
-        return writeFile('index.html', argsObj.userHTML);
+        return writeFile('index.html', userHTML);
     })
     .then(() => {
-        // write user css to user-app folder
+        // write user js to public folder
+        console.log('creating the user js');
+        return writeFile('userJS.js', argsObj.userJS);
+    })
+    .then(() => {
+        // write user css to public folder
         console.log('creating the user css');
         return writeFile('style.css', argsObj.userCSS);
     })
