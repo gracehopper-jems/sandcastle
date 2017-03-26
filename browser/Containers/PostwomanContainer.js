@@ -8,13 +8,13 @@ export default class PostwomanContainer extends Component {
         this.state = {
             path: '/',
             requestType: 'GET',
-            requestBody: '{"example_key": "example_value"}',  
+            requestBody: '{"example_key": "example_value"}',
 
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSend = this.handleSend.bind(this);
         this.handleRequestType = this.handleRequestType.bind(this);
-        this.handleRequestBody = this.handleRequestBody.bind(this); 
+        this.handleRequestBody = this.handleRequestBody.bind(this);
     }
 
     handleChange(event) {
@@ -27,7 +27,7 @@ export default class PostwomanContainer extends Component {
     }
 
     handleRequestBody(event) {
-        let requestBody = event.target.value; 
+        let requestBody = event.target.value;
         event.preventDefault();
         this.setState({requestBody: requestBody})
     }
@@ -38,9 +38,9 @@ export default class PostwomanContainer extends Component {
         if (this.state.requestType === 'GET' && this.state.path !== '') {
             axios.post('/postWomanGetPath', {path: this.state.path})
             .then(() => {
-                return axios.get('/containerGet');       
+                return axios.get('/containerGet');
             })
-            .then((res) => {  
+            .then((res) => {
                 return JSON.stringify(res.data);
             })
             .then((jsonStr) => {
@@ -50,13 +50,17 @@ export default class PostwomanContainer extends Component {
         } else if (this.state.requestType === 'POST' && this.state.path !== '') {
             axios.post('/postWomanGetPath', {path: this.state.path})
             .then(() => {
-                return axios.post('/containerPostTest', {request: this.state.requestBody} )    
+                return axios.post('/containerPostTest', {request: this.state.requestBody} )
             })
             .then((res) => {
                 return JSON.stringify(res.data);
             })
             .then((jsonStr) => {
                 this.props.handlers.handleSendPost(jsonStr);
+
+                // dispatches below makes sure iframe for app refreshes
+                this.props.handlers.handleUpdateDockerOn(false);
+                this.props.handlers.handleUpdateDockerOn(true);
             })
             .then(() => {
                 this.props.handlers.handleSendJson("Congrats! You made a post! You can now checkout out your database.")
@@ -78,16 +82,16 @@ export default class PostwomanContainer extends Component {
                     <option>POST</option>
                 </select>
                 <FormGroup>
-                {this.state.requestType === 'POST' ? 
+                {this.state.requestType === 'POST' ?
 
-                (<div> 
-                    <p>Enter POST request body here:</p> 
-                    
+                (<div>
+                    <p>Enter POST request body here:</p>
+
                         <InputGroup>
                             <FormControl type="text" value={this.state.requestBody} onChange={this.handleRequestBody} />
                         </InputGroup>
-                </div>) 
-                : null 
+                </div>)
+                : null
                 }
                     <InputGroup>
                         <FormControl type="text" value={this.state.path} onChange={this.handleChange} />

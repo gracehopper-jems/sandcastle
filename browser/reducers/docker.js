@@ -1,7 +1,8 @@
 const initialState = {
   json: '',
   database: [],
-  dockerOn: false
+  dockerOn: false,
+  port: null
 };
 
 // reducer
@@ -18,7 +19,11 @@ const reducer = (state = initialState, action) => {
       return newState;
 
     case UPDATE_DOCKER:
-      newState.dockerOn = true;
+      newState.dockerOn = action.bool;
+      return newState;
+
+    case RECEIVE_PORT:
+      newState.port = action.port;
       return newState;
 
     default:
@@ -28,8 +33,9 @@ const reducer = (state = initialState, action) => {
 
 // constants
 const RECEIVE_JSON = 'RECEIVE_JSON';
-const POST_TO_DB ='POST_TO_DB';
-const UPDATE_DOCKER = "UPDATE_DOCKER";
+const POST_TO_DB = 'POST_TO_DB';
+const UPDATE_DOCKER = 'UPDATE_DOCKER';
+const RECEIVE_PORT = 'RECEIVE_PORT';
 
 // action creators
 export const receiveJson = json => ({
@@ -50,12 +56,22 @@ export const sendPost = (...args) => {
   return postToDB(...args);
 };
 
-export const updateDocker = () => ({
-  type: UPDATE_DOCKER
+export const updateDockerOn = bool => ({
+  type: UPDATE_DOCKER,
+  bool
 });
 
-export const sendUpdateDocker = () => {
-  return updateDocker();
-}
+export const sendUpdateDockerOn = (...args) => {
+  return updateDockerOn(...args);
+};
+
+export const receivePort = port => ({
+  type: RECEIVE_PORT,
+  port
+});
+
+export const sendPort = (...args) => {
+  return receivePort(...args);
+};
 
 export default reducer;
