@@ -23,6 +23,7 @@
     "body-parser": "^1.17.1",
     "codemirror": "^5.24.2",
     "express": "^4.14.0",
+    "express-session": "^1.15.1",
     "finalhandler": "^1.0.0",
     "firebase": "^3.7.2",
     "firepad": "^1.4.0",
