@@ -1,6 +1,7 @@
 import { Tab, Tabs } from 'react-bootstrap';
 import React from 'react';
 import PostwomanContainer from '../Containers/PostwomanContainer';
+import DatabaseTable from './DatabaseTable'; 
 
 export const IframeTabs = (props) => {
   var stringifiedDB = "";
@@ -20,11 +21,10 @@ export const IframeTabs = (props) => {
         <div>{props.docker ? props.docker.json : null}</div>
       </Tab>
       <Tab eventKey={3} title="Database View">
-          {props.docker ? 
-            props.docker.database.map(obj => {
-              return (<p key={obj.slice(6, 8)}>{obj.toString()}</p>)
-            })
-            : null } 
+        {props.docker ? 
+          <DatabaseTable database={props.docker.databse} /> 
+          : null 
+        } 
         </Tab>
     </Tabs>
   )
