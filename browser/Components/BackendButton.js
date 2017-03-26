@@ -22,12 +22,15 @@ class BackendButton extends Component {
       userCSS: this.props.code.cssString,
       userJS: this.props.code.jsString
     })
-    .then(() => {
+    .then((res) => {
       console.log('running container');
+      const userServerPort = res.data.port;
+
       // ========= change this once we figure out to send signal that docker composed up and port is listening
       setTimeout(() => {
-        this.props.handlers.handleUpdateDocker();
-      }, 20000);
+        this.props.handlers.handleSendPort(userServerPort);
+        this.props.handlers.handleUpdateDockerOn(true);
+      }, 30000);
     })
     .catch(console.error);
 
@@ -35,7 +38,7 @@ class BackendButton extends Component {
     setTimeout(() => {
         // Completed of async action, set loading state back
         this.setState({isLoading: false});
-    }, 20000);
+    }, 30000);
   }
 
   render(){
@@ -48,9 +51,7 @@ class BackendButton extends Component {
       </div>
     )
   }
-
 }
-
 
 export default BackendButton;
 

@@ -68,21 +68,21 @@ module.exports = app
       // find a port that is available
       portfinder.getPortPromise()
       .then((port) => {
-        // argsObj.serverPort = port;
-        // argsObj.postgresPort = port + 1;
-        argsObj.serverPort = 8000;
-        argsObj.postgresPort = 8001;
-        console.log('server port', argsObj.serverPort)
-        console.log('postgres port', argsObj.postgresPort)
+        argsObj.serverPort = port;
+        argsObj.postgresPort = port + 1;
+        // argsObj.serverPort = 8000;
+        // argsObj.postgresPort = 8001;
+        console.log('server port', argsObj.serverPort);
+        console.log('postgres port', argsObj.postgresPort);
       })
       .then(() => {
-        //change this to object
         runContainer(argsObj);
+        // send response with port number
+        // how to send response after docker compose up ?????
+        res.send({response: 'running container on port', port: argsObj.serverPort});
       })
       .catch(console.error);
 
-      // send res after docker compose up ?????
-      res.send('posted to container')
     } else {
       res.send('no logged in user');
     }
