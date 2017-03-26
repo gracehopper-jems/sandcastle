@@ -70,3 +70,9 @@ body {
 img {
   width: 200px;
 }
+
+.selectdropdown {
+  font-size: 14px;
+  width: auto;
+}
+
