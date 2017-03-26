@@ -93,7 +93,7 @@ render(){
 
                   <ul className="nav navbar-nav nav-tabs">
                     <li><a><LoadingButton code={this.props.code} handlers={this.props.handlers} /></a></li>
-                    <li><a><BackendButton code={this.props.code} handlers={this.props.handlers} user={this.props.user}/></a></li>
+                    <li><a><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user}/></a></li>
 
                     {this.state.signup ?
                       (<div className="static-modal">

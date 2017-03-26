@@ -24,25 +24,30 @@ class BackendButton extends Component {
     })
     .then(() => {
       console.log('running container');
+      // ========= change this once we figure out to send signal that docker composed up and port is listening
+      setTimeout(() => {
+        this.props.handlers.handleUpdateDocker();
+      }, 20000);
     })
     .catch(console.error);
 
+    // ========= change this once we figure out to send signal that docker composed up and port is listening
     setTimeout(() => {
         // Completed of async action, set loading state back
         this.setState({isLoading: false});
-    }, 5000);
+    }, 20000);
   }
 
   render(){
-    let isLoading = this.state.isLoading;
+    const isLoading = this.state.isLoading;
     return (
       <div
         disabled={isLoading}
-        onClick={!isLoading? this.handleClick: null}>
+        onClick={!isLoading ? this.handleClick: null}>
         {isLoading ? 'Running your backend...' : 'Run Backend'}
       </div>
     )
-}
+  }
 
 }
 
