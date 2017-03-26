@@ -115,7 +115,7 @@ const runContainer = (argsObj) => {
         console.log('changing into public directory')
         process.chdir('public');
 
-        // create user html gile
+        // create user html file
         const userHTML = createHTML(argsObj.userHTML);
 
         // write user html to pbulic folder
@@ -126,6 +126,11 @@ const runContainer = (argsObj) => {
         // write user js to public folder
         console.log('creating the user js');
         return writeFile('userJS.js', argsObj.userJS);
+    })
+    .then(() => {
+        // bunlde user js file to require node modules
+        console.log('browserifying js into bundle');
+        return exec('browserify userJS.js -o userBundle.js');
     })
     .then(() => {
         // write user css to public folder
