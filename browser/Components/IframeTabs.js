@@ -1,7 +1,7 @@
 import { Tab, Tabs } from 'react-bootstrap';
 import React from 'react';
 import PostwomanContainer from '../Containers/PostwomanContainer';
-import DatabaseTable from './DatabaseTable'; 
+import DatabaseTable from '../Containers/DatabaseTable'; 
 
 export const IframeTabs = (props) => {
   var stringifiedDB = "";
@@ -10,7 +10,6 @@ export const IframeTabs = (props) => {
       stringifiedDB += obj.toString(); 
     })
   }
-
   return (
     <Tabs defaultActiveKey={1} id="IframeTabContainer">
       <Tab eventKey={1} title="Browser View">
@@ -22,7 +21,7 @@ export const IframeTabs = (props) => {
       </Tab>
       <Tab eventKey={3} title="Database View">
         {props.docker ? 
-          <DatabaseTable database={props.docker.databse} /> 
+          <DatabaseTable database={props.docker.database} /> 
           : null 
         } 
         </Tab>
