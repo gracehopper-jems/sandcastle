@@ -8,7 +8,6 @@ const userRoutes = require('./userRoutes');
 const operation = retry.operation({ retries: 3 });
 const bodyParser = require('body-parser');
 const {resolve} = require('path');
-const axios = require('axios');
 
 // Constants
 const PORT = 8080;
