@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { FormGroup, InputGroup, FormControl, DropdownButton, MenuItem, Button } from 'react-bootstrap'
+import { FormGroup, InputGroup, FormControl, DropdownButton, MenuItem, Button, ControlLabel } from 'react-bootstrap'
 import axios from 'axios';
 
 export default class PostwomanContainer extends Component {
@@ -77,10 +77,16 @@ export default class PostwomanContainer extends Component {
     render(){
         return (
             <div>
-                <select className="custom-select" onChange={this.handleRequestType}>
+                {/*<select className="custom-select" onChange={this.handleRequestType}>
                     <option>GET</option>
                     <option>POST</option>
-                </select>
+                </select>*/}
+                    <FormGroup controlId="formControlsSelect">
+                    <FormControl componentClass="select" placeholder="select" className="selectdropdown" onChange={this.handleRequestType}>
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                    </FormControl>
+                    </FormGroup>
                 <FormGroup>
                 {this.state.requestType === 'POST' ?
 
