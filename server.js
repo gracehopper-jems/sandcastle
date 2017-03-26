@@ -55,22 +55,27 @@ module.exports = app
 
   .post('/container', (req, res, next) => {
     if (req.session.userId){
-      const userId = req.session.userId.toLowerCase();
-      const userRoutes = req.body.userRoutes;
-      const userModels = req.body.userModels;
-      let serverPort;
-      let postgresPort;
+
+      const argsObj = {
+        userId: req.session.userId.toLowerCase(),
+        userRoutes: req.body.userRoutes,
+        userModels: req.body.userModels,
+        userHTML: req.body.userHTML,
+        userCSS: req.body.userCSS,
+        userJS: req.body.userJS,
+      }
 
       // find a port that is available
       portfinder.getPortPromise()
       .then((port) => {
-        serverPort = port;
-        postgresPort = port + 1;
-        console.log('server port', serverPort)
-        console.log('postgres port', postgresPort)
+        argsObj.serverPort = port;
+        argsObj.postgresPort = port + 1;
+        console.log('server port', argsObj.serverPort)
+        console.log('postgres port', argsObj.postgresPort)
       })
       .then(() => {
-        runContainer(userId, serverPort, postgresPort, userRoutes, userModels);
+        //change this to object
+        runContainer(argsObj);
       })
       .catch(console.error);
 
