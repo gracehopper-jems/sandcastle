@@ -1,5 +1,5 @@
 const createHTML = (userHTML) => {
-  const html = `<!DOCTYPE html>
+  return `<!DOCTYPE html>
   <html>
     <head>
       <title>My Tiny App</title>
@@ -11,8 +11,6 @@ const createHTML = (userHTML) => {
     <script src="userJS.js"></script>
     </body>
   </html>`;
-
-  return html;
 };
 
 module.exports = createHTML;

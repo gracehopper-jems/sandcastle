@@ -68,8 +68,10 @@ module.exports = app
       // find a port that is available
       portfinder.getPortPromise()
       .then((port) => {
-        argsObj.serverPort = port;
-        argsObj.postgresPort = port + 1;
+        // argsObj.serverPort = port;
+        // argsObj.postgresPort = port + 1;
+        argsObj.serverPort = 8000;
+        argsObj.postgresPort = 8001;
         console.log('server port', argsObj.serverPort)
         console.log('postgres port', argsObj.postgresPort)
       })
