@@ -8,7 +8,7 @@ const createHTML = (userHTML) => {
     <body>
       ${userHTML}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="userJS.js"></script>
+    <script src="userBundle.js"></script>
     </body>
   </html>`;
 };
