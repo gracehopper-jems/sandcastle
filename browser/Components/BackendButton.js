@@ -16,8 +16,12 @@ class BackendButton extends Component {
   handleClick (event) {
     event.preventDefault();
     this.setState({isLoading: true});
-
-    axios.post('/container', {userRoutes: this.props.code.serverString, userModels: this.props.code.databaseString})
+    axios.post('/container', {userRoutes: this.props.code.serverString,
+      userModels: this.props.code.databaseString,
+      userHTML: this.props.code.htmlString,
+      userCSS: this.props.code.cssString,
+      userJS: this.props.code.jsString
+    })
     .then(() => {
       console.log('running container');
     })
@@ -26,7 +30,7 @@ class BackendButton extends Component {
     setTimeout(() => {
         // Completed of async action, set loading state back
         this.setState({isLoading: false});
-      }, 5000);
+    }, 5000);
   }
 
   render(){

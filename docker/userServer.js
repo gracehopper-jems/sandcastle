@@ -7,6 +7,7 @@ const express = require('express');
 const userRoutes = require('./userRoutes');
 const operation = retry.operation({ retries: 3 });
 const bodyParser = require('body-parser');
+const {resolve} = require('path');
 
 // Constants
 const PORT = 8080;
@@ -19,11 +20,12 @@ operation.attempt(function() {
         if (operation.retry(e)) {
             return;
         }
-        if (!e) console.log("Hello Postgres!")
+        if (!e) console.log("Hello Postgres!");
 
         const server = express();
         server.use(bodyParser.urlencoded({ extended: true }));
         server.use(bodyParser.json());
+        // server.use(express.static(resolve(__dirname, 'public')))
         server.use('/', userRoutes);
 
         db.sync({ force: true })
