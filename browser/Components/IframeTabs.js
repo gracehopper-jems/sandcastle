@@ -24,7 +24,10 @@ export const IframeTabs = (props) => {
           <DatabaseTable database={props.docker.database} />
           : null
         }
-        </Tab>
+      </Tab>
+      <Tab eventKey={4} title="App View">
+        { !props.docker ? null : props.docker.dockerOn === false ? null : <iframe className="app-frame" src={`http://127.0.0.1:${props.docker.port}`} />}
+      </Tab>
     </Tabs>
   )
 };

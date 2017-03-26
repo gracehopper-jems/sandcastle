@@ -57,6 +57,10 @@ export default class PostwomanContainer extends Component {
             })
             .then((jsonStr) => {
                 this.props.handlers.handleSendPost(jsonStr);
+
+                // dispatches below makes sure iframe for app refreshes
+                this.props.handlers.handleUpdateDockerOn(false);
+                this.props.handlers.handleUpdateDockerOn(true);
             })
             .then(() => {
                 this.props.handlers.handleSendJson("Congrats! You made a post! You can now checkout out your database.")
