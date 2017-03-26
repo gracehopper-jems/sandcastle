@@ -6,7 +6,7 @@ export const IframeTabs = (props) => {
   var stringifiedDB = "";
   if (props.docker){
     props.docker.database.forEach(obj => {
-      stringifiedDB += obj.toString(); 
+      stringifiedDB += obj.toString();
     })
   }
 
@@ -20,11 +20,11 @@ export const IframeTabs = (props) => {
         <div>{props.docker ? props.docker.json : null}</div>
       </Tab>
       <Tab eventKey={3} title="Database View">
-          {props.docker ? 
+          {props.docker ?
             props.docker.database.map(obj => {
               return (<p key={obj.slice(6, 8)}>{obj.toString()}</p>)
             })
-            : null } 
+            : null }
         </Tab>
     </Tabs>
   )
