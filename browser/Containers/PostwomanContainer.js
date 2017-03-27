@@ -34,7 +34,6 @@ export default class PostwomanContainer extends Component {
 
     handleSend(event) {
         event.preventDefault();
-
         if (this.state.requestType === 'GET' && this.state.path !== '') {
             axios.post('/postWomanGetPath', {path: this.state.path})
             .then(() => {
@@ -61,9 +60,13 @@ export default class PostwomanContainer extends Component {
                 // dispatches below makes sure iframe for app refreshes
                 this.props.handlers.handleUpdateDockerOn(false);
                 this.props.handlers.handleUpdateDockerOn(true);
+
+                return jsonStr;
             })
-            .then(() => {
-                this.props.handlers.handleSendJson("Congrats! You made a post! You can now checkout out your database.")
+            .then((jsonStr) => {
+                // this.props.handlers.handleSendJson("Congrats! You made a post! You can now checkout out your database.")
+                // postman shows the json that was posted so thought it'd be better if we showed that too
+                this.props.handlers.handleSendJson(jsonStr);
             })
             .catch(console.error);
         }
@@ -71,7 +74,9 @@ export default class PostwomanContainer extends Component {
 
     handleRequestType(event) {
         event.preventDefault();
-        this.setState({requestType: event.target.value})
+        // when user chooses a different request method, the old JSON result is cleared from view
+        this.props.handlers.handleSendJson('');
+        this.setState({requestType: event.target.value});
     }
 
     render(){
@@ -81,12 +86,12 @@ export default class PostwomanContainer extends Component {
                     <option>GET</option>
                     <option>POST</option>
                 </select>*/}
-                    <FormGroup controlId="formControlsSelect">
+                <FormGroup controlId="formControlsSelect">
                     <FormControl componentClass="select" placeholder="select" className="selectdropdown" onChange={this.handleRequestType}>
                         <option value="GET">GET</option>
                         <option value="POST">POST</option>
                     </FormControl>
-                    </FormGroup>
+                </FormGroup>
                 <FormGroup>
                 {this.state.requestType === 'POST' ?
 
