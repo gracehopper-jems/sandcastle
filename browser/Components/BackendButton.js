@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import Progress from '../Components/ProgressIndicator'
+import Progress, { ProgressModal } from '../Components/ProgressIndicator'
 
 class BackendButton extends Component {
 
@@ -54,7 +54,7 @@ class BackendButton extends Component {
       <div
         disabled={isLoading}
         onClick={!isLoading ? this.handleClick: null}>
-        {isLoading ? <Progress /> : 'Run Backend'}
+        {isLoading ? <ProgressModal view={'Backend'}/> : 'Run Backend'}
       </div>
     )
   }
