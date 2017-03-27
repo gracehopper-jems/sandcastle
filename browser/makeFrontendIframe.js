@@ -7,7 +7,7 @@ const makeFrontendIframe = () => {
 	// Create a new blank iframe
 	var newIframe = document.createElement('iframe');
 	// Set attributes for iFrame (do whatever suits)
-	newIframe.width = '545px'; newIframe.height = '810px';
+	newIframe.width = '100%'; newIframe.height = '809px';
 	// This for the src makes it 'friendly'
 	newIframe.src = 'about:blank';
 
