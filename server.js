@@ -4,15 +4,16 @@ const bodyParser = require('body-parser');
 const {resolve} = require('path');
 const PrettyError = require('pretty-error');
 const finalHandler = require('finalhandler');
-const runContainer = require('./docker/runContainer');
-const removeContainer = require('./docker/removeContainer');
+// const runContainer = require('./docker/runContainer');
+// const removeContainer = require('./docker/removeContainer');
 const session = require('express-session')
-const Promise = require('bluebird');
-const portfinder = require('portfinder');
+// const Promise = require('bluebird');
+// const portfinder = require('portfinder');
+const routes = require('./routes');
 
 const app = express();
 
-const exec = Promise.promisify(require('child_process').exec);
+// const exec = Promise.promisify(require('child_process').exec);
 
 // Pretty error prints errors all pretty. PrettyError docs: https://www.npmjs.com/package/pretty-error
 const prettyError = new PrettyError();
@@ -41,107 +42,7 @@ module.exports = app
       saveUninitialized: true
     }))
 
-  // adding userid to req.session
-  .post('/setUser', (req, res, next) => {
-      const userId = req.body.userId;
-      req.session.userId = userId;
-      res.sendStatus(200);
-  })
-
-  .get('/removeUser', (req, res, next) => {
-    req.session.destroy();
-    res.sendStatus(200);
-  })
-
-  .post('/container', (req, res, next) => {
-    if (req.session.userId){
-
-      const argsObj = {
-        userId: req.session.userId.toLowerCase(),
-        userRoutes: req.body.userRoutes,
-        userModels: req.body.userModels,
-        userHTML: req.body.userHTML,
-        userCSS: req.body.userCSS,
-        userJS: req.body.userJS,
-      }
-
-      // find a port that is available
-      portfinder.getPortPromise()
-      .then((port) => {
-        argsObj.serverPort = port;
-        argsObj.postgresPort = port + 1;
-        // argsObj.serverPort = 8000;
-        // argsObj.postgresPort = 8001;
-        console.log('server port', argsObj.serverPort);
-        console.log('postgres port', argsObj.postgresPort);
-      })
-      .then(() => {
-        runContainer(argsObj);
-        // send response with port number
-        // how to send response after docker compose up ?????
-        res.send({response: 'running container on port', port: argsObj.serverPort});
-      })
-      .catch(console.error);
-
-    } else {
-      res.send('no logged in user');
-    }
-  })
-
-  .get('/removeContainer', (req, res, next) => {
-    if (req.session.userId){
-      const userId = req.session.userId.toLowerCase();
-      removeContainer(userId);
-      res.send('removed container')
-    } else {
-      res.send('no logged in user');
-    }
-  })
-
-  .post('/postWomanGetPath', (req, res, next) => {
-    req.session.path = req.body.path;
-    res.send('path now on session');
-  })
-
-  // run a get request in container terminal and receive the result
-  .get('/containerGet', (req, res, next) => {
-    // the container's name is the user id plus `app_docker-test_1`
-    if (req.session.userId){
-        const path = req.session.path;
-        const userId = req.session.userId.toLowerCase();
-        const containerName = `${userId}app_docker-test_1`;
-        // command below gets the container name's id
-        exec(`docker ps -aqf "name=${containerName}"`)
-        .then( (containerId) => {
-          return exec('docker exec ' + containerId.trim() + ' curl http://localhost:8080' + path.trim());
-        })
-        .then((result) => {
-          res.send(result);
-        })
-        .catch(console.error);
-      } else {
-        console.log("Error - No user saved on session!")
-      }
-    })
-
-    .post('/containerPostTest', (req, res, next) => {
-      if (req.session.userId){
-        const requestBody = req.body.request;
-        const path = req.session.path;
-        const userId = req.session.userId.toLowerCase();
-        const containerName = `${userId}app_docker-test_1`;
-        exec(`docker ps -aqf "name=${containerName}"`)
-        .then( (containerId) => {
-            return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '${requestBody}' http://localhost:8080${path.trim()}`)
-        })
-        .then((result) => {
-            res.send(result);
-        })
-        .catch(console.error);
-      } else {
-        console.log("Error - No user saved on session!")
-      }
-    })
+  .use('/', routes)
 
   // Send index.html for anything else.
   .get('/*', (_, res) => res.sendFile(resolve(__dirname, 'public', 'index.html')))
