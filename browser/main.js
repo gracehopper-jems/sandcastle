@@ -13,6 +13,10 @@ import makeFirepads from './utils/firepads';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase } from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
 import axios from 'axios';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+injectTapEventPlugin(); //need this for the progress indicator
 
 const onAppEnter = () => {
 
@@ -120,11 +124,13 @@ const onAppEnter = () => {
 
 ReactDOM.render(
   <Provider store={store}>
+    <MuiThemeProvider>
     <Router history={browserHistory}>
       <Route path="/" component={AppContainer} onEnter={onAppEnter}>
         <Route path="/signup" component={SignUp} />
       </Route>
     </Router>
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById('app')
 );
