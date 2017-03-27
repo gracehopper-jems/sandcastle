@@ -24,17 +24,23 @@ const onAppEnter = () => {
   var config = { apiKey, authDomain, databaseURL };
   firebase.initializeApp(config);
 
-  // let user = firebase.auth().currentUser;
-
   let madeFirepads = false;
   let madeFrontendIframe = false;
+
+  // let currentUser;
+  // axios.get('/getUser')
+  // .then((user) => {
+  //   currentUser = user.data;
+  //   console.log('====current user', currentUser);
+  // })
+  // .catch(console.error);
 
   firebase.auth().onAuthStateChanged((user) => {
     console.log("USER IN ON APP ENTER", user);
 
     if (user) {
       let userId = user.uid;
-      store.dispatch(setUserId(userId))
+      store.dispatch(setUserId(userId));
 
       axios.post('/setUser', {userId: userId})
       .then(() => {

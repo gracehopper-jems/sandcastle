@@ -9,9 +9,14 @@ const exec = Promise.promisify(require('child_process').exec);
 module.exports = router
   // adding userid to req.session
   .post('/setUser', (req, res, next) => {
-      const userId = req.body.userId;
-      req.session.userId = userId;
-      res.sendStatus(200);
+    const userId = req.body.userId;
+    req.session.userId = userId;
+    res.sendStatus(200);
+  })
+
+  .get('/getUser', (req, res, next) => {
+    const userId = req.session.userId;
+    res.send(userId);
   })
 
   .get('/removeUser', (req, res, next) => {
