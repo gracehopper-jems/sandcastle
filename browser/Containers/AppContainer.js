@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
-import {sendJson, sendPost} from '../reducers/docker.js';
+import {sendJson, sendPost, sendPut, sendDelete} from '../reducers/docker.js';
 import {setUserId} from '../reducers/user';
 import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';
@@ -78,8 +78,14 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleSendPost(...args){
           dispatch(sendPost(...args));
+        },
+// PUT-AND-DELETE
+        handleSendPut(...args) {
+          dispatch(sendPut(...args));
+        },
+        handleSendDelete(...args) {
+          dispatch(sendDelete(...args));
         }
-
       }
   };
 };
