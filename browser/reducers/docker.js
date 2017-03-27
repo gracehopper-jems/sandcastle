@@ -24,6 +24,11 @@ const reducer = (state = initialState, action) => {
       newState.database = newState.database.concat(action.post);
       return newState;
 
+
+    case CLEAR_DB:
+      newState.database = [];
+      return newState;
+
     case UPDATE_DOCKER:
       newState.dockerOn = action.bool;
       return newState;
@@ -42,6 +47,7 @@ const RECEIVE_JSON = 'RECEIVE_JSON';
 const POST_TO_DB = 'POST_TO_DB';
 const UPDATE_DOCKER = 'UPDATE_DOCKER';
 const RECEIVE_PORT = 'RECEIVE_PORT';
+const CLEAR_DB = 'CLEAR_DB';
 
 // action creators
 export const receiveJson = json => ({
@@ -60,6 +66,14 @@ export const postToDB = post => ({
 
 export const sendPost = (...args) => {
   return postToDB(...args);
+};
+
+export const clearDB = () => ({
+  type: CLEAR_DB
+});
+
+export const sendClearDB = () => {
+  return clearDB();
 };
 
 export const updateDockerOn = bool => ({

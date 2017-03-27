@@ -65,7 +65,7 @@ export default class PostwomanContainer extends Component {
             })
             .then((jsonStr) => {
                 // this.props.handlers.handleSendJson("Congrats! You made a post! You can now checkout out your database.")
-                // postman shows the json that was posted so thought it'd be better if we showed that too
+                // postman shows the json that was posted so thought it'd be nice if we showed that too
                 this.props.handlers.handleSendJson(jsonStr);
             })
             .catch(console.error);
@@ -74,7 +74,7 @@ export default class PostwomanContainer extends Component {
 
     handleRequestType(event) {
         event.preventDefault();
-        // when user chooses a different request method, the old JSON result is cleared from view
+        // when user chooses a different request method, the old server view is cleared from view
         this.props.handlers.handleSendJson('');
         this.setState({requestType: event.target.value});
     }
