@@ -34,11 +34,8 @@ export default class PostwomanContainer extends Component {
 
     handleSend(event) {
         event.preventDefault();
-<<<<<<< HEAD
-=======
         console.log('REQUEST TYPE', this.state.requestType);
 
->>>>>>> 130c454872425c1524f1df0b86537510c85968cc
         if (this.state.requestType === 'GET' && this.state.path !== '') {
             axios.post('/postWomanGetPath', {path: this.state.path})
             .then(() => {
@@ -51,10 +48,11 @@ export default class PostwomanContainer extends Component {
                 this.props.handlers.handleSendJson(jsonStr);
             })
             .catch(console.error);
-        } else if ((this.state.requestType === 'POST' || this.state.requestType === 'PUT' || this.state.requestType === 'DELETE') && this.state.path !== '') {
+
+        } else if (this.state.requestType === 'POST' || this.state.requestType === 'PUT' || this.state.requestType === 'DELETE') && this.state.path !== '') {
             axios.post('/postWomanGetPath', {path: this.state.path})
             .then(() => {
-                return axios.post('/containerPostPutDeleteTest', { requestType: this.state.requestType, request: this.state.requestBody });
+                return axios.post('/containerPostPutDeleteTest', { requestType: this.state.requestType, request: this.state.requestBody 
             })
             .then((res) => {
                 return JSON.stringify(res.data);
@@ -68,13 +66,8 @@ export default class PostwomanContainer extends Component {
 
                 return jsonStr;
             })
-<<<<<<< HEAD
             .then((jsonStr) => {
                 this.props.handlers.handleSendJson(jsonStr);
-=======
-            .then(() => {
-                this.props.handlers.handleSendJson("Congrats! You've updated your database! You can now check it out.");
->>>>>>> 130c454872425c1524f1df0b86537510c85968cc
             })
                 .catch(console.error);
 // PUT-AND-DELETE
@@ -117,6 +110,7 @@ export default class PostwomanContainer extends Component {
     }
 
     render(){
+        console.log('=======',this.state)
         return (
             <div>
                 {/*<select className="custom-select" onChange={this.handleRequestType}>
@@ -134,19 +128,17 @@ export default class PostwomanContainer extends Component {
                 <FormGroup>
                 {this.state.requestType === 'POST' || this.state.requestType === 'PUT' || this.state.requestType === 'DELETE' ?
 
-<<<<<<< HEAD
                 ( <FormGroup controlId="formControlsTextarea">
                         <ControlLabel>Enter request body as JSON:</ControlLabel>
                         <FormControl componentClass="textarea"value={this.state.requestBody} onChange={this.handleRequestBody} />
                     </FormGroup>)
-=======
+
                 (<div>
                     <p>Enter {this.state.requestType} request body here:</p>
                         <InputGroup>
                             <FormControl type="text" value={this.state.requestBody} onChange={this.handleRequestBody} />
                         </InputGroup>
                 </div>)
->>>>>>> 130c454872425c1524f1df0b86537510c85968cc
                 : null
                 }
                     <ControlLabel>Enter route:</ControlLabel>
