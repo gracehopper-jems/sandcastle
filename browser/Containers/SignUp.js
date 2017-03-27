@@ -39,7 +39,7 @@ export default class SignUp extends Component {
     })
     .catch(err => alert("Invalid sign up!"))
     // .catch(console.error)
-    };
+  }
 
 	handleChange(event){
 		const value = event.target.value;

@@ -24,20 +24,25 @@ module.exports = router
       const argsObj = req.body;
       argsObj.userId = req.session.userId.toLowerCase();
 
-      // find a port that is available
+      let serverPort;
+      let postgresPort;
+
+      // find available port
       portfinder.getPortPromise()
       .then((port) => {
-        let serverPort = port;
-        let postgresPort = port + 1;
+        serverPort = port;
         console.log('server port', serverPort);
-        console.log('postgres port', postgresPort);
-        return {serverPort, postgresPort};
+        portfinder.basePort = port + 1;
+        return portfinder.getPortPromise()
       })
-      .then((portsObj) => {
-        runContainer(Object.assign({}, argsObj, portsObj));
+      .then((port) => {
+        postgresPort = port;
+        console.log('server port', postgresPort);
+        runContainer(Object.assign({}, argsObj, {serverPort, postgresPort}));
+
         // send response with port number
         // how to send response after docker compose up ?????
-        res.send({response: 'running container on port', port: portsObj.serverPort});
+        res.send({response: 'running container on port', port: serverPort});
       })
       .catch(console.error);
 
