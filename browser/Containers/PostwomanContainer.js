@@ -46,10 +46,10 @@ export default class PostwomanContainer extends Component {
                 this.props.handlers.handleSendJson(jsonStr);
             })
             .catch(console.error);
-        } else if (this.state.requestType === 'POST' && this.state.path !== '') {
+        } else if ((this.state.requestType === 'POST' || this.state.requestType === 'PUT') && this.state.path !== '') {
             axios.post('/postWomanGetPath', {path: this.state.path})
             .then(() => {
-                return axios.post('/containerPostTest', {request: this.state.requestBody} )
+                return axios.post('/containerPostPut', {requestType: this.state.requestType, request: this.state.requestBody} )
             })
             .then((res) => {
                 return JSON.stringify(res.data);
@@ -80,6 +80,7 @@ export default class PostwomanContainer extends Component {
     }
 
     render(){
+        console.log('=======',this.state)
         return (
             <div>
                 {/*<select className="custom-select" onChange={this.handleRequestType}>
@@ -90,13 +91,15 @@ export default class PostwomanContainer extends Component {
                     <FormControl componentClass="select" placeholder="select" className="selectdropdown" onChange={this.handleRequestType}>
                         <option value="GET">GET</option>
                         <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
                     </FormControl>
                 </FormGroup>
                 <FormGroup>
-                {this.state.requestType === 'POST' ?
+                {this.state.requestType === 'POST' || this.state.requestType === 'PUT' ?
 
                 (<div>
-                    <p>Enter POST request body here:</p>
+                    <p>Enter {this.state.requestType} request body here:</p>
 
                         <InputGroup>
                             <FormControl type="text" value={this.state.requestBody} onChange={this.handleRequestBody} />

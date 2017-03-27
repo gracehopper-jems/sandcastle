@@ -90,15 +90,16 @@ module.exports = router
       }
     })
 
-    .post('/containerPostTest', (req, res, next) => {
+    .post('/containerPostPut', (req, res, next) => {
       if (req.session.userId){
         const requestBody = req.body.request;
+        const requestType = req.body.requestType;
         const path = req.session.path;
         const userId = req.session.userId.toLowerCase();
         const containerName = `${userId}app_docker-test_1`;
         exec(`docker ps -aqf "name=${containerName}"`)
         .then( (containerId) => {
-            return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '${requestBody}' http://localhost:8080${path.trim()}`)
+            return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X ${requestType} -d '${requestBody}' http://localhost:8080${path.trim()}`)
         })
         .then((result) => {
             res.send(result);
