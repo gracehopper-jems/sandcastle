@@ -1,9 +1,10 @@
 'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SignUp from './Containers/SignUp';
-import {Router, Route, browserHistory} from 'react-router';
+import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import AppContainer from './Containers/AppContainer';
+import SignUp from './Containers/SignUp';
+// import WelcomeMessage from './Components/WelcomeMessage';
 import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
