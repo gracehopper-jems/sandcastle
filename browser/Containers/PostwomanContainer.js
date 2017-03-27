@@ -67,6 +67,27 @@ export default class PostwomanContainer extends Component {
                 this.props.handlers.handleSendJson(jsonStr);
             })
             .catch(console.error);
+        } else if (this.state.requestType === 'PUT' && this.state.path !== '') {
+            axios.post('/postWomanGetPath', {path: this.state.path})
+            .then(() => {
+                return axios.put('/containerPutTest', {request: this.state.requestBody} )
+            })
+            .then((res) => {
+                return JSON.stringify(res.data);
+            })
+            .then((jsonStr) => {
+                this.props.handlers.handleSendPut(jsonStr);
+
+                // dispatches below makes sure iframe for app refreshes
+                this.props.handlers.handleUpdateDockerOn(false);
+                this.props.handlers.handleUpdateDockerOn(true);
+
+                return jsonStr;
+            })
+            .then((jsonStr) => {
+                this.props.handlers.handleSendJson(jsonStr);
+            })
+            .catch(console.error);
         } else if (this.state.requestType === 'DELETE' && this.state.path !== '') {
             axios.post('/postWomanGetPath', {path: this.state.path})
             .then(() => {
@@ -105,18 +126,18 @@ export default class PostwomanContainer extends Component {
     }
 
     render(){
-        console.log("REQUEST TYPE", this.state.requestType); 
         return (
             <div>
                 <FormGroup controlId="formControlsSelect">
                     <FormControl componentClass="select" placeholder="select" className="selectdropdown" onChange={this.handleRequestType}>
                         <option value="GET">GET</option>
                         <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
                         <option value="DELETE">DELETE</option>
                     </FormControl>
                 </FormGroup>
                 <FormGroup>
-                {this.state.requestType === 'POST' ?
+                {this.state.requestType === 'POST' || this.state.requestType === 'PUT' ?
 
                 ( <FormGroup controlId="formControlsTextarea">
                         <ControlLabel>Enter request body as JSON:</ControlLabel>
