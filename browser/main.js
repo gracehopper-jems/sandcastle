@@ -1,23 +1,23 @@
 'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
-import {Promise} from 'bluebird';
+import { Router, Route, browserHistory } from 'react-router';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import { Promise } from 'bluebird';
+import axios from 'axios';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Provider } from 'react-redux';
+
 import AppContainer from './Containers/AppContainer';
 import SignUp from './Containers/SignUp';
 // import WelcomeMessage from './Components/WelcomeMessage';
 import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
-import {Provider} from 'react-redux';
 import { setUserId } from './reducers/user';
 import makeFirepads from './utils/firepads';
-// import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase } from './reducers/code';
 import * as updateActions from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
-import axios from 'axios';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 injectTapEventPlugin(); //need this for the progress indicator
 
@@ -118,48 +118,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app')
 );
-
-        // allFirepads.forEach((pad, i) => {
-        //   pad.on('ready', () => {
-        //     if (i === 0) {
-        //       store.dispatch(updateHTML(pad.getText()));
-        //       count++;
-        //     }
-        //     if (i === 1) {
-        //       store.dispatch(updateCSS(pad.getText()));
-        //       count++;
-        //     }
-        //     if (i === 2) {
-        //       store.dispatch(updateJS(pad.getText()));
-        //       count++;
-        //     }
-        //     if (i === 3) {
-        //       store.dispatch(updateServer(pad.getText()));
-        //       count++;
-        //     }
-        //     if (i === 4) {
-        //       store.dispatch(updateDatabase(pad.getText()));
-        //       count++;
-        //     }
-        //     if (madeFrontendIframe === false && count === 5) {
-        //       makeFrontendIframe();
-        //       madeFrontendIframe = true;
-        //     }
-        //   });
-          // pad.on('synced', isSynced => {
-          //   if (isSynced) {
-          //     if (i === 0) store.dispatch(updateHTML(pad.getText()));
-          //     if (i === 1) store.dispatch(updateCSS(pad.getText()));
-          //     if (i === 2) store.dispatch(updateJS(pad.getText()));
-          //     if (i === 3) store.dispatch(updateServer(pad.getText()));
-          //     if (i === 4) store.dispatch(updateDatabase(pad.getText()));
-          //   }
-          // });
-
-
-        // user set timout if codemirror autorefresh stops working
-        // const codeMirrorInstances = pads[1];
-        // setTimeout(() => {
-        //   console.log('refreshing code mirrors');
-        //   pads[1].forEach(pad => {pad.refresh();});
-        // }, 1);
