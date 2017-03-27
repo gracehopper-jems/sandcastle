@@ -62,6 +62,14 @@ body {
     font-weight: bold;
 }
 
+.navbar-default .navbar-nav > li > button {
+    margin-top: 8px;
+}
+
+.navbar-default .navbar-nav > li > input {
+    margin-top: 8px;
+}
+
 .giant-container {
   display: flex;
 }
@@ -70,7 +78,7 @@ body {
   width: 50%;
 }
 
-img {
+.welcome img {
   width: 200px;
   margin: auto;
   display: block;
@@ -90,10 +98,20 @@ table {
 }
 
 h1, h2, h3 {
-  font-family: 'Quattrocento', serif; 
+  font-family: 'Quattrocento', serif;
   text-align: center;
 }
 
-li { 
-  cursor: pointer; 
+li {
+  cursor: pointer;
+}
+
+.welcome {
+    background-image: linear-gradient(rgba(255,255,255,0.9),rgba(255,255,255,0.5)), url('http://www.wallpaperup.com/uploads/wallpapers/2014/01/18/231587/81ad20119d092dd1f122cffca660d27d.jpg');
+    height: 100vh;
+    left: 0;
+    right:0;
+    margin:-20px;
+    overflow: hidden;
+    position: fixed;
 }
