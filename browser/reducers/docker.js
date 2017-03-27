@@ -21,8 +21,19 @@ const reducer = (state = initialState, action) => {
       return newState;
 
     case POST_TO_DB:
-      newState.database = newState.database.concat(action.post);
+      newState.database = newState.database.concat(JSON.parse(action.post));
       return newState;
+
+    // case DELETE_ENTRY: 
+    //   let JSON.parse(action.delete)[id]; 
+    //   newState.database.map( json => {
+    //     JSON.parse(json); 
+
+
+    //   })
+
+    //   let index = newState.
+    //   newState.database = newState.database 
 
 
     case CLEAR_DB:
@@ -48,6 +59,7 @@ const POST_TO_DB = 'POST_TO_DB';
 const UPDATE_DOCKER = 'UPDATE_DOCKER';
 const RECEIVE_PORT = 'RECEIVE_PORT';
 const CLEAR_DB = 'CLEAR_DB';
+const DELETE_ENTRY = 'DELETE_ENTRY'; 
 
 // action creators
 export const receiveJson = json => ({

@@ -67,7 +67,32 @@ export default class PostwomanContainer extends Component {
                 this.props.handlers.handleSendJson(jsonStr);
             })
             .catch(console.error);
-        }
+        } 
+        // else if (this.state.requestType === 'DELETE' && this.state.path !== '') {
+        //     axios.post('/postWomanGetPath', {path: this.state.path})
+        //     .then(() => {
+        //         return axios.post('/containerDeleteTest', {request: this.state.requestBody} )
+        //     })
+        //     .then((res) => {
+        //         return JSON.stringify(res.data);
+        //     })
+        //     .then((jsonStr) => {
+        //         this.props.handlers.handleSendPost(jsonStr);
+
+        //         // dispatches below makes sure iframe for app refreshes
+        //         this.props.handlers.handleUpdateDockerOn(false);
+        //         this.props.handlers.handleUpdateDockerOn(true);
+
+        //         return jsonStr;
+        //     })
+        //     .then((jsonStr) => {
+        //         this.props.handlers.handleSendJson(jsonStr);
+        //     })
+        //     .catch(console.error);
+        // }
+
+
+
     }
 
     handleRequestType(event) {
@@ -88,6 +113,7 @@ export default class PostwomanContainer extends Component {
                     <FormControl componentClass="select" placeholder="select" className="selectdropdown" onChange={this.handleRequestType}>
                         <option value="GET">GET</option>
                         <option value="POST">POST</option>
+                        <option value="POST">DELETE</option>
                     </FormControl>
                 </FormGroup>
                 <FormGroup>
