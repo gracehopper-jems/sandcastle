@@ -42,9 +42,8 @@ export default class NavbarContainer extends Component {
             })
             .catch(console.error);
         })
-        .catch(console.error);
-        // CHANGE THIS BACK LATER
-        // .catch(err => alert("Invalid log in!"))
+        // .catch(console.error);
+        .catch(err => alert("Invalid log in!"));
     }
 
   handleSignout(event) {
@@ -52,12 +51,21 @@ export default class NavbarContainer extends Component {
     this.setState({email: '', password: ''});
     firebase.auth().signOut()
     .then(() => {
+        return axios.get('/removeContainer')
+        .then((res) => {
+            console.log('removing container');
+            console.log('res', res)
+        });
+    })
+    .then(() => {
         this.props.handlers.handleSignout();
-        axios.get('/removeUser')
-        .then(() => {
-            console.log('removing userid');
-        })
-        .then(() => window.location.reload())
+        return axios.get('/removeUser')
+    })
+    .then(() => {
+        console.log('removing userid');
+    })
+    .then(() => {
+        window.location.reload();
     })
     .catch(console.error)
 }
