@@ -108,10 +108,6 @@ export default class PostwomanContainer extends Component {
         console.log("REQUEST TYPE", this.state.requestType); 
         return (
             <div>
-                {/*<select className="custom-select" onChange={this.handleRequestType}>
-                    <option>GET</option>
-                    <option>POST</option>
-                </select>*/}
                 <FormGroup controlId="formControlsSelect">
                     <FormControl componentClass="select" placeholder="select" className="selectdropdown" onChange={this.handleRequestType}>
                         <option value="GET">GET</option>
