@@ -18,7 +18,7 @@ class AppContainer extends Component {
     return (
         <div>
           <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} docker={this.props.docker}/>
-          {this.props.user.userId === ""
+          {(this.props.user.userId === '')
             ? (<WelcomeMessage />)
             :
             (<div className='giant-container'>
