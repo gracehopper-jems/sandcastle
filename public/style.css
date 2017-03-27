@@ -93,3 +93,7 @@ h1, h2, h3 {
   font-family: 'Quattrocento', serif; 
   text-align: center;
 }
+
+li { 
+  cursor: pointer; 
+}
