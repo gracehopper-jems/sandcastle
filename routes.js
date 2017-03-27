@@ -112,13 +112,12 @@ module.exports = router
 
       .delete('/containerDeleteTest', (req, res, next) => {
       if (req.session.userId){
-        const requestBody = req.body.request;
         const path = req.session.path;
         const userId = req.session.userId.toLowerCase();
         const containerName = `${userId}app_docker-test_1`;
         exec(`docker ps -aqf "name=${containerName}"`)
         .then( (containerId) => {
-            return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X DELETE -d '${requestBody}' http://localhost:8080${path.trim()}`)
+            return exec(`docker exec ${containerId.trim()} curl -X "DELETE" http://localhost:8080${path.trim()}`)
         })
         .then((result) => {
             console.log("Result from DELETE", result)
