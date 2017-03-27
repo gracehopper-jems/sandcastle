@@ -29,7 +29,7 @@ export default class DatabaseTable extends Component {
 
 
 	render() {
-
+		let count = 0; 
 		return (
 
 			<table> 
@@ -40,11 +40,10 @@ export default class DatabaseTable extends Component {
 				 </tbody>
 
 			{this.state.entries.map(entry => { 
-				let count = 0; 
 				return (
-					 <tbody>
-					 	<tr>
-					 		{this.state.headings.map( key => <td>{entry[key]}</td>) } 
+					 <tbody key={"" + count++}>
+					 	<tr key={"" + count++}>
+					 		{this.state.headings.map( col => <td key={"" + count++}>{entry[col]}</td>) } 
 					 	</tr> 
 					 </tbody> 
 				) 
