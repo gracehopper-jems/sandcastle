@@ -6,6 +6,7 @@ body {
   margin: 0;
   height: 100%;
   position: relative;
+  font-family: 'Roboto', sans-serif;
 }
 
 .container {
@@ -71,6 +72,8 @@ body {
 
 img {
   width: 200px;
+  margin: auto;
+  display: block;
 }
 
 .selectdropdown {
@@ -84,4 +87,9 @@ img {
 
 table {
   width: 100%;
+}
+
+h1, h2, h3 {
+  font-family: 'Quattrocento', serif; 
+  text-align: center;
 }
