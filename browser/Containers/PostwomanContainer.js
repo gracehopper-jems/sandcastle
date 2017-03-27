@@ -63,7 +63,7 @@ export default class PostwomanContainer extends Component {
                 this.props.handlers.handleUpdateDockerOn(true);
             })
             .then(() => {
-                this.props.handlers.handleSendJson("Congrats! You made a post! You can now checkout out your database.")
+                this.props.handlers.handleSendJson("Congrats! You made a post! Checkout your database view to see it.")
             })
             .catch(console.error);
         }
@@ -90,19 +90,16 @@ export default class PostwomanContainer extends Component {
                 <FormGroup>
                 {this.state.requestType === 'POST' ?
 
-                (<div>
-                    <p>Enter POST request body here:</p>
-
-                        <InputGroup>
-                            <FormControl type="text" value={this.state.requestBody} onChange={this.handleRequestBody} />
-                        </InputGroup>
-                </div>)
+                ( <FormGroup controlId="formControlsTextarea">
+                        <ControlLabel>Enter request body as JSON:</ControlLabel>
+                        <FormControl componentClass="textarea"value={this.state.requestBody} onChange={this.handleRequestBody} />
+                    </FormGroup>)
                 : null
                 }
                     <InputGroup>
                         <FormControl type="text" value={this.state.path} onChange={this.handleChange} />
                         <InputGroup.Button>
-                        <Button onClick={this.handleSend}>Send</Button>
+                            <Button onClick={this.handleSend}>Send</Button>
                         </InputGroup.Button>
                     </InputGroup>
                 </FormGroup>
