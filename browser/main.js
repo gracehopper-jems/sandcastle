@@ -11,7 +11,7 @@ import {Provider} from 'react-redux';
 import { setUserId } from './reducers/user';
 import makeFirepads from './utils/firepads';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase } from './reducers/code';
-import makeFrontendIframe from './makeFrontendIframe';
+import makeFrontendIframe from './utils/makeFrontendIframe';
 import axios from 'axios';
 
 const onAppEnter = () => {
