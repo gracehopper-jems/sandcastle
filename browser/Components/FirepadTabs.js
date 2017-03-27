@@ -8,7 +8,7 @@ export const FirepadTabs = () => {
   const handleClick = (event) => {
   }
 
-  let HTMEditor = Editors[0];
+  let HTMLEditor = Editors[0];
   let CSSEditor = Editors[1];
   let JSEditor = Editors[2];
   let ServerEditor = Editors[3];
@@ -18,7 +18,7 @@ export const FirepadTabs = () => {
     <div onClick={handleClick}>
       <Tabs defaultActiveKey={1} id="FirepadTabContainer">
         <Tab eventKey={1} title="HTML Editor">
-          <HTMEditor />
+          <HTMLEditor />
         </Tab>
         <Tab eventKey={2} title="CSS Editor">
           <CSSEditor />
