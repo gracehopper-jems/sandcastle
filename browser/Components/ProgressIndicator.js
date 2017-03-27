@@ -1,6 +1,7 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import CircularProgress from 'material-ui/CircularProgress';
+import { Button, Modal, Tooltip, Popover } from 'react-bootstrap';
 
 const Progress = () => (
   <div>
@@ -8,4 +9,27 @@ const Progress = () => (
   </div>
 );
 
+// export const ProgressModal = () => (
+
+// )
+
+export const ProgressModal = () => (
+  <div className="static-modal">
+    <Modal.Dialog>
+      <Modal.Header>
+        <Modal.Title>Loading ...</Modal.Title>
+      </Modal.Header>
+
+      <Modal.Body>
+        <center>
+        <CircularProgress size={80} thickness={5} />
+        </center>
+      </Modal.Body>
+
+      <Modal.Footer>
+      </Modal.Footer>
+
+    </Modal.Dialog>
+  </div>
+);
 export default Progress;

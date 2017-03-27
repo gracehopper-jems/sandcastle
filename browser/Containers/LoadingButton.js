@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { Button } from 'react-bootstrap';
-import Progress from '../Components/ProgressIndicator';
+import Progress, { ProgressModal } from '../Components/ProgressIndicator';
 
 export default class LoadingButton extends Component {
 	constructor(props) {
@@ -30,7 +30,7 @@ export default class LoadingButton extends Component {
 					<div
 						disabled={isLoading}
 					 	onClick={!isLoading ? this.handleClick : null}>
-						{isLoading ? <Progress /> : 'Run Frontend'}
+						{isLoading ? <ProgressModal /> : 'Run Frontend'}
 					</div>
 			);
 		}
