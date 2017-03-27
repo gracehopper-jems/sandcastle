@@ -67,7 +67,34 @@ export default class PostwomanContainer extends Component {
                 this.props.handlers.handleSendJson(jsonStr);
             })
             .catch(console.error);
+        } else if (this.state.requestType === 'DELETE' && this.state.path !== '') {
+            axios.post('/postWomanGetPath', {path: this.state.path})
+            .then(() => {
+                return axios.delete('/containerDeleteTest', {request: this.state.requestBody} )
+            })
+            .then((res) => {
+                console.log("RESPONSE FROM DELETE REQUEST")
+                console.log(res); 
+                return JSON.stringify(res.data);
+            })
+            .then((jsonStr) => {
+                console.log("AS A JSON STR", jsonStr); 
+                this.props.handlers.handleSendDelete(jsonStr);
+
+                // dispatches below makes sure iframe for app refreshes
+                this.props.handlers.handleUpdateDockerOn(false);
+                this.props.handlers.handleUpdateDockerOn(true);
+
+                return jsonStr;
+            })
+            .then((jsonStr) => {
+                this.props.handlers.handleSendJson(jsonStr);
+            })
+            .catch(console.error);
         }
+
+
+
     }
 
     handleRequestType(event) {
@@ -78,16 +105,14 @@ export default class PostwomanContainer extends Component {
     }
 
     render(){
+        console.log("REQUEST TYPE", this.state.requestType); 
         return (
             <div>
-                {/*<select className="custom-select" onChange={this.handleRequestType}>
-                    <option>GET</option>
-                    <option>POST</option>
-                </select>*/}
                 <FormGroup controlId="formControlsSelect">
                     <FormControl componentClass="select" placeholder="select" className="selectdropdown" onChange={this.handleRequestType}>
                         <option value="GET">GET</option>
                         <option value="POST">POST</option>
+                        <option value="DELETE">DELETE</option>
                     </FormControl>
                 </FormGroup>
                 <FormGroup>
