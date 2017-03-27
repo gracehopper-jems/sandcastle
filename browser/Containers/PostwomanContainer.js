@@ -27,8 +27,8 @@ export default class PostwomanContainer extends Component {
     }
 
     handleRequestBody(event) {
-        let requestBody = event.target.value;
         event.preventDefault();
+        let requestBody = event.target.value;
         this.setState({requestBody: requestBody})
     }
 
@@ -74,11 +74,11 @@ export default class PostwomanContainer extends Component {
             })
             .then((res) => {
                 console.log("RESPONSE FROM DELETE REQUEST")
-                console.log(res); 
+                console.log(res);
                 return JSON.stringify(res.data);
             })
             .then((jsonStr) => {
-                console.log("AS A JSON STR", jsonStr); 
+                console.log("AS A JSON STR", jsonStr);
                 this.props.handlers.handleSendDelete(jsonStr);
 
                 // dispatches below makes sure iframe for app refreshes
@@ -93,8 +93,6 @@ export default class PostwomanContainer extends Component {
             .catch(console.error);
         }
 
-
-
     }
 
     handleRequestType(event) {
@@ -105,7 +103,7 @@ export default class PostwomanContainer extends Component {
     }
 
     render(){
-        console.log("REQUEST TYPE", this.state.requestType); 
+        console.log("REQUEST TYPE", this.state.requestType);
         return (
             <div>
                 <FormGroup controlId="formControlsSelect">
