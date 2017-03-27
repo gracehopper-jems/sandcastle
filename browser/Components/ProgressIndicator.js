@@ -9,15 +9,11 @@ const Progress = () => (
   </div>
 );
 
-// export const ProgressModal = () => (
-
-// )
-
-export const ProgressModal = () => (
+export const ProgressModal = (props) => (
   <div className="static-modal">
     <Modal.Dialog>
       <Modal.Header>
-        <Modal.Title>Loading ...</Modal.Title>
+        <Modal.Title>Loading {props.view}...</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
