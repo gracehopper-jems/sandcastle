@@ -15,6 +15,11 @@ class BackendButton extends Component {
 
   handleClick (event) {
     event.preventDefault();
+
+    // old server and database views cleared from view
+    this.props.handlers.handleSendJson('');
+    this.props.handlers.handleSendClearDB();
+
     this.setState({isLoading: true});
     axios.post('/container', {userRoutes: this.props.code.serverString,
       userModels: this.props.code.databaseString,
@@ -25,6 +30,7 @@ class BackendButton extends Component {
     .then((res) => {
       console.log('running container');
       const userServerPort = res.data.port;
+
 
       // ========= change this once we figure out to send signal that docker composed up and port is listening
       setTimeout(() => {
