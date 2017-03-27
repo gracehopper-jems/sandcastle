@@ -21,16 +21,7 @@ module.exports = router
 
   .post('/container', (req, res, next) => {
     if (req.session.userId){
-
-      const argsObj = {
-        // userId: req.session.userId.toLowerCase(),
-        userRoutes: req.body.userRoutes,
-        userModels: req.body.userModels,
-        userHTML: req.body.userHTML,
-        userCSS: req.body.userCSS,
-        userJS: req.body.userJS,
-      }
-
+      const argsObj = req.body;
       argsObj.userId = req.session.userId.toLowerCase();
 
       // find a port that is available
