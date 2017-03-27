@@ -101,6 +101,27 @@ module.exports = router
       }
     })
 
+    .put('/containerPutTest', (req, res, next) => {
+      if (req.session.userId){
+        const requestBody = req.body.request;
+        const path = req.session.path;
+        const userId = req.session.userId.toLowerCase();
+        const containerName = `${userId}app_docker-test_1`;
+        exec(`docker ps -aqf "name=${containerName}"`)
+        .then( (containerId) => {
+            return exec(`docker exec ${containerId.trim()} curl -X PUT -H "Content-type: application/json" -d '${requestBody}' http://localhost:8080${path.trim()}`)
+        })
+        .then((result) => {
+            res.send(result);
+        })
+        .catch(console.error);
+      } else {
+        console.log("Error - No user saved on session!")
+      }
+    })
+
+
+
 
       .delete('/containerDeleteTest', (req, res, next) => {
       if (req.session.userId){
