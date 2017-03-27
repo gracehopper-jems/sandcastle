@@ -4,12 +4,6 @@ import PostwomanContainer from '../Containers/PostwomanContainer';
 import DatabaseTable from '../Containers/DatabaseTable';
 
 export const IframeTabs = (props) => {
-  var stringifiedDB = '';
-  if (props.docker){
-    props.docker.database.forEach(obj => {
-      stringifiedDB += obj.toString();
-    })
-  }
   return (
     <Tabs defaultActiveKey={1} id="IframeTabContainer">
       <Tab eventKey={1} title="Browser View">
