@@ -7,7 +7,7 @@ const createHTML = require('./createHTML');
 const dockerComposeStr = `db:
   image: postgres
   ports:
-    - <%= postgresPort %>:5432
+    - <%= postgresPort %>:<%= userPostgresPort %>
   environment:
     POSTGRES_USER: username
     POSTGRES_PASSWORD: pgpassword
@@ -15,18 +15,36 @@ const dockerComposeStr = `db:
 docker-test:
   build: .
   ports:
-    - <%= serverPort %>:8080
+    - <%= serverPort %>:<%= userServerPort %>
   links:
     - db
   environment:
     SEQ_DB: docker-test
     SEQ_USER: username
     SEQ_PW: pgpassword
-    PORT: 8080
+    PORT: <%= userServerPort %>
     DATABASE_URL: postgres://username:pgpassword@db:5432/docker-test`;
 
+const dockerFileStr = `FROM node:boron
+
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# Install app dependencies
+COPY package.json /usr/src/app/
+RUN npm install
+
+# Bundle app source
+COPY . /usr/src/app
+
+EXPOSE <%= userServerPort %>
+
+CMD [ "npm", "start" ]`
+
 const runContainer = (argsObj) => {
-    const dockerCompose = _.template(dockerComposeStr);
+    const makeDockerCompose = _.template(dockerComposeStr);
+    const makeDockerFile = _.template(dockerFileStr);
     const exec = Promise.promisify(require('child_process').exec);
     const writeFile = Promise.promisify(fs.writeFile);
     const readFile = Promise.promisify(fs.readFile);
@@ -142,16 +160,16 @@ const runContainer = (argsObj) => {
         console.log('change into user app directory')
         process.chdir('../');
         // write docker-compose to user-app folder
-        return writeFile('docker-compose.yml', dockerCompose({'serverPort': argsObj.serverPort, 'postgresPort': argsObj.postgresPort}));
+        return writeFile('docker-compose.yml', makeDockerCompose({'serverPort': argsObj.serverPort, 'postgresPort': argsObj.postgresPort, 'userServerPort': process.env.userServerPort, 'userPostgresPort': process.env.userPostgresPort}));
     })
+    // .then(() => {
+    //     console.log("reading Dockerfile");
+    //     return readFile(path.join(__dirname,'./Dockerfile'), 'utf8')
+    // })
     .then(() => {
-        console.log("reading Dockerfile");
-        return readFile(path.join(__dirname,'./Dockerfile'), 'utf8')
-    })
-    .then((dockerFile) => {
         // write dockerFile to user-app folder
         console.log('creating docker file');
-        return writeFile('Dockerfile', dockerFile);
+        return writeFile('Dockerfile', makeDockerFile({'userServerPort': process.env.userServerPort}));
     })
     .then(() => {
         // build docker container
