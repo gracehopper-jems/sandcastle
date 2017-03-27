@@ -7,7 +7,6 @@ import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';
 import NavbarContainer from './NavbarContainer';
 import WelcomeMessage from '../Components/WelcomeMessage';
-import axios from 'axios';
 
 class AppContainer extends Component {
   constructor(props){
@@ -25,29 +24,28 @@ class AppContainer extends Component {
   }
 
   render(){
-
     return (
         <div>
-          <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} docker={this.props.docker}/>
-          {(this.props.user.userId === '' && this.state.renderWelcomeMessage === true)
-            ? <WelcomeMessage />
-            :
-            (<div className='giant-container'>
-              <div className='editor-container'>
-                <FirepadTabs />
-              </div>
-              <div className='iframe-container'>
-                <div className="container-fluid">
-                  <div className="row">
-                    <div className="col-md-6">
-                        <IframeTabs docker={this.props.docker} handlers={this.props.handlers} />
+            <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} docker={this.props.docker}/>
+                {(this.props.user.userId === '' && this.state.renderWelcomeMessage === true)
+                ? <WelcomeMessage />
+                :
+                (<div className='giant-container'>
+                    <div className='editor-container'>
+                        <FirepadTabs />
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>)
-          }
-          </div>
+                    <div className='iframe-container'>
+                    <div className="container-fluid">
+                        <div className="row">
+                        <div className="col-md-6">
+                            <IframeTabs docker={this.props.docker} handlers={this.props.handlers} />
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>)
+                }
+        </div>
     );
   }
 }
