@@ -96,12 +96,15 @@ render(){
         <nav className="navbar navbar-default">
               <div className="container-fluid">
                   <div className="navbar-header">
-                      <Link className="navbar-brand" to="/">Sandcastle</Link>
+                      <Link className="navbar-brand" to="/">
+                      <span><img src='https://cdn0.iconfinder.com/data/icons/map-and-navigation-2/65/79-128.png' width="25px" height="25px"></img>
+                       Sandcastle</span>
+                      </Link>
                   </div>
                   <ul className="nav navbar-nav nav-tabs">
 
-                    { this.props.user.userId !== '' ? <li><a><LoadingButton code={this.props.code} handlers={this.props.handlers} /></a></li> : null } 
-                    { this.props.user.userId !== '' ?  <li><a><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user}/></a></li> : null} 
+                    { this.props.user.userId !== '' ? <li><a><LoadingButton code={this.props.code} handlers={this.props.handlers} /></a></li> : null }
+                    { this.props.user.userId !== '' ?  <li><a><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user}/></a></li> : null}
 
                     {this.state.signup ?
                       (<div className="static-modal">
@@ -141,9 +144,9 @@ render(){
                         </li>
                         <li>
                             <label className="sr-only" htmlFor="inlineFormInputGroup">Password</label>
-                            <div className="input-group mb-2 mr-sm-2 mb-sm-0">
+                            {/*<div className="input-group mb-2 mr-sm-2 mb-sm-0">*/}
                                 <input name="password" type="password" className="form-control" id="inlineFormInputGroup" placeholder="Password" onChange={this.handleChange} />
-                            </div>
+                            {/*</div>*/}
                         </li>
                         <li>
                             <button type="submit" className="btn btn-primary">Sign In</button>
