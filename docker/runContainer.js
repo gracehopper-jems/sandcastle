@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
+const createHTML = require('./createHTML');
 
 const dockerComposeStr = `db:
   image: postgres
@@ -24,7 +25,7 @@ docker-test:
     PORT: 8080
     DATABASE_URL: postgres://username:pgpassword@db:5432/docker-test`;
 
-const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) => {
+const runContainer = (argsObj) => {
     const dockerCompose = _.template(dockerComposeStr);
     const exec = Promise.promisify(require('child_process').exec);
     const writeFile = Promise.promisify(fs.writeFile);
@@ -32,13 +33,11 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
 
     console.log(`DIRECTORY WHEN RUN BACKEND BUTTON CLICKED: ${process.cwd()}`);
 
-    // currently in text-editor folder
+    // check current directory
     exec(`pwd`)
-    // create user app folder in docker folder
-    // include timestamp in folder in future if time
     .then((currentDirectory) => {
-        // if user app folder already exista and already inside use app folder
-        if (currentDirectory.includes(`${userId}-app`)) {
+        // if user app folder already exists and already inside use app folder
+        if (currentDirectory.includes(`${argsObj.userId}-app`)) {
             console.log('THERE IS ALREADY A USER APP')
 
             console.log('docker compose down');
@@ -48,7 +47,7 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
                 process.chdir('../');
                 console.log(`Changed working directory: ${process.cwd()}`);
                 console.log('deleting user-app folder');
-                return exec(`rm -r ${userId}-app`);
+                return exec(`rm -r ${argsObj.userId}-app`);
             })
             .then(() => {
                 // change into text-editor folder
@@ -56,43 +55,29 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
                 console.log(`Changed working directory: ${process.cwd()}`);
             })
             .then(() => {
-                return exec(`mkdir docker/${userId}-app`);
+                // create user app folder in docker folder
+                // include timestamp in folder in future if time
+                return exec(`mkdir docker/${argsObj.userId}-app`);
             })
             .catch(console.error);
 
         } else {
-        // if user app folder does not exist and inside text editor folder
+            // if user app folder does not exist and inside text editor folder
+            // create user app folder
             console.log('NO USER APP FOLDER YET');
-            return exec(`mkdir docker/${userId}-app`);
+            return exec(`mkdir docker/${argsObj.userId}-app`);
         }
     })
     .then(() => {
         //change into user app folder
         try {
           console.log(`Current working directory: ${process.cwd()}`);
-          process.chdir(`docker/${userId}-app`);
+          process.chdir(`docker/${argsObj.userId}-app`);
           console.log(`Changed working directory: ${process.cwd()}`);
         }
         catch (err) {
           console.log(`chdir: ${err}`);
         }
-        // check that we can do docker-compose down and delete user-app folder
-        // in future run this in separate function when user reload their app on frontend
-        // setTimeout(() => {
-        //     console.log('timeout, docker compose down');
-        //     exec('docker-compose down')
-        //     .then(() => {
-        //         process.chdir('../');
-        //         console.log(`Changed working directory: ${process.cwd()}`);
-        //         console.log('deleting user-app folder');
-        //         exec(`rm -r ${userId}-app`);
-        //     })
-        //     .then(() => {
-        //         process.chdir('../');
-        //         console.log(`Changed working directory: ${process.cwd()}`);
-        //     })
-        //     .catch(console.error);
-        // }, 60000);
 
         console.log("reading package.json");
         return readFile(path.join(__dirname,'./package.json'), 'utf8')
@@ -113,16 +98,51 @@ const runContainer = (userId, serverPort, postgresPort, userRoutes, userModels) 
     .then(() => {
         // write user models to user-app folder
         console.log('creating the user models');
-        return writeFile('userModels.js', userModels);
+        return writeFile('userModels.js', argsObj.userModels);
     })
     .then(() => {
         // write user routes to user-app folder
         console.log('creating the user routes');
-        return writeFile('userRoutes.js', userRoutes);
+        return writeFile('userRoutes.js', argsObj.userRoutes);
     })
     .then(() => {
+        // create public directory
+        console.log('making public directory');
+        return exec('mkdir public');
+    })
+    .then(() => {
+        // change into public directory
+        console.log('changing into public directory')
+        process.chdir('public');
+
+        // create user html file
+        const userHTML = createHTML(argsObj.userHTML);
+
+        // write user html to pbulic folder
+        console.log('creating the user html');
+        return writeFile('index.html', userHTML);
+    })
+    .then(() => {
+        // write user js to public folder
+        console.log('creating the user js');
+        return writeFile('userJS.js', argsObj.userJS);
+    })
+    .then(() => {
+        // bunlde user js file to require node modules
+        console.log('browserifying js into bundle');
+        return exec('browserify userJS.js -o userBundle.js');
+    })
+    .then(() => {
+        // write user css to public folder
+        console.log('creating the user css');
+        return writeFile('style.css', argsObj.userCSS);
+    })
+    .then(() => {
+        // change into user folder
+        console.log('change into user app directory')
+        process.chdir('../');
         // write docker-compose to user-app folder
-        return writeFile('docker-compose.yml', dockerCompose({'serverPort': serverPort, 'postgresPort': postgresPort}));
+        return writeFile('docker-compose.yml', dockerCompose({'serverPort': argsObj.serverPort, 'postgresPort': argsObj.postgresPort}));
     })
     .then(() => {
         console.log("reading Dockerfile");
