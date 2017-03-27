@@ -39,8 +39,7 @@ export default class SignUp extends Component {
 	    .catch(console.error);
     })
     .catch(console.error)
-    // CHANGE THIS BACK LATER
-    // .catch(err => alert("Invalid sign up!"))
+    .catch(err => alert("Invalid sign up!"))
     };
 
 	handleChange(event){
@@ -77,10 +76,13 @@ export default class SignUp extends Component {
 			                </div>
 			            </div>
 			          	<div className="form-group">
-			                <label htmlFor="title" className="col-sm-4 control-label">Password</label>
+			                <label htmlFor="title" className="col-sm-4 control-label">Password *</label>
 			                <div className="col-sm-6">
 			                    <input name="password" type="password" className="form-control" onChange={this.handleChange} />
 			                </div>
+			            </div>
+			            <div className="form-group">
+			            	<p>* Password must be at least 6-characters long.</p> 
 			            </div>
 
 			            <div className="col-sm-offset-10 col-sm-10">

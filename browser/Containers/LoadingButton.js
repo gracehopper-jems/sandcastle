@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { Button } from 'react-bootstrap';
 import Progress, { ProgressModal } from '../Components/ProgressIndicator';
 
 export default class LoadingButton extends Component {

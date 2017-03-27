@@ -40,5 +40,13 @@ router.post('/test2', (req, res) => {
     //     .catch(console.error);
 });
 
+router.put('/test3', (req, res) => {
+    res.status(200).send('put req.body', req.body)
+});
+
+router.delete('/test4', (req, res) => {
+    res.status(200).send('delete request successful');
+});
+
 /* And we would provide this for them to make sure they are exporting their router correctly */
 module.exports = router;

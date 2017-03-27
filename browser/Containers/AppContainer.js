@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
+<<<<<<< HEAD
 import {sendJson, sendPost, sendClearDB, sendUpdateDockerOn, sendPort} from '../reducers/docker.js';
+=======
+import {sendJson, sendPostPutDelete, sendUpdateDockerOn, sendPort} from '../reducers/docker.js';
+>>>>>>> 130c454872425c1524f1df0b86537510c85968cc
 import {setUserId} from '../reducers/user';
 import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';
@@ -76,12 +80,19 @@ const mapDispatchToProps = (dispatch) => {
         handleSendJson(...args){
           dispatch(sendJson(...args));
         },
-        handleSendPost(...args){
-          dispatch(sendPost(...args));
+        handleSendPostPutDelete(...args){
+          dispatch(sendPostPutDelete(...args));
         },
         handleSendClearDB(){
           dispatch(sendClearDB());
         },
+// PUT-AND-DELETE
+        // handleSendPut(...args) {
+        //   dispatch(sendPut(...args));
+        // },
+        // handleSendDelete(...args) {
+        //   dispatch(sendDelete(...args));
+        // },
         handleUpdateDockerOn(...args){
           dispatch(sendUpdateDockerOn(...args));
         },
