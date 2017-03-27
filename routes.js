@@ -29,8 +29,6 @@ module.exports = router
       .then((port) => {
         let serverPort = port;
         let postgresPort = port + 1;
-        // argsObj.serverPort = 8000;
-        // argsObj.postgresPort = 8001;
         console.log('server port', serverPort);
         console.log('postgres port', postgresPort);
         return {serverPort, postgresPort};
