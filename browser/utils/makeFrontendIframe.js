@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import store from '../store';
-import { Promise } from 'bluebird';
 
 const makeFrontendIframe = () => {
 	let state = store.getState();
