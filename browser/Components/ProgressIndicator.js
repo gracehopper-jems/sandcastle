@@ -11,9 +11,9 @@ const Progress = () => (
 
 export const ProgressModal = (props) => (
   <div className="static-modal">
-    <Modal.Dialog>
+    <Modal.Dialog dialogClassName="custom-modal">
       <Modal.Header>
-        <Modal.Title>Loading {props.view}...</Modal.Title>
+        <Modal.Title>Building {props.view}...</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>

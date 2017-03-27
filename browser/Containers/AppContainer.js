@@ -12,14 +12,25 @@ import axios from 'axios';
 class AppContainer extends Component {
   constructor(props){
     super(props)
+    this.state = {
+      renderWelcomeMessage: false
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // if userid on props is empty and userid on nextprops is empty, then render welcome message
+    if (this.props.user.userId === '' && nextProps.user.userId === '') {
+      this.setState({renderWelcomeMessage: true});
+    }
   }
 
   render(){
+
     return (
         <div>
           <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} docker={this.props.docker}/>
-          {(this.props.user.userId === '')
-            ? (<WelcomeMessage />)
+          {(this.props.user.userId === '' && this.state.renderWelcomeMessage === true)
+            ? <WelcomeMessage />
             :
             (<div className='giant-container'>
               <div className='editor-container'>
