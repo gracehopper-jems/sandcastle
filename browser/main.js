@@ -73,27 +73,28 @@ const onAppEnter = () => {
 
         madeFirepads = true;
 
-        Promise.map(allFirepads, (pad, i) => {
+        const updatingText = Promise.map(allFirepads, (pad, i) => {
           return new Promise((resolve, reject) => {
             pad.on('ready', () => {
-              store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText));
+              store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
               count++;
-              if (madeFrontendIframe === false && count === 5) {
-                console.log('COUNT', count);
-                makeFrontendIframe();
-                madeFrontendIframe = true;
-              }
+              console.log('COUNT', count);
               resolve();
             });
           });
         });
 
+        updatingText.then(() => {
+          if (madeFrontendIframe === false && count === 5) {
+            makeFrontendIframe();
+            madeFrontendIframe = true;
+          }
+        });
 
-
-        Promise.map(allFirepads, (pad, i) => {
+        const syncing = Promise.map(allFirepads, (pad, i) => {
           return new Promise((resolve, reject) => {
             pad.on('sync', isSynced => {
-              if (isSynced) store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText));
+              if (isSynced) store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
               resolve();
             });
           });
