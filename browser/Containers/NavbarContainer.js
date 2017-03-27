@@ -29,8 +29,7 @@ export default class NavbarContainer extends Component {
 
     handleSignin(event){
         event.preventDefault();
-        const email = this.state.email;
-        const password = this.state.password;
+        const {email, password} = this.state;
         firebase.auth().signInWithEmailAndPassword(email, password)
         .then( () => {
             const user = firebase.auth().currentUser;
