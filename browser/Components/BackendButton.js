@@ -54,7 +54,7 @@ class BackendButton extends Component {
       <div
         disabled={isLoading}
         onClick={!isLoading ? this.handleClick: null}>
-        {isLoading ? <ProgressModal /> : 'Run Backend'}
+        {isLoading ? <ProgressModal view={'Backend'}/> : 'Run Backend'}
       </div>
     )
   }
