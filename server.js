@@ -4,11 +4,7 @@ const bodyParser = require('body-parser');
 const {resolve} = require('path');
 const PrettyError = require('pretty-error');
 const finalHandler = require('finalhandler');
-// const runContainer = require('./docker/runContainer');
-// const removeContainer = require('./docker/removeContainer');
 const session = require('express-session')
-// const Promise = require('bluebird');
-// const portfinder = require('portfinder');
 const routes = require('./routes');
 
 const app = express();

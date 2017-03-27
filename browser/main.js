@@ -1,16 +1,15 @@
 'use strict';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import SignUp from './Containers/SignUp';
-import {Router, Route, IndexRoute, browserHistory} from 'react-router';
+import {Router, Route, browserHistory} from 'react-router';
 import AppContainer from './Containers/AppContainer';
 import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
 import {Provider} from 'react-redux';
 import { setUserId } from './reducers/user';
-import makeFirepads from './firepads';
+import makeFirepads from './utils/firepads';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase } from './reducers/code';
 import makeFrontendIframe from './makeFrontendIframe';
 import axios from 'axios';
