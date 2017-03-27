@@ -21,10 +21,14 @@ body {
   height: 98vh;
 }
 
-#frame {
+/*.pagehalf {
+  flex: 1;
+}*/
+
+/*#frame {
   width: 45vw;
   height: 85vh;
-}
+}*/
 
 .app-frame {
   width: 45vw;

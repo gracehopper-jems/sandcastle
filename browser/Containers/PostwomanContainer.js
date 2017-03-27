@@ -64,8 +64,6 @@ export default class PostwomanContainer extends Component {
                 return jsonStr;
             })
             .then((jsonStr) => {
-                // this.props.handlers.handleSendJson("Congrats! You made a post! You can now checkout out your database.")
-                // postman shows the json that was posted so thought it'd be nice if we showed that too
                 this.props.handlers.handleSendJson(jsonStr);
             })
             .catch(console.error);
@@ -95,19 +93,16 @@ export default class PostwomanContainer extends Component {
                 <FormGroup>
                 {this.state.requestType === 'POST' ?
 
-                (<div>
-                    <p>Enter POST request body here:</p>
-
-                        <InputGroup>
-                            <FormControl type="text" value={this.state.requestBody} onChange={this.handleRequestBody} />
-                        </InputGroup>
-                </div>)
+                ( <FormGroup controlId="formControlsTextarea">
+                        <ControlLabel>Enter request body as JSON:</ControlLabel>
+                        <FormControl componentClass="textarea"value={this.state.requestBody} onChange={this.handleRequestBody} />
+                    </FormGroup>)
                 : null
                 }
                     <InputGroup>
                         <FormControl type="text" value={this.state.path} onChange={this.handleChange} />
                         <InputGroup.Button>
-                        <Button onClick={this.handleSend}>Send</Button>
+                            <Button onClick={this.handleSend}>Send</Button>
                         </InputGroup.Button>
                     </InputGroup>
                 </FormGroup>
