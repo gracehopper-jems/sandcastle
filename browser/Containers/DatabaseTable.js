@@ -2,15 +2,13 @@ import React, {Component} from 'react';
 
 
 export default class DatabaseTable extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-    	entries: [], 
-    	headings: [], 
-    }
+    constructor(props){
+        super(props)
+        this.state = {
+            entries: [],
+            headings: [],
+        }
   }
-
-
 
 	componentWillReceiveProps(nextProps){ 
   		const entries = nextProps.database; 
@@ -52,12 +50,3 @@ export default class DatabaseTable extends Component {
 		) 
 	} 
 } 
-
-
-
-
-		  
-
-
-
-

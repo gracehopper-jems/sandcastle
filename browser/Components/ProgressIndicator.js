@@ -21,10 +21,6 @@ export const ProgressModal = (props) => (
         <CircularProgress size={80} thickness={5} />
         </center>
       </Modal.Body>
-
-      <Modal.Footer>
-      </Modal.Footer>
-
     </Modal.Dialog>
   </div>
 );
