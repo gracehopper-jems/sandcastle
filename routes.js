@@ -14,11 +14,6 @@ module.exports = router
     res.sendStatus(200);
   })
 
-  .get('/getUser', (req, res, next) => {
-    const userId = req.session.userId;
-    res.send(userId);
-  })
-
   .get('/removeUser', (req, res, next) => {
     req.session.destroy();
     res.sendStatus(200);

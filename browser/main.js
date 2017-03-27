@@ -1,9 +1,10 @@
 'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SignUp from './Containers/SignUp';
-import {Router, Route, browserHistory} from 'react-router';
+import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import AppContainer from './Containers/AppContainer';
+import SignUp from './Containers/SignUp';
+// import WelcomeMessage from './Components/WelcomeMessage';
 import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
@@ -24,23 +25,17 @@ const onAppEnter = () => {
   var config = { apiKey, authDomain, databaseURL };
   firebase.initializeApp(config);
 
+  // let user = firebase.auth().currentUser;
+
   let madeFirepads = false;
   let madeFrontendIframe = false;
-
-  // let currentUser;
-  // axios.get('/getUser')
-  // .then((user) => {
-  //   currentUser = user.data;
-  //   console.log('====current user', currentUser);
-  // })
-  // .catch(console.error);
 
   firebase.auth().onAuthStateChanged((user) => {
     console.log("USER IN ON APP ENTER", user);
 
     if (user) {
       let userId = user.uid;
-      store.dispatch(setUserId(userId));
+      store.dispatch(setUserId(userId))
 
       axios.post('/setUser', {userId: userId})
       .then(() => {
