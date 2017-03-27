@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
-import {sendJson, sendPost, sendPut, sendDelete} from '../reducers/docker.js';
+import {sendJson, sendPostPutDelete, sendUpdateDockerOn, sendPort} from '../reducers/docker.js';
 import {setUserId} from '../reducers/user';
 import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';
@@ -17,7 +17,7 @@ class AppContainer extends Component {
   render(){
     return (
         <div>
-          <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} />
+          <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} docker={this.props.docker}/>
           {this.props.user.userId === ""
             ? (<WelcomeMessage />)
             :
@@ -76,16 +76,22 @@ const mapDispatchToProps = (dispatch) => {
         handleSendJson(...args){
           dispatch(sendJson(...args));
         },
-        handleSendPost(...args){
-          dispatch(sendPost(...args));
+        handleSendPostPutDelete(...args){
+          dispatch(sendPostPutDelete(...args));
         },
 // PUT-AND-DELETE
-        handleSendPut(...args) {
-          dispatch(sendPut(...args));
+        // handleSendPut(...args) {
+        //   dispatch(sendPut(...args));
+        // },
+        // handleSendDelete(...args) {
+        //   dispatch(sendDelete(...args));
+        // },
+        handleUpdateDockerOn(...args){
+          dispatch(sendUpdateDockerOn(...args));
         },
-        handleSendDelete(...args) {
-          dispatch(sendDelete(...args));
-        }
+        handleSendPort(...args){
+          dispatch(sendPort(...args));
+        },
       }
   };
 };

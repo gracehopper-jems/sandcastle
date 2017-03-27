@@ -55,27 +55,34 @@ module.exports = app
 
   .post('/container', (req, res, next) => {
     if (req.session.userId){
-      const userId = req.session.userId.toLowerCase();
-      const userRoutes = req.body.userRoutes;
-      const userModels = req.body.userModels;
-      let serverPort;
-      let postgresPort;
+
+      const argsObj = {
+        userId: req.session.userId.toLowerCase(),
+        userRoutes: req.body.userRoutes,
+        userModels: req.body.userModels,
+        userHTML: req.body.userHTML,
+        userCSS: req.body.userCSS,
+        userJS: req.body.userJS,
+      }
 
       // find a port that is available
       portfinder.getPortPromise()
       .then((port) => {
-        serverPort = port;
-        postgresPort = port + 1;
-        console.log('server port', serverPort)
-        console.log('postgres port', postgresPort)
+        argsObj.serverPort = port;
+        argsObj.postgresPort = port + 1;
+        // argsObj.serverPort = 8000;
+        // argsObj.postgresPort = 8001;
+        console.log('server port', argsObj.serverPort);
+        console.log('postgres port', argsObj.postgresPort);
       })
       .then(() => {
-        runContainer(userId, serverPort, postgresPort, userRoutes, userModels);
+        runContainer(argsObj);
+        // send response with port number
+        // how to send response after docker compose up ?????
+        res.send({response: 'running container on port', port: argsObj.serverPort});
       })
       .catch(console.error);
 
-      // send res after docker compose up ?????
-      res.send('posted to container')
     } else {
       res.send('no logged in user');
     }
@@ -113,67 +120,89 @@ module.exports = app
         })
         .catch(console.error);
       } else {
-        console.log("Error - No user saved on session!")
+      console.log("Error - No user saved on session!");
       }
     })
-
-    .post('/containerPostTest', (req, res, next) => {
+// trying to dry it out by combining post and put...
+    .post('/containerPostPutDeleteTest', (req, res, next) => {
       if (req.session.userId){
         const requestBody = req.body.request;
+        const requestType = req.body.requestType;
+        console.log('request type in server.js', requestType);
         const path = req.session.path;
         const userId = req.session.userId.toLowerCase();
         const containerName = `${userId}app_docker-test_1`;
         exec(`docker ps -aqf "name=${containerName}"`)
         .then( (containerId) => {
-            return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '${requestBody}' http://localhost:8080${path.trim()}`)
+          return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X ${requestType} -d '${requestBody}' http://localhost:8080${path.trim()}`);
         })
         .then((result) => {
             res.send(result);
         })
         .catch(console.error);
       } else {
-        console.log("Error - No user saved on session!")
+        console.log('Error - No user saved on session!');
       }
     })
 
 // PUT-AND-DELETE
-    .put('/containerPutTest', (req, res, next) => {
-      if (req.session.userId){
-        const requestBody = req.body.request;
-        const path = req.session.path;
-        const userId = req.session.userId.toLowerCase();
-        const containerName = `${userId}app_docker-test_1`;
-        exec(`docker ps -aqf "name=${containerName}"`)
-        .then( (containerId) => {
-            return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X PUT -d '${requestBody}' http://localhost:8080${path.trim()}`)
-        })
-        .then((result) => {
-            res.send(result);
-        })
-        .catch(console.error);
-      } else {
-        console.log("Error - No user saved on session!")
-      }
-  })
+  //   .put('/containerPutTest', (req, res, next) => {
+  //     if (req.session.userId){
+  //       const requestBody = req.body.request;
+  //       const path = req.session.path;
+  //       const userId = req.session.userId.toLowerCase();
+  //       const containerName = `${userId}app_docker-test_1`;
+  //       exec(`docker ps -aqf "name=${containerName}"`)
+  //       .then( (containerId) => {
+  //           return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X PUT -d '${requestBody}' http://localhost:8080${path.trim()}`)
+  //       })
+  //       .then((result) => {
+  //           res.send(result);
+  //       })
+  //       .catch(console.error);
+  //     } else {
+  //       console.log("Error - No user saved on session!")
+  //     }
+  // })
 
-      .delete('/containerDeleteTest', (req, res, next) => {
-      if (req.session.userId){
-        // const requestBody = req.body.request;
-        const path = req.session.path;
-        const userId = req.session.userId.toLowerCase();
-        const containerName = `${userId}app_docker-test_1`;
-        exec(`docker ps -aqf "name=${containerName}"`)
-        .then( (containerId) => {
-            return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X DELETE http://localhost:8080${path.trim()}`)
-        })
-        .then(() => {
-            res.send('deleted!');
-        })
-        .catch(console.error);
-      } else {
-        console.log("Error - No user saved on session!")
-      }
-    })
+  //     .delete('/containerDeleteTest', (req, res, next) => {
+  //     if (req.session.userId){
+  //       const requestBody = req.body.request;
+  //       const path = req.session.path;
+  //       const userId = req.session.userId.toLowerCase();
+  //       const containerName = `${userId}app_docker-test_1`;
+  //       exec(`docker ps -aqf "name=${containerName}"`)
+  //       .then( (containerId) => {
+  //           return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X DELETE http://localhost:8080${path.trim()}`)
+  //       })
+  //       .then(() => {
+  //           res.send('deleted!');
+  //       })
+  //       .catch(console.error);
+  //     } else {
+  //       console.log("Error - No user saved on session!")
+  //     }
+  // })
+
+    // .post('/containerDeleteTest', (req, res, next) => {
+    //   if (req.session.userId){
+    //     const requestBody = req.body.request;
+    //     const requestType = req.body.requestType;
+    //     const path = req.session.path;
+    //     const userId = req.session.userId.toLowerCase();
+    //     const containerName = `${userId}app_docker-test_1`;
+    //     exec(`docker ps -aqf "name=${containerName}"`)
+    //     .then( (containerId) => {
+    //         return exec(`docker exec ${containerId.trim()} curl -H "Accept: application/json" -H "Content-type: application/json" -X DELETE -d '${requestBody}' http://localhost:8080${path.trim()}`)
+    //     })
+    //     .then((result) => {
+    //         res.send(result);
+    //     })
+    //     .catch(console.error);
+    //   } else {
+    //     console.log("Error - No user saved on session!")
+    //   }
+    // })
 
   // Send index.html for anything else.
   .get('/*', (_, res) => res.sendFile(resolve(__dirname, 'public', 'index.html')))
