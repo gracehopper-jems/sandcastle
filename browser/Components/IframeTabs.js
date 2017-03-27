@@ -20,9 +20,7 @@ export const IframeTabs = (props) => {
         <div>{props.docker ? props.docker.json : null}</div>
       </Tab>
       <Tab eventKey={3} title="Database View">
-        {props.docker ?
-          <DatabaseTable database={props.docker.database} />
-          : null
+        {!props.docker ? null : props.docker.database.length === 0 ? null : <DatabaseTable database={props.docker.database} />
         }
       </Tab>
       <Tab eventKey={4} title="App View">
