@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
-<<<<<<< HEAD
-import {sendJson, sendPost, sendClearDB, sendUpdateDockerOn, sendPort} from '../reducers/docker.js';
-=======
-import {sendJson, sendPostPutDelete, sendUpdateDockerOn, sendPort} from '../reducers/docker.js';
->>>>>>> 130c454872425c1524f1df0b86537510c85968cc
+import {sendJson, sendPost, sendClearDB, sendUpdateDockerOn, sendPort, sendPostPutDelete} from '../reducers/docker.js';
 import {setUserId} from '../reducers/user';
 import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';

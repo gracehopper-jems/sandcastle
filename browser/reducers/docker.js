@@ -79,7 +79,6 @@ export const sendPostPutDelete = (...args) => {
   return postPutDeleteDB(...args);
 };
 
-<<<<<<< HEAD
 export const clearDB = () => ({
   type: CLEAR_DB
 });
@@ -87,7 +86,7 @@ export const clearDB = () => ({
 export const sendClearDB = () => {
   return clearDB();
 };
-=======
+
 // PUT-AND-DELETE
 // export const putToDb = put => ({
 //   type: PUT_TO_DB,
@@ -107,7 +106,6 @@ export const sendClearDB = () => {
 //   console.log('HI');
 //   return deleteFromDb(...args);
 // }
->>>>>>> 130c454872425c1524f1df0b86537510c85968cc
 
 export const updateDockerOn = bool => ({
   type: UPDATE_DOCKER,

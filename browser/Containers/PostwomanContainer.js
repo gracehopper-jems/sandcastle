@@ -49,10 +49,10 @@ export default class PostwomanContainer extends Component {
             })
             .catch(console.error);
 
-        } else if (this.state.requestType === 'POST' || this.state.requestType === 'PUT' || this.state.requestType === 'DELETE') && this.state.path !== '') {
+        } else if (this.state.requestType === 'POST' || this.state.requestType === 'PUT' || this.state.requestType === 'DELETE' && this.state.path !== '') {
             axios.post('/postWomanGetPath', {path: this.state.path})
             .then(() => {
-                return axios.post('/containerPostPutDeleteTest', { requestType: this.state.requestType, request: this.state.requestBody 
+                return axios.post('/containerPostPutDeleteTest', { request: this.state.requestBody } ) 
             })
             .then((res) => {
                 return JSON.stringify(res.data);
@@ -113,10 +113,6 @@ export default class PostwomanContainer extends Component {
         console.log('=======',this.state)
         return (
             <div>
-                {/*<select className="custom-select" onChange={this.handleRequestType}>
-                    <option>GET</option>
-                    <option>POST</option>
-                </select>*/}
                 <FormGroup controlId="formControlsSelect">
                     <FormControl componentClass="select" placeholder="select" className="selectdropdown" onChange={this.handleRequestType}>
                         <option value="GET">GET</option>
@@ -126,22 +122,18 @@ export default class PostwomanContainer extends Component {
                     </FormControl>
                 </FormGroup>
                 <FormGroup>
+
                 {this.state.requestType === 'POST' || this.state.requestType === 'PUT' || this.state.requestType === 'DELETE' ?
 
                 ( <FormGroup controlId="formControlsTextarea">
                         <ControlLabel>Enter request body as JSON:</ControlLabel>
-                        <FormControl componentClass="textarea"value={this.state.requestBody} onChange={this.handleRequestBody} />
+                        <FormControl componentClass="textarea" value={this.state.requestBody} onChange={this.handleRequestBody} />
                     </FormGroup>)
 
-                (<div>
-                    <p>Enter {this.state.requestType} request body here:</p>
-                        <InputGroup>
-                            <FormControl type="text" value={this.state.requestBody} onChange={this.handleRequestBody} />
-                        </InputGroup>
-                </div>)
                 : null
                 }
-                    <ControlLabel>Enter route:</ControlLabel>
+                
+                <ControlLabel>Enter route:</ControlLabel>
                     <InputGroup>
                         <FormControl type="text" value={this.state.path} onChange={this.handleChange} />
                         <InputGroup.Button>
