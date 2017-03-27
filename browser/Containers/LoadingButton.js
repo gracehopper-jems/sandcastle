@@ -13,27 +13,27 @@ export default class LoadingButton extends Component {
 		this.handleClick = this.handleClick.bind(this);
 	}
 
-		handleClick() {
-			this.setState({isLoading: true});
-			// This probably where you would have an `ajax` call
-			updateIframeContents(this.props);
+	handleClick() {
+		this.setState({isLoading: true});
+		// This probably where you would have an `ajax` call
+		updateIframeContents(this.props);
 
-			setTimeout(() => {
-				// Completed of async action, set loading state back
-				this.setState({isLoading: false});
-			}, 2000);
-		}
+		setTimeout(() => {
+			// Completed of async action, set loading state back
+			this.setState({isLoading: false});
+		}, 2000);
+	}
 
-		render() {
-			let isLoading = this.state.isLoading;
-			return (
-					<div
-						disabled={isLoading}
-					 	onClick={!isLoading ? this.handleClick : null}>
-						{isLoading ? <ProgressModal view={'Frontend'} /> : 'Run Frontend'}
-					</div>
-			);
-		}
+	render() {
+		let isLoading = this.state.isLoading;
+		return (
+				<div
+					disabled={isLoading}
+					onClick={!isLoading ? this.handleClick : null}>
+					{isLoading ? <ProgressModal view={'Frontend'} /> : 'Run Frontend'}
+				</div>
+		);
+	}
 }
 
 function updateIframeContents(props) {

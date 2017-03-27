@@ -50,51 +50,48 @@ export default class SignUp extends Component {
 	}
 
 	render(){
-	return (
-		<div>
-		{ this.state.signedUp ?
+		return (
+			<div>
+				{ this.state.signedUp ?
 
-			( <div>Thanks for signing up! You are now logged in and can create your first project.</div>)
-			: ( <div className="container-fluid">
-				<div className="row">
-			        <form>
-			            <div className="form-group">
-			                <label htmlFor="title" className="col-sm-4 control-label">First Name</label>
-			                <div className="col-sm-6">
-			                    <input name="firstname" type="text" className="form-control" onChange={this.handleChange} />
-			                </div>
-			            </div>
-			          	<div className="form-group">
-			                <label htmlFor="title" className="col-sm-4 control-label">Last Name</label>
-			                <div className="col-sm-6">
-			                    <input name="lastname" type="text" className="form-control" onChange={this.handleChange} />
-			                </div>
-			            </div>
-			            <div className="form-group">
-			                <label htmlFor="title" className="col-sm-4 control-label">Email</label>
-			                <div className="col-sm-6">
-			                    <input name="email" type="text" className="form-control" onChange={this.handleChange} />
-			                </div>
-			            </div>
-			          	<div className="form-group">
-			                <label htmlFor="title" className="col-sm-4 control-label">Password</label>
-			                <div className="col-sm-6">
-			                    <input name="password" type="password" className="form-control" onChange={this.handleChange} />
-			                </div>
-			            </div>
+					( <div>Thanks for signing up! You are now logged in and can create your first project.</div>)
+					: ( <div className="container-fluid">
+						<div className="row">
+							<form>
+								<div className="form-group">
+									<label htmlFor="title" className="col-sm-4 control-label">First Name</label>
+									<div className="col-sm-6">
+										<input name="firstname" type="text" className="form-control" onChange={this.handleChange} />
+									</div>
+								</div>
+								<div className="form-group">
+									<label htmlFor="title" className="col-sm-4 control-label">Last Name</label>
+									<div className="col-sm-6">
+										<input name="lastname" type="text" className="form-control" onChange={this.handleChange} />
+									</div>
+								</div>
+								<div className="form-group">
+									<label htmlFor="title" className="col-sm-4 control-label">Email</label>
+									<div className="col-sm-6">
+										<input name="email" type="text" className="form-control" onChange={this.handleChange} />
+									</div>
+								</div>
+								<div className="form-group">
+									<label htmlFor="title" className="col-sm-4 control-label">Password</label>
+									<div className="col-sm-6">
+										<input name="password" type="password" className="form-control" onChange={this.handleChange} />
+									</div>
+								</div>
 
-			            <div className="col-sm-offset-10 col-sm-10">
-			                <button onClick={this.handleSubmit} type="submit" className="btn btn-primary">Submit</button>
-			            </div>
-			        </form>
-		        </div>
-			    </div>
-			  )
-		}
-		</div>
-		)
-
+								<div className="col-sm-offset-10 col-sm-10">
+									<button onClick={this.handleSubmit} type="submit" className="btn btn-primary">Submit</button>
+								</div>
+							</form>
+						</div>
+						</div>
+					)
+				}
+			</div>
+			)
 	}
-
-
 }
