@@ -128,7 +128,7 @@ const runContainer = (argsObj) => {
         return writeFile('userJS.js', argsObj.userJS);
     })
     .then(() => {
-        // bunlde user js file to require node modules
+        // bundle user js file to require node modules
         console.log('browserifying js into bundle');
         return exec('browserify userJS.js -o userBundle.js');
     })

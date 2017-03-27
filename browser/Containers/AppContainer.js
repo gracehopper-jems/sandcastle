@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
-import {sendJson, sendPost, sendUpdateDockerOn, sendPort} from '../reducers/docker.js';
+import {sendJson, sendPost, sendClearDB, sendUpdateDockerOn, sendPort} from '../reducers/docker.js';
 import {setUserId} from '../reducers/user';
 import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';
@@ -18,7 +18,7 @@ class AppContainer extends Component {
     return (
         <div>
           <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} docker={this.props.docker}/>
-          {this.props.user.userId === ""
+          {(this.props.user.userId === '')
             ? (<WelcomeMessage />)
             :
             (<div className='giant-container'>
@@ -78,6 +78,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleSendPost(...args){
           dispatch(sendPost(...args));
+        },
+        handleSendClearDB(){
+          dispatch(sendClearDB());
         },
         handleUpdateDockerOn(...args){
           dispatch(sendUpdateDockerOn(...args));

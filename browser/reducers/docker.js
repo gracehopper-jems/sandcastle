@@ -11,11 +11,22 @@ const reducer = (state = initialState, action) => {
 
   switch(action.type) {
     case RECEIVE_JSON:
-      newState.json = action.json;
+      if (action.json.includes('Error') && action.json.includes('Cannot GET')) {
+        newState.json = 'Error: Cannot GET';
+      } else if (action.json.includes('Error') && action.json.includes('Cannot POST')) {
+        newState.json = 'Error: Cannot POST';
+      } else {
+        newState.json = action.json;
+      }
       return newState;
 
     case POST_TO_DB:
       newState.database = newState.database.concat(action.post);
+      return newState;
+
+
+    case CLEAR_DB:
+      newState.database = [];
       return newState;
 
     case UPDATE_DOCKER:
@@ -36,6 +47,7 @@ const RECEIVE_JSON = 'RECEIVE_JSON';
 const POST_TO_DB = 'POST_TO_DB';
 const UPDATE_DOCKER = 'UPDATE_DOCKER';
 const RECEIVE_PORT = 'RECEIVE_PORT';
+const CLEAR_DB = 'CLEAR_DB';
 
 // action creators
 export const receiveJson = json => ({
@@ -54,6 +66,14 @@ export const postToDB = post => ({
 
 export const sendPost = (...args) => {
   return postToDB(...args);
+};
+
+export const clearDB = () => ({
+  type: CLEAR_DB
+});
+
+export const sendClearDB = () => {
+  return clearDB();
 };
 
 export const updateDockerOn = bool => ({
