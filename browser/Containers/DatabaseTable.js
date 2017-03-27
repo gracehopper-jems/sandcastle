@@ -13,11 +13,10 @@ export default class DatabaseTable extends Component {
 
 
 	componentWillReceiveProps(nextProps){ 
-  		const database = nextProps.database; 
+  		const entries = nextProps.database; 
 
-  		if (database.length){
+  		if (entries.length){
   		  	
-  		  	const entries = database.map(item => JSON.parse(item)); 
 		  	this.setState({entries: entries}); 
 
 		  	const headings = Object.keys(entries[0]); 
