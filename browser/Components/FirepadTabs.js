@@ -1,25 +1,28 @@
 import { Tab, Tabs } from 'react-bootstrap';
 import React from 'react';
-import HTMLEditor from '../Containers/HTMLEditor';
-import CSSEditor from '../Containers/CSSEditor';
-import JSEditor from '../Containers/JSEditor';
-import ServerEditor from '../Containers/ServerEditor';
-import DatabaseEditor from '../Containers/DatabaseEditor';
 
-export const FirepadTabs = (props) => {
+import Editors from './Editors';
+
+export const FirepadTabs = () => {
 
   const handleClick = (event) => {
   }
+
+  let HTMLEditor = Editors[0];
+  let CSSEditor = Editors[1];
+  let JSEditor = Editors[2];
+  let ServerEditor = Editors[3];
+  let DatabaseEditor = Editors[4];
 
   return (
     <div onClick={handleClick}>
       <Tabs defaultActiveKey={1} id="FirepadTabContainer">
         <Tab eventKey={1} title="HTML Editor">
           <HTMLEditor />
-          </Tab>
+        </Tab>
         <Tab eventKey={2} title="CSS Editor">
           <CSSEditor />
-          </Tab>
+        </Tab>
         <Tab eventKey={3} title="JS Editor">
           <JSEditor />
         </Tab>
@@ -31,5 +34,5 @@ export const FirepadTabs = (props) => {
         </Tab>
       </Tabs>
     </div>
-  )
+  );
 };
