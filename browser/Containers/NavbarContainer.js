@@ -14,6 +14,7 @@ export default class NavbarContainer extends Component {
             password: "",
             signup: false,
         }
+
     this.handleSignin = this.handleSignin.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
@@ -97,8 +98,10 @@ export default class NavbarContainer extends Component {
                     <div className="container-fluid">
                         <div className="navbar-header">
                             <Link className="navbar-brand" to="/">
-                            <span><img src='https://cdn0.iconfinder.com/data/icons/map-and-navigation-2/65/79-128.png' width="25px" height="25px"></img>
-                            Sandcastle</span>
+                                <span>
+                                    <img src='https://cdn0.iconfinder.com/data/icons/map-and-navigation-2/65/79-128.png' width="25px" height="25px" />
+                                    Sandcastle
+                                </span>
                             </Link>
                         </div>
                         <ul className="nav navbar-nav nav-tabs">

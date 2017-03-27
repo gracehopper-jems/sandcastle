@@ -6,7 +6,6 @@ class BackendButton extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       isLoading: false
     };
@@ -31,7 +30,6 @@ class BackendButton extends Component {
     .then((res) => {
       console.log('running container');
       const userServerPort = res.data.port;
-
 
       // ========= change this once we figure out to send signal that docker composed up and port is listening
       setTimeout(() => {

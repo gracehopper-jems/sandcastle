@@ -16,7 +16,7 @@ export const FirepadTabs = (props) => {
       <Tabs defaultActiveKey={1} id="FirepadTabContainer">
         <Tab eventKey={1} title="HTML Editor">
           <HTMLEditor />
-          </Tab>
+        </Tab>
         <Tab eventKey={2} title="CSS Editor">
           <CSSEditor />
           </Tab>
