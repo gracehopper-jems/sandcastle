@@ -6,6 +6,15 @@ const removeContainer = require('./docker/removeContainer');
 const Promise = require('bluebird');
 const exec = Promise.promisify(require('child_process').exec);
 
+
+const getContainerAndPath = () => {
+  if (req.session.userId){
+    const { path, userId } = req.session; 
+    userId = userId.toLowerCase();
+    const containerName = `${userId}app_docker-test_1`;
+  } 
+}
+
 module.exports = router
   // adding userid to req.session
   .post('/setUser', (req, res, next) => {
