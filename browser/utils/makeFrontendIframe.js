@@ -3,6 +3,7 @@ import store from '../store';
 
 const makeFrontendIframe = () => {
 	let state = store.getState();
+	console.log('STATE IN makeFrontendIframe', state);
 	// Create a new blank iframe
 	var newIframe = document.createElement('iframe');
 	// Set attributes for iFrame (do whatever suits)

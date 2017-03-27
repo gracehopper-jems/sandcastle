@@ -1,7 +1,8 @@
 'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, browserHistory, IndexRoute} from 'react-router';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import {Promise} from 'bluebird';
 import AppContainer from './Containers/AppContainer';
 import SignUp from './Containers/SignUp';
 // import WelcomeMessage from './Components/WelcomeMessage';
@@ -11,7 +12,8 @@ import store from './store';
 import {Provider} from 'react-redux';
 import { setUserId } from './reducers/user';
 import makeFirepads from './utils/firepads';
-import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase } from './reducers/code';
+// import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase } from './reducers/code';
+import * as updateActions from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
 import axios from 'axios';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -64,64 +66,44 @@ const onAppEnter = () => {
 
       // render firepads
       if (madeFirepads === false) {
-
-        let pads = makeFirepads();
-
-        // user set timout if codemirror autorefresh stops working
-        // const codeMirrorInstances = pads[1];
-        // setTimeout(() => {
-        //   console.log('refreshing code mirrors');
-        //   pads[1].forEach(pad => {pad.refresh();});
-        // }, 1);
+        let firepads = makeFirepads();
+        let allFirepads = firepads[0];
+        let orderManifesto = ['HTML', 'CSS', 'JS', 'Server', 'Database'];
+        let count = 0;
 
         madeFirepads = true;
-        let count = 0;
-        pads[0].forEach((pad, i) => {
-          pad.on('ready', () => {
-            if (i === 0) {
-              store.dispatch(updateHTML(pad.getText()));
+
+        Promise.map(allFirepads, (pad, i) => {
+          return new Promise((resolve, reject) => {
+            pad.on('ready', () => {
+              store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText));
               count++;
-            }
-            if (i === 1) {
-              store.dispatch(updateCSS(pad.getText()));
-              count++;
-            }
-            if (i === 2) {
-              store.dispatch(updateJS(pad.getText()));
-              count++;
-            }
-            if (i === 3) {
-              store.dispatch(updateServer(pad.getText()));
-              count++;
-            }
-            if (i === 4) {
-              store.dispatch(updateDatabase(pad.getText()));
-              count++;
-            }
-            if (madeFrontendIframe === false && count === 5) {
-              makeFrontendIframe();
-              madeFrontendIframe = true;
-            }
+              if (madeFrontendIframe === false && count === 5) {
+                console.log('COUNT', count);
+                makeFrontendIframe();
+                madeFrontendIframe = true;
+              }
+              resolve();
+            });
           });
-          pad.on('synced', isSynced => {
-            if (isSynced) {
-              if (i === 0) store.dispatch(updateHTML(pad.getText()));
-              if (i === 1) store.dispatch(updateCSS(pad.getText()));
-              if (i === 2) store.dispatch(updateJS(pad.getText()));
-              if (i === 3) store.dispatch(updateServer(pad.getText()));
-              if (i === 4) store.dispatch(updateDatabase(pad.getText()));
-            }
+        });
+
+
+
+        Promise.map(allFirepads, (pad, i) => {
+          return new Promise((resolve, reject) => {
+            pad.on('sync', isSynced => {
+              if (isSynced) store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText));
+              resolve();
+            });
           });
         });
       }
-
     } else {
       store.dispatch(setUserId(''));
     }
   });
 };
-
-
 
 ReactDOM.render(
   <Provider store={store}>
@@ -136,4 +118,47 @@ ReactDOM.render(
   document.getElementById('app')
 );
 
+        // allFirepads.forEach((pad, i) => {
+        //   pad.on('ready', () => {
+        //     if (i === 0) {
+        //       store.dispatch(updateHTML(pad.getText()));
+        //       count++;
+        //     }
+        //     if (i === 1) {
+        //       store.dispatch(updateCSS(pad.getText()));
+        //       count++;
+        //     }
+        //     if (i === 2) {
+        //       store.dispatch(updateJS(pad.getText()));
+        //       count++;
+        //     }
+        //     if (i === 3) {
+        //       store.dispatch(updateServer(pad.getText()));
+        //       count++;
+        //     }
+        //     if (i === 4) {
+        //       store.dispatch(updateDatabase(pad.getText()));
+        //       count++;
+        //     }
+        //     if (madeFrontendIframe === false && count === 5) {
+        //       makeFrontendIframe();
+        //       madeFrontendIframe = true;
+        //     }
+        //   });
+          // pad.on('synced', isSynced => {
+          //   if (isSynced) {
+          //     if (i === 0) store.dispatch(updateHTML(pad.getText()));
+          //     if (i === 1) store.dispatch(updateCSS(pad.getText()));
+          //     if (i === 2) store.dispatch(updateJS(pad.getText()));
+          //     if (i === 3) store.dispatch(updateServer(pad.getText()));
+          //     if (i === 4) store.dispatch(updateDatabase(pad.getText()));
+          //   }
+          // });
 
+
+        // user set timout if codemirror autorefresh stops working
+        // const codeMirrorInstances = pads[1];
+        // setTimeout(() => {
+        //   console.log('refreshing code mirrors');
+        //   pads[1].forEach(pad => {pad.refresh();});
+        // }, 1);
