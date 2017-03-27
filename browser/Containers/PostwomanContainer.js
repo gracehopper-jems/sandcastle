@@ -34,6 +34,7 @@ export default class PostwomanContainer extends Component {
 
     handleSend(event) {
         event.preventDefault();
+        console.log('REQUEST TYPE', this.state.requestType);
 
         if (this.state.requestType === 'GET' && this.state.path !== '') {
             axios.post('/postWomanGetPath', {path: this.state.path})
@@ -72,6 +73,7 @@ export default class PostwomanContainer extends Component {
                     return JSON.stringify(res.data);
                 })
                 .then((jsonStr) => {
+                    console.log(this.state.requestType);
                     this.props.handlers.handleSendPut(jsonStr);
                 })
                 .then(() => {
@@ -81,6 +83,7 @@ export default class PostwomanContainer extends Component {
         } else if (this.state.requestType === 'DELETE' && this.state.path !== '') {
             axios.post('/postWomanGetPath', { path: this.state.path })
                 .then(() => {
+                    console.log('HELLO FROM POSTWOMAN CONTAINER');
                     return axios.delete('/containerDeleteTest');
                 })
                 .then(() => {
@@ -105,10 +108,10 @@ export default class PostwomanContainer extends Component {
                     <option>DELETE</option>
                 </select>
                 <FormGroup>
-                {this.state.requestType === 'POST' ?
+                {this.state.requestType === 'POST' || this.state.requestType === 'PUT' ?
 
                 (<div>
-                    <p>Enter POST request body here:</p>
+                    <p>Enter {this.state.requestType} request body here:</p>
 
                         <InputGroup>
                             <FormControl type="text" value={this.state.requestBody} onChange={this.handleRequestBody} />

@@ -6,6 +6,7 @@ const initialState = {
 // reducer
 const reducer = (state = initialState, action) => {
   const newState = Object.assign({}, state);
+  console.log('ACTION', action);
 
   switch(action.type) {
     case RECEIVE_JSON:
@@ -16,6 +17,13 @@ const reducer = (state = initialState, action) => {
       newState.database = newState.database.concat(action.post);
       return newState;
 
+    case PUT_TO_DB:
+      newState.database = newState.database.concat(action.put);
+      return newState;
+
+    case DELETE_FROM_DB:
+      return action.del;
+
     default:
       return state;
   }
@@ -23,7 +31,9 @@ const reducer = (state = initialState, action) => {
 
 // constants
 const RECEIVE_JSON = 'RECEIVE_JSON';
-const POST_TO_DB ='POST_TO_DB';
+const POST_TO_DB = 'POST_TO_DB';
+const PUT_TO_DB = 'PUT_TO_DB';
+const DELETE_FROM_DB = 'DELETE_FROM_DB';
 
 // action creators
 export const receiveJson = json => ({
@@ -53,12 +63,17 @@ export const putToDb = put => ({
 });
 
 export const sendPut = (...args) => {
-  return updateDb(...args);
+  return putToDb(...args);
 };
 
 export const deleteFromDb = del => ({
   type: DELETE_FROM_DB,
   del
 });
+
+export const sendDelete = (...args) => {
+  console.log('HI');
+  return deleteFromDb(...args);
+}
 
 export default reducer;
