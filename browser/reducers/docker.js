@@ -21,9 +21,13 @@ const reducer = (state = initialState, action) => {
       return newState;
 
     case POST_TO_DB:
-      newState.database = newState.database.concat(action.post);
+      newState.database = newState.database.concat(JSON.parse(action.post));
       return newState;
 
+    case DELETE_ENTRY:
+      let deleteId = parseInt(action.id); 
+      newState.database = newState.database.filter(item => item.id !== deleteId); 
+      return newState; 
 
     case CLEAR_DB:
       newState.database = [];
@@ -48,6 +52,7 @@ const POST_TO_DB = 'POST_TO_DB';
 const UPDATE_DOCKER = 'UPDATE_DOCKER';
 const RECEIVE_PORT = 'RECEIVE_PORT';
 const CLEAR_DB = 'CLEAR_DB';
+const DELETE_ENTRY = 'DELETE_ENTRY'; 
 
 // action creators
 export const receiveJson = json => ({
@@ -60,13 +65,22 @@ export const sendJson = (...args) => {
 };
 
 export const postToDB = post => ({
-  type: POST_TO_DB,
+  type: POST_TO_DB, 
   post
 });
 
 export const sendPost = (...args) => {
   return postToDB(...args);
 };
+
+export const deletePost = id => ({
+  type: DELETE_ENTRY,
+  id
+});
+
+export const sendDelete = (...args) => {
+  return deletePost(...args); 
+}
 
 export const clearDB = () => ({
   type: CLEAR_DB

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
-import {sendJson, sendPost, sendClearDB, sendUpdateDockerOn, sendPort} from '../reducers/docker.js';
+import {sendJson, sendPost, sendClearDB, sendUpdateDockerOn, sendPort, sendDelete} from '../reducers/docker.js';
 import {setUserId} from '../reducers/user';
 import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';
@@ -97,6 +97,9 @@ const mapDispatchToProps = (dispatch) => {
         handleSendPort(...args){
           dispatch(sendPort(...args));
         },
+        handleSendDelete(...args){
+          dispatch(sendDelete(...args)); 
+        }
       }
   };
 };
