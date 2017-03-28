@@ -121,7 +121,7 @@ const onAppEnter = () => {
     }
   });
   tour.init();
-  tour.start();
+  tour.start(true);
 };
 
 
