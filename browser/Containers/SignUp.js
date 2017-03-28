@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import firebase from 'firebase';
 import axios from 'axios';
 
-// import tour from '../../tour/tour';
+// import tour from '../../tour';
 
 export default class SignUp extends Component {
 	constructor(props){

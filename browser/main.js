@@ -18,7 +18,7 @@ import { setUserId } from './reducers/user';
 import makeFirepads from './utils/firepads';
 import * as updateActions from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
-import tour from '../tour/tour';
+import tour from '../tour';
 
 
 injectTapEventPlugin(); //need this for the progress indicator
