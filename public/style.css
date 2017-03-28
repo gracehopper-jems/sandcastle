@@ -109,6 +109,13 @@ li {
   margin-top: 15px;
 }
 
+.modal-body {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .sandcastle-icon {
   margin-right: 5px;
 }
