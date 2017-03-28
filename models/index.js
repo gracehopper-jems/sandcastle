@@ -4,6 +4,7 @@ const db = new Sequelize('postgres://localhost:5432/sandcastle', {
 	logging: false
 });
 
+
 const User = db.define('user', {
 	firebaseId: {
 		type: Sequelize.STRING,
@@ -17,9 +18,17 @@ const Project = db.define('project', {
 		// allowNull: false,
 	},
 	code: {
-		type: Sequelize.TEXT,
+		type: Sequelize.JSON,
 	}
 }
+	// {
+	// 	hooks: {
+	// 		beforeValidate: function (project) {
+	// 			// console.log('RANDO STRINGO', randomstring.generate(10));
+	// 			project.hashedProjectId = randomstring.generate(10);
+	// 		}
+	// 	}
+	// }
 );
 
 Project.belongsTo(User);
