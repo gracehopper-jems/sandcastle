@@ -5,6 +5,7 @@ import BackendButton from '../Components/BackendButton';
 import firebase from 'firebase';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
+import SigninModal from '../Components/SigninModal';
 
 export default class NavbarContainer extends Component {
     constructor(props){
@@ -13,15 +14,13 @@ export default class NavbarContainer extends Component {
             email: "",
             password: "",
             signup: false,
-            login: false,
+            signin: false
         }
-
     this.handleSignin = this.handleSignin.bind(this);
+    this.showSigninModal = this.showSigninModal.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
     this.handleClose = this.handleClose.bind(this);
 }
     handleChange(event){
@@ -42,7 +41,7 @@ export default class NavbarContainer extends Component {
             axios.post('/setUser', {userId: userId})
             .then(() => {
                 console.log('posting userid');
-                this.setState({login: false})
+                this.setState({signin: false, modal: false})
             })
             .catch(console.error);
         })
@@ -66,8 +65,6 @@ export default class NavbarContainer extends Component {
         })
         .then(() => {
             console.log('removing userid');
-        })
-        .then(() => {
             window.location.reload();
         })
         .catch(console.error)
@@ -79,21 +76,14 @@ export default class NavbarContainer extends Component {
         this.setState({signup: true})
     }
 
-    handleLogin(event) {
+    showSigninModal(event) {
         event.preventDefault();
-        this.setState({login: true})
-    }
-
-    handleSubmit(event){
-        event.preventDefault();
-        this.setState({signup: false});
-        browserHistory.push('/');
+        this.setState({signin: true})
     }
 
     handleClose(event){
         event.preventDefault();
-        console.log('CLOSE EVENT', event.target)
-        this.setState({login: false});
+        this.setState({signin: false, signup: false});
         browserHistory.push('/');
     }
 
@@ -123,8 +113,11 @@ export default class NavbarContainer extends Component {
                             { this.props.user.userId !== '' ? <li><a><LoadingButton code={this.props.code} handlers={this.props.handlers} /></a></li> : null }
                             { this.props.user.userId !== '' ?  <li><a><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user}/></a></li> : null}
 
-                            {this.state.signup ?
-                                (<div className="static-modal">
+                            {this.state.signin ?
+                                <SigninModal handleSignin={this.handleSignin} handleChange={this.handleChange} handleClose={this.handleClose} /> : null
+                            }
+
+                            {this.state.signup ? (<div className="static-modal">
                                     <Modal.Dialog>
                                     <Modal.Header>
                                         <Modal.Title>Sign Up</Modal.Title>
@@ -135,39 +128,11 @@ export default class NavbarContainer extends Component {
                                     </Modal.Body>
 
                                     <Modal.Footer>
-                                        <Button onClick={this.handleSubmit}>Close</Button>
-                                    </Modal.Footer>
-
-                                    </Modal.Dialog>
-                                </div>) : null
-                            }
-
-                            {this.state.login ?
-                                (<div className="static-modal">
-                                    <Modal.Dialog>
-                                    <Modal.Header>
-                                        <Modal.Title>LOGIJN</Modal.Title>
-                                    </Modal.Header>
-
-                                    <Modal.Body>
-                                        <form onSubmit={this.handleSignin} >
-                                                    <label className="sr-only" htmlFor="inlineFormInput">Email</label>
-                                                    <input name="email" type="text" className="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Email" onChange={this.handleChange} />
-                                                    <label className="sr-only" htmlFor="inlineFormInputGroup">Password</label>
-                                                    {/*<div className="input-group mb-2 mr-sm-2 mb-sm-0">*/}
-                                                        <input name="password" type="password" className="form-control" id="inlineFormInputGroup" placeholder="Password" onChange={this.handleChange} />
-                                                    {/*</div>*/}
-                                        </form>
-                                    </Modal.Body>
-
-                                    <Modal.Footer>
-                                        <button type="submit" className="btn btn-primary" onClick={this.handleSignin}>Sign In</button>
                                         <Button onClick={this.handleClose}>Close</Button>
                                     </Modal.Footer>
 
                                     </Modal.Dialog>
-                                </div>) : null
-                            }
+                                </div>) : null}
                         </ul>
 
                         {this.props.user.userId !== ''
@@ -180,7 +145,7 @@ export default class NavbarContainer extends Component {
                         :
                             <div className="nav navbar-nav navbar-right">
                             <li>
-                                <button type="submit" className="btn btn-primary" onClick={this.handleLogin}>Sign In</button>
+                                <button type="submit" className="btn btn-primary" onClick={this.showSigninModal}>Sign In</button>
                             </li>
                             <li>
                                 <button type="submit" className="btn btn-info" onClick={this.handleSignup} >Sign Up</button>
