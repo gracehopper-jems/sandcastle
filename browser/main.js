@@ -71,7 +71,7 @@ const onAppEnter = () => {
         let firepads = makeFirepads();
         let allFirepads = firepads[0];
         let orderManifesto = ['HTML', 'CSS', 'JS', 'Server', 'Database'];
-        let count = 0;
+        // let count = 0;
 
         madeFirepads = true;
 
@@ -79,28 +79,30 @@ const onAppEnter = () => {
           return new Promise((resolve, reject) => {
             pad.on('ready', () => {
               store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
-              count++;
-              console.log('COUNT', count);
+              // count++;
               resolve();
             });
           });
-        });
-
-        updatingText.then(() => {
-          if (madeFrontendIframe === false && count === 5) {
+        })
+          .then(() => {
+            // if (madeFrontendIframe === false && count === 5) {
             makeFrontendIframe();
-            madeFrontendIframe = true;
-          }
-        });
-
-        const syncing = Promise.map(allFirepads, (pad, i) => {
-          return new Promise((resolve, reject) => {
-            pad.on('sync', isSynced => {
-              if (isSynced) store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
-              resolve();
-            });
+            // madeFrontendIframe = true;
+            // }
+          })
+          .then(() => {
+            Promise.map(allFirepads, (pad, i) => {
+              return new Promise((resolve, reject) => {
+                pad.on('synced', isSynced => {
+                  if (isSynced) {
+                    store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
+                    resolve();
+                  }
+                });
+              });
+            })
+              .catch(console.error);
           });
-        });
       }
     } else {
       store.dispatch(setUserId(''));
