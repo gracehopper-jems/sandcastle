@@ -4,8 +4,11 @@ const bodyParser = require('body-parser');
 const {resolve} = require('path');
 const PrettyError = require('pretty-error');
 const finalHandler = require('finalhandler');
-const session = require('express-session')
-const routes = require('./routes');
+const session = require('express-session');
+const containerRoutes = require('./containerRoutes');
+const userRoutes = require('./userRoutes');
+const models = require('./models');
+const db = models.db;
 
 // add user ports as process environment variables
 process.env.userServerPort = 8080;
@@ -37,32 +40,49 @@ module.exports = app
 
   // express session
   .use(session({
-      secret: '1234567890QWERTY',
-      resave: true,
-      saveUninitialized: true
-    }))
+    secret: '1234567890QWERTY',
+    resave: true,
+    saveUninitialized: true
+  }))
 
-  .use('/', routes)
+  .use('/api', userRoutes)
+  .use('/', containerRoutes)
 
   // Send index.html for anything else.
   .get('/*', (_, res) => res.sendFile(resolve(__dirname, 'public', 'index.html')))
 
+
   // Error middleware interceptor, delegates to same handler Express uses.
   // https://github.com/expressjs/express/blob/master/lib/application.js#L162
   // https://github.com/pillarjs/finalhandler/blob/master/index.js#L172
-  .use((err, req, res, next) => {
+
+
+  db.sync({force: true})
+    .then(() => {
+      const server = app.listen(
+        3000,
+        () => {
+          console.log(`--- Started HTTP Server ---`);
+          const { address, port } = server.address();
+          const host = address === '::' ? 'localhost' : address;
+          const urlSafeHost = host.includes(':') ? `[${host}]` : host;
+          console.log(`Listening on http://${urlSafeHost}:${port}`);
+        }
+      );
+    });
+
+  app.use((err, req, res, next) => {
     console.error(prettyError.render(err))
     finalHandler(req, res)(err)
-  })
-
-const server = app.listen(
-  3000,
-  () => {
-    console.log(`--- Started HTTP Server ---`);
-    const { address, port } = server.address();
-    const host = address === '::' ? 'localhost' : address;
-    const urlSafeHost = host.includes(':') ? `[${host}]` : host;
-    console.log(`Listening on http://${urlSafeHost}:${port}`);
-  }
-)
+  });
+// const server = app.listen(
+//   3000,
+//   () => {
+//     console.log(`--- Started HTTP Server ---`);
+//     const { address, port } = server.address();
+//     const host = address === '::' ? 'localhost' : address;
+//     const urlSafeHost = host.includes(':') ? `[${host}]` : host;
+//     console.log(`Listening on http://${urlSafeHost}:${port}`);
+//   }
+// )
 
