@@ -38,10 +38,10 @@ module.exports = router
       .then((port) => {
         postgresPort = port;
         console.log('server port', postgresPort);
-        runContainer(Object.assign({}, argsObj, {serverPort, postgresPort}));
-
+        return runContainer(Object.assign({}, argsObj, {serverPort, postgresPort}));
+      })
+      .then(() => {
         // send response with port number
-        // how to send response after docker compose up ?????
         res.send({response: 'running container on port', port: serverPort});
       })
       .catch(console.error);
