@@ -33,6 +33,7 @@ module.exports = router
         let serverPort;
         let postgresPort;
 
+<<<<<<< HEAD
         // find available port
         portfinder.getPortPromise()
             .then((port) => {
@@ -57,6 +58,26 @@ module.exports = router
                 });
             })
             .catch(console.error);
+=======
+      // find available port
+      portfinder.getPortPromise()
+      .then((port) => {
+        serverPort = port;
+        console.log('server port', serverPort);
+        portfinder.basePort = port + 1;
+        return portfinder.getPortPromise()
+      })
+      .then((port) => {
+        postgresPort = port;
+        console.log('postgres port', postgresPort);
+        return runContainer(Object.assign({}, argsObj, {serverPort, postgresPort}));
+      })
+      .then(() => {
+        // send response with port number
+        res.send({response: 'running container on port', port: serverPort});
+      })
+      .catch(console.error);
+>>>>>>> master
 
     } else {
         res.send('no logged in user');
@@ -124,9 +145,19 @@ module.exports = router
         .catch(console.error);
 })
 
+<<<<<<< HEAD
 .delete('/containerAPI', (req, res, next) => {
     exec(`docker ps -aqf "name=${containerName}"`)
         .then((containerId) => {
+=======
+    .delete('/containerDelete', (req, res, next) => {
+      if (req.session.userId){
+        const path = req.session.path;
+        const userId = req.session.userId.toLowerCase();
+        const containerName = `${userId}app_docker-test_1`;
+        exec(`docker ps -aqf "name=${containerName}"`)
+        .then( (containerId) => {
+>>>>>>> master
             return exec(`docker exec ${containerId.trim()} curl -X "DELETE" http://localhost:8080${path.trim()}`)
         })
         .then((result) => {

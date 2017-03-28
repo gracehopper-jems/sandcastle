@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 // import { Button } from 'react-bootstrap';
 import Progress, { ProgressModal } from '../Components/ProgressIndicator';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 export default class LoadingButton extends Component {
 	constructor(props) {
@@ -31,10 +30,7 @@ export default class LoadingButton extends Component {
 				<div
 					disabled={isLoading}
 					onClick={!isLoading ? this.handleClick : null}>
-					{isLoading ? <ReactCSSTransitionGroup
-          transitionName="example"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}><ProgressModal view={'Frontend'} /></ReactCSSTransitionGroup> : 'Run Frontend'}
+					{isLoading ? <ProgressModal view={'Frontend'} /> : 'Run Frontend'}
 				</div>
 		);
 	}
