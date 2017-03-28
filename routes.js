@@ -37,7 +37,7 @@ module.exports = router
       })
       .then((port) => {
         postgresPort = port;
-        console.log('server port', postgresPort);
+        console.log('postgres port', postgresPort);
         return runContainer(Object.assign({}, argsObj, {serverPort, postgresPort}));
       })
       .then(() => {
