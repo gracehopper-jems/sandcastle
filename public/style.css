@@ -64,10 +64,7 @@ body {
 
 .navbar-default .navbar-nav > li > button {
     margin-top: 8px;
-}
-
-.navbar-default .navbar-nav > li > input {
-    margin-top: 8px;
+    margin-right: 5px;
 }
 
 .giant-container {

@@ -98,10 +98,10 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(sendPort(...args));
         },
         handleSendDelete(...args){
-          dispatch(sendDelete(...args)); 
-        }, 
+          dispatch(sendDelete(...args));
+        },
         handleSendPut(...args){
-          dispatch(sendUpdate(...args)); 
+          dispatch(sendUpdate(...args));
         }
       }
   };
