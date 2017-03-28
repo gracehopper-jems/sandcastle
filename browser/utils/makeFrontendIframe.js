@@ -17,14 +17,14 @@ const makeFrontendIframe = () => {
 
 	// List any CSS you want to reference within the iframe
 	// var CSS = '<link rel="stylesheet" href="https://external.com/css/styles.css">';
-	let CSS = '<style>' + state.code.cssString + '</style>';
+	let CSS = `<style>${state.code.cssString}</style>`;
 
 	// List any JS you want to reference within the iframe
 	// var JS = '<script src="http://external.com/js/plugins.js"></script>';
-	let JS = '<script>' + state.code.jsString + '</script>';
+	let JS = `<script>${state.code.jsString}</script>`;
 
 	// Now sticch it all together into one thing to insert into the iframe
-	var myContent = '<!DOCTYPE html>' + '<html><head><title>Rendered HTML from Pattern</title>' + CSS + '</head><body>' + getHTML + JS + '</body></html>';
+	var myContent = `<!DOCTYPE html><html><head><title>Rendered HTML from Pattern</title>${CSS}</head><body>${getHTML}${JS}</body></html>`;
 
 	// Use the JavaScript methods to write to the iFrame, then close it
 	newIframe.contentWindow.document.open('text/html', 'replace');

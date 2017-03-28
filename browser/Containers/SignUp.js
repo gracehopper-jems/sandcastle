@@ -18,8 +18,7 @@ export default class SignUp extends Component {
 
 	handleSubmit(event){
 		event.preventDefault();
-		const email = this.state.email;
-		const password = this.state.password;
+		const {email, password} = this.state;
 
 		firebase.auth().createUserWithEmailAndPassword(email, password)
 		.then(() => {
@@ -38,10 +37,9 @@ export default class SignUp extends Component {
 	    })
 	    .catch(console.error);
     })
-    .catch(console.error)
-    // CHANGE THIS BACK LATER
-    // .catch(err => alert("Invalid sign up!"))
-    };
+    .catch(err => alert("Invalid sign up!"))
+    // .catch(console.error)
+  }
 
 	handleChange(event){
 		const value = event.target.value;

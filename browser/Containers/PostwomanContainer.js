@@ -27,34 +27,42 @@ export default class PostwomanContainer extends Component {
     }
 
     handleRequestBody(event) {
-        let requestBody = event.target.value;
         event.preventDefault();
+        let requestBody = event.target.value;
         this.setState({requestBody: requestBody})
     }
 
     handleSend(event) {
         event.preventDefault();
         if (this.state.requestType === 'GET' && this.state.path !== '') {
-            axios.post('/postWomanGetPath', {path: this.state.path})
+            // posts user's requests to server, server adds to req.session
+            axios.post('/postWomanPath', {path: this.state.path})
             .then(() => {
+                // runs get request in container using path in req.session
                 return axios.get('/containerGet');
             })
             .then((res) => {
+                //return JSON
                 return JSON.stringify(res.data);
             })
             .then((jsonStr) => {
+                // add JSON to redux state
                 this.props.handlers.handleSendJson(jsonStr);
             })
             .catch(console.error);
         } else if (this.state.requestType === 'POST' && this.state.path !== '') {
-            axios.post('/postWomanGetPath', {path: this.state.path})
+            // posts user's requests to server, server adds to req.session
+            axios.post('/postWomanPath', {path: this.state.path})
             .then(() => {
-                return axios.post('/containerPostTest', {request: this.state.requestBody} )
+                // runs post request in container using path in req.session
+                return axios.post('/containerPost', {request: this.state.requestBody} )
             })
             .then((res) => {
+                // return JSON
                 return JSON.stringify(res.data);
             })
             .then((jsonStr) => {
+                // add to database table on redux state
                 this.props.handlers.handleSendPost(jsonStr);
 
                 // dispatches below makes sure iframe for app refreshes
@@ -64,18 +72,23 @@ export default class PostwomanContainer extends Component {
                 return jsonStr;
             })
             .then((jsonStr) => {
+                // add JSON to redux state
                 this.props.handlers.handleSendJson(jsonStr);
             })
             .catch(console.error);
         } else if (this.state.requestType === 'PUT' && this.state.path !== '') {
-            axios.post('/postWomanGetPath', {path: this.state.path})
+            // posts user's request to server, server adds to req.session
+            axios.post('/postWomanPath', {path: this.state.path})
             .then(() => {
-                return axios.put('/containerPutTest', {request: this.state.requestBody} )
+                // runs put request in container using path in req.session
+                return axios.put('/containerPut', {request: this.state.requestBody} )
             })
             .then((res) => {
+                // return JSON
                 return JSON.stringify(res.data);
             })
             .then((jsonStr) => {
+                // update database table on redux state
                 this.props.handlers.handleSendPut(jsonStr);
 
                 // dispatches below makes sure iframe for app refreshes
@@ -85,21 +98,26 @@ export default class PostwomanContainer extends Component {
                 return jsonStr;
             })
             .then((jsonStr) => {
+                // add JSON to redux state
                 this.props.handlers.handleSendJson(jsonStr);
             })
             .catch(console.error);
         } else if (this.state.requestType === 'DELETE' && this.state.path !== '') {
-            axios.post('/postWomanGetPath', {path: this.state.path})
+            // posts user's requests to server, server adds to req.session
+            axios.post('/postWomanPath', {path: this.state.path})
             .then(() => {
-                return axios.delete('/containerDeleteTest', {request: this.state.requestBody} )
+                // runs delete request in container using path in req.session
+                return axios.delete('/containerDelete', {request: this.state.requestBody} )
             })
             .then((res) => {
                 console.log("RESPONSE FROM DELETE REQUEST")
-                console.log(res); 
+                console.log(res);
+                // return JSON
                 return JSON.stringify(res.data);
             })
             .then((jsonStr) => {
-                console.log("AS A JSON STR", jsonStr); 
+                console.log("AS A JSON STR", jsonStr);
+                // update database table on redux state
                 this.props.handlers.handleSendDelete(jsonStr);
 
                 // dispatches below makes sure iframe for app refreshes
@@ -109,12 +127,11 @@ export default class PostwomanContainer extends Component {
                 return jsonStr;
             })
             .then((jsonStr) => {
+                // add JSON to redux state
                 this.props.handlers.handleSendJson(jsonStr);
             })
             .catch(console.error);
         }
-
-
 
     }
 
