@@ -7,10 +7,8 @@ import { Promise } from 'bluebird';
 import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Provider } from 'react-redux';
-
 import AppContainer from './Containers/AppContainer';
 import SignUp from './Containers/SignUp';
-// import WelcomeMessage from './Components/WelcomeMessage';
 import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
@@ -27,8 +25,6 @@ const onAppEnter = () => {
   var config = { apiKey, authDomain, databaseURL };
   firebase.initializeApp(config);
 
-  // let user = firebase.auth().currentUser;
-
   let madeFirepads = false;
 
   firebase.auth().onAuthStateChanged((user) => {
@@ -36,7 +32,7 @@ const onAppEnter = () => {
 
     if (user) {
       let userId = user.uid;
-      store.dispatch(setUserId(userId))
+      store.dispatch(setUserId(userId));
 
       axios.post('/setUser', {userId: userId})
       .then(() => {

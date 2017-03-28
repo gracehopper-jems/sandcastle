@@ -33,7 +33,7 @@ export default class NavbarContainer extends Component {
         event.preventDefault();
         const {email, password} = this.state;
         firebase.auth().signInWithEmailAndPassword(email, password)
-        .then( () => {
+        .then(() => {
             const user = firebase.auth().currentUser;
             const userId = user.uid;
             this.props.handlers.handleSignin(userId);
@@ -61,11 +61,8 @@ export default class NavbarContainer extends Component {
         })
         .then(() => {
             this.props.handlers.handleSignout();
-            return axios.get('/removeUser')
-        })
-        .then(() => {
             console.log('removing userid');
-            window.location.reload();
+            return axios.get('/removeUser')
         })
         .catch(console.error)
     }
