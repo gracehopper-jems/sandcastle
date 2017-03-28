@@ -52,7 +52,7 @@ const runContainer = (argsObj) => {
     console.log(`DIRECTORY WHEN RUN BACKEND BUTTON CLICKED: ${process.cwd()}`);
 
     // check current directory
-    exec(`pwd`)
+    const preppingAllWork = exec(`pwd`)
     .then((currentDirectory) => {
         // if user app folder already exists and already inside use app folder
         if (currentDirectory.includes(`${argsObj.userId}-app`)) {
@@ -162,10 +162,6 @@ const runContainer = (argsObj) => {
         // write docker-compose to user-app folder
         return writeFile('docker-compose.yml', makeDockerCompose({'serverPort': argsObj.serverPort, 'postgresPort': argsObj.postgresPort, 'userServerPort': process.env.userServerPort, 'userPostgresPort': process.env.userPostgresPort}));
     })
-    // .then(() => {
-    //     console.log("reading Dockerfile");
-    //     return readFile(path.join(__dirname,'./Dockerfile'), 'utf8')
-    // })
     .then(() => {
         // write dockerFile to user-app folder
         console.log('creating docker file');
@@ -179,28 +175,28 @@ const runContainer = (argsObj) => {
     .then(() => {
         // run docker container
         console.log('running docker-compose up');
+        const runningProcess = require('child_process').spawn('docker-compose', ['up'], {stdio: ['pipe', 'pipe', 'pipe']});
+        runningProcess.on('exit', statusCode => {
+            console.log('status code', statusCode);
+        });
+
         return new Promise(function (resolve, reject) {
-            // might not need stdio?
-            const runningProcess = require('child_process').spawn('docker-compose', ['up'], {stdio: ['pipe', 'pipe', 'pipe']});
-            // console.log('stdin', runningProcess.stdin);
             runningProcess.stdout.on('data', v => {
                 const dockerTerminalOutput = v.toString();
                 console.log(dockerTerminalOutput);
                 // when container server runs, listen for the 'Running container server' output from docker terminal
-                // if (dockerTerminalOutput.includes('Running container server')) {
-                //     console.log('=====sdfsfdfsf=======')
-                // }
+                if (dockerTerminalOutput.includes('Running container server')) {
+                    resolve('SUCCESS');
+                }
             });
             runningProcess.stderr.on('data', e => {
                 console.log(e.toString());
             });
-            runningProcess.on('exit', statusCode => {
-                console.log('status code', statusCode);
-                return statusCode === 0 ? resolve() : reject();
-            });
         });
     })
     .catch(console.error);
+
+    return preppingAllWork;
 };
 
 module.exports = runContainer;
