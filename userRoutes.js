@@ -23,6 +23,18 @@ router.post('/:firebaseId', (req, res, next) => {
 		.catch(console.error);
 });
 
+router.get('/:firebaseId', (req, res, next) => {
+	User.findOne({ where: { firebaseId: req.params.firebaseId } })
+		.then(user => {
+			return user.getProjects();
+		})
+		.then(projects => {
+			console.log('PROJECTS', projects);
+			res.status(200).send(projects);
+		})
+		.catch(next);
+});
+
 module.exports = router;
 
 
