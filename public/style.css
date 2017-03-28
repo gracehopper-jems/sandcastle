@@ -22,15 +22,6 @@ body {
   height: 98vh;
 }
 
-/*.pagehalf {
-  flex: 1;
-}*/
-
-/*#frame {
-  width: 45vw;
-  height: 85vh;
-}*/
-
 .app-frame {
   width: 45vw;
   height: 85vh;
@@ -64,10 +55,7 @@ body {
 
 .navbar-default .navbar-nav > li > button {
     margin-top: 8px;
-}
-
-.navbar-default .navbar-nav > li > input {
-    margin-top: 8px;
+    margin-right: 5px;
 }
 
 .giant-container {
