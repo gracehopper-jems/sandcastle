@@ -24,21 +24,21 @@ const reducer = (state = initialState, action) => {
       newState.database = newState.database.concat(JSON.parse(action.post));
       return newState;
 
-    case UPDATE_ENTRY: 
-      let entry = JSON.parse(action.entry); 
+    case UPDATE_ENTRY:
+      let entry = JSON.parse(action.entry);
       newState.database = newState.database.map(item => {
         if (item.id === entry.id){
-          return entry 
+          return entry
         } else {
-          return item 
+          return item
         }
-      }); 
-      return newState; 
+      });
+      return newState;
 
     case DELETE_ENTRY:
-      let deleteId = parseInt(action.id); 
-      newState.database = newState.database.filter(item => item.id !== deleteId); 
-      return newState; 
+      let deleteId = parseInt(action.id);
+      newState.database = newState.database.filter(item => item.id !== deleteId);
+      return newState;
 
     case CLEAR_DB:
       newState.database = [];
@@ -63,8 +63,8 @@ const POST_TO_DB = 'POST_TO_DB';
 const UPDATE_DOCKER = 'UPDATE_DOCKER';
 const RECEIVE_PORT = 'RECEIVE_PORT';
 const CLEAR_DB = 'CLEAR_DB';
-const DELETE_ENTRY = 'DELETE_ENTRY'; 
-const UPDATE_ENTRY = 'UPDATE_ENTRY'; 
+const DELETE_ENTRY = 'DELETE_ENTRY';
+const UPDATE_ENTRY = 'UPDATE_ENTRY';
 
 // action creators
 export const receiveJson = json => ({
@@ -77,7 +77,7 @@ export const sendJson = (...args) => {
 };
 
 export const postToDB = post => ({
-  type: POST_TO_DB, 
+  type: POST_TO_DB,
   post
 });
 
@@ -88,21 +88,21 @@ export const sendPost = (...args) => {
 
 
 export const updatePost = (entry) => ({
-  type: UPDATE_ENTRY,  
-  entry 
+  type: UPDATE_ENTRY,
+  entry
 })
 
 export const sendUpdate = (...args) => {
-  return updatePost(...args); 
-} 
- 
+  return updatePost(...args);
+}
+
 export const deletePost = id => ({
   type: DELETE_ENTRY,
   id
 });
 
 export const sendDelete = (...args) => {
-  return deletePost(...args); 
+  return deletePost(...args);
 }
 
 export const clearDB = () => ({

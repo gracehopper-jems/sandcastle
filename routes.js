@@ -38,10 +38,10 @@ module.exports = router
       .then((port) => {
         postgresPort = port;
         console.log('server port', postgresPort);
-        runContainer(Object.assign({}, argsObj, {serverPort, postgresPort}));
-
+        return runContainer(Object.assign({}, argsObj, {serverPort, postgresPort}));
+      })
+      .then(() => {
         // send response with port number
-        // how to send response after docker compose up ?????
         res.send({response: 'running container on port', port: serverPort});
       })
       .catch(console.error);
@@ -61,7 +61,7 @@ module.exports = router
     }
   })
 
-  .post('/postWomanGetPath', (req, res, next) => {
+  .post('/postWomanPath', (req, res, next) => {
     req.session.path = req.body.path;
     res.send('path now on session');
   })
@@ -87,7 +87,7 @@ module.exports = router
       }
     })
 
-    .post('/containerPostTest', (req, res, next) => {
+    .post('/containerPost', (req, res, next) => {
       if (req.session.userId){
         const requestBody = req.body.request;
         const path = req.session.path;
@@ -106,7 +106,7 @@ module.exports = router
       }
     })
 
-    .put('/containerPutTest', (req, res, next) => {
+    .put('/containerPut', (req, res, next) => {
       if (req.session.userId){
         const requestBody = req.body.request;
         const path = req.session.path;
@@ -125,10 +125,7 @@ module.exports = router
       }
     })
 
-
-
-
-      .delete('/containerDeleteTest', (req, res, next) => {
+      .delete('/containerDelete', (req, res, next) => {
       if (req.session.userId){
         const path = req.session.path;
         const userId = req.session.userId.toLowerCase();

@@ -28,22 +28,13 @@ class BackendButton extends Component {
       userJS: this.props.code.jsString
     })
     .then((res) => {
-      console.log('running container');
+      console.log(res.data.response, res.data.port);
       const userServerPort = res.data.port;
-
-      // ========= change this once we figure out to send signal that docker composed up and port is listening
-      setTimeout(() => {
-        this.props.handlers.handleSendPort(userServerPort);
-        this.props.handlers.handleUpdateDockerOn(true);
-      }, 30000);
+      this.props.handlers.handleSendPort(userServerPort);
+      this.props.handlers.handleUpdateDockerOn(true);
+      this.setState({isLoading: false});
     })
     .catch(console.error);
-
-    // ========= change this once we figure out to send signal that docker composed up and port is listening
-    setTimeout(() => {
-        // Completed of async action, set loading state back
-        this.setState({isLoading: false});
-    }, 30000);
   }
 
   render(){
