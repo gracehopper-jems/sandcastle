@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { FormGroup, InputGroup, FormControl, DropdownButton, MenuItem, Button, ControlLabel } from 'react-bootstrap'
 import axios from 'axios';
+import Promise from 'bluebird';
 
 export default class PostwomanContainer extends Component {
     constructor(props){
@@ -33,107 +34,45 @@ export default class PostwomanContainer extends Component {
     }
 
     handleSend(event) {
-        event.preventDefault();
-        if (this.state.requestType === 'GET' && this.state.path !== '') {
-            // posts user's requests to server, server adds to req.session
-            axios.post('/postWomanPath', {path: this.state.path})
-            .then(() => {
-                // runs get request in container using path in req.session
-                return axios.get('/containerGet');
-            })
-            .then((res) => {
-                //return JSON
-                return JSON.stringify(res.data);
-            })
-            .then((jsonStr) => {
-                // add JSON to redux state
-                this.props.handlers.handleSendJson(jsonStr);
-            })
-            .catch(console.error);
-        } else if (this.state.requestType === 'POST' && this.state.path !== '') {
-            // posts user's requests to server, server adds to req.session
-            axios.post('/postWomanPath', {path: this.state.path})
-            .then(() => {
-                // runs post request in container using path in req.session
-                return axios.post('/containerPost', {request: this.state.requestBody} )
-            })
-            .then((res) => {
-                // return JSON
-                return JSON.stringify(res.data);
-            })
-            .then((jsonStr) => {
-                // add to database table on redux state
+        event.preventDefault(); 
+
+        axios.post('/postWomanPath', {path: this.state.path})
+        .then(() => {
+            var axiosPromise; 
+            if (this.state.requestType === 'GET' && this.state.path !== ''){
+                axiosPromise = axios.get('/containerAPI'); 
+            } else if (this.state.requestType === 'POST' && this.state.path !== ''){
+                axiosPromise = axios.post('/containerAPI', {request: this.state.requestBody});
+            }  else if (this.state.requestType === 'PUT' && this.state.path !== '') {
+                axiosPromise = axios.put('/containerAPI', {request: this.state.requestBody});
+            } else if (this.state.requestType === 'DELETE' && this.state.path !== '') {
+                axiosPromise = axios.delete('/containerAPI', {request: this.state.requestBody});
+            } 
+            return axiosPromise; 
+        })
+        .then((res) => {
+            // return JSON
+            return JSON.stringify(res.data);
+        })
+        .then((jsonStr) => {
+
+            if (this.state.requestType === 'POST'){
                 this.props.handlers.handleSendPost(jsonStr);
-
-                // dispatches below makes sure iframe for app refreshes
-                this.props.handlers.handleUpdateDockerOn(false);
-                this.props.handlers.handleUpdateDockerOn(true);
-
-                return jsonStr;
-            })
-            .then((jsonStr) => {
-                // add JSON to redux state
-                this.props.handlers.handleSendJson(jsonStr);
-            })
-            .catch(console.error);
-        } else if (this.state.requestType === 'PUT' && this.state.path !== '') {
-            // posts user's request to server, server adds to req.session
-            axios.post('/postWomanPath', {path: this.state.path})
-            .then(() => {
-                // runs put request in container using path in req.session
-                return axios.put('/containerPut', {request: this.state.requestBody} )
-            })
-            .then((res) => {
-                // return JSON
-                return JSON.stringify(res.data);
-            })
-            .then((jsonStr) => {
-                // update database table on redux state
+            } else if (this.state.requestType === 'PUT'){
                 this.props.handlers.handleSendPut(jsonStr);
-
-                // dispatches below makes sure iframe for app refreshes
-                this.props.handlers.handleUpdateDockerOn(false);
-                this.props.handlers.handleUpdateDockerOn(true);
-
-                return jsonStr;
-            })
-            .then((jsonStr) => {
-                // add JSON to redux state
-                this.props.handlers.handleSendJson(jsonStr);
-            })
-            .catch(console.error);
-        } else if (this.state.requestType === 'DELETE' && this.state.path !== '') {
-            // posts user's requests to server, server adds to req.session
-            axios.post('/postWomanPath', {path: this.state.path})
-            .then(() => {
-                // runs delete request in container using path in req.session
-                return axios.delete('/containerDelete', {request: this.state.requestBody} )
-            })
-            .then((res) => {
-                console.log("RESPONSE FROM DELETE REQUEST")
-                // response from delete request needs to be the instance's id
-                console.log(res);
-                // return JSON
-                return JSON.stringify(res.data);
-            })
-            .then((jsonStr) => {
-                console.log("AS A JSON STR", jsonStr);
-                // update database table on redux state
+            } else if (this.state.requestType === 'DELETE'){
                 this.props.handlers.handleSendDelete(jsonStr);
-
-                // dispatches below makes sure iframe for app refreshes
-                this.props.handlers.handleUpdateDockerOn(false);
-                this.props.handlers.handleUpdateDockerOn(true);
-
-                return jsonStr;
-            })
-            .then((jsonStr) => {
-                // add JSON to redux state
-                this.props.handlers.handleSendJson(jsonStr);
-            })
-            .catch(console.error);
-        }
-
+            } 
+            // dispatches below makes sure iframe for app refreshes
+            this.props.handlers.handleUpdateDockerOn(false);
+            this.props.handlers.handleUpdateDockerOn(true);
+            return jsonStr 
+        })
+        .then((jsonStr) => {
+            // add JSON to redux state
+            this.props.handlers.handleSendJson(jsonStr);
+        })
+        .catch(console.error);
     }
 
     handleRequestType(event) {
