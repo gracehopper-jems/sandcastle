@@ -10,7 +10,7 @@ export const IframeTabs = (props) => {
         <div id="frame" />
       </Tab>
       <Tab eventKey={2} title="Server View">
-        <PostwomanContainer handlers={props.handlers} />
+        <PostwomanContainer handlers={props.handlers} docker={props.docker} />
         <div>{props.docker ? props.docker.json : null}</div>
       </Tab>
       <Tab eventKey={3} title="Database View">
