@@ -100,11 +100,11 @@ export default class NavbarContainer extends Component {
 
 	render(){
 		const children = React.Children.map(this.props.children, (child) => {
-		return React.cloneElement(child, {
-			code: this.props.code,
-			handlers: this.props.handlers,
-			user: this.props.user
-		})
+			return React.cloneElement(child, {
+				code: this.props.code,
+				handlers: this.props.handlers,
+				user: this.props.user
+			});
 		});
 
 		return (
@@ -139,7 +139,7 @@ export default class NavbarContainer extends Component {
 									</Modal.Body>
 
 									<Modal.Footer>
-										<Button onClick={this.handleClose}>Close</Button>
+										<Button onClick={this.handleClose}>Start working right away...</Button>
 									</Modal.Footer>
 
 									</Modal.Dialog>
