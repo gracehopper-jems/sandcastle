@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 // import { Button } from 'react-bootstrap';
 import Progress, { ProgressModal } from '../Components/ProgressIndicator';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 export default class LoadingButton extends Component {
 	constructor(props) {
