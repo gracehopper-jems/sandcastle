@@ -25,7 +25,6 @@ export default function makeFirepads() {
 			mode: firepad.mode,
 			matchBrackets: true,
 			autoCloseBrackets: true,
-			// matchTags: true,
 			autoCloseTags: true,
 			toggleComment: true,
 			foldCode: true,
