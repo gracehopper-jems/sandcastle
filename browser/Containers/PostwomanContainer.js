@@ -168,7 +168,11 @@ export default class PostwomanContainer extends Component {
                     <InputGroup>
                         <FormControl type="text" value={this.state.path} onChange={this.handleChange} />
                         <InputGroup.Button>
-                            {this.props.docker.dockerOn ? <Button onClick={this.handleSend}>Send</Button> : <Button disabled>Send</Button>}
+                            {this.props.docker.dockerOn ?
+                                <Button onClick={this.handleSend}>Send</Button>
+                                :
+                                <Button disabled>Send</Button>
+                            }
                         </InputGroup.Button>
                     </InputGroup>
                 </FormGroup>
