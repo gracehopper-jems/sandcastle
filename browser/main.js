@@ -30,7 +30,6 @@ const onAppEnter = () => {
   // let user = firebase.auth().currentUser;
 
   let madeFirepads = false;
-  let madeFrontendIframe = false;
 
   firebase.auth().onAuthStateChanged((user) => {
     console.log("USER IN ON APP ENTER", user);
@@ -69,35 +68,36 @@ const onAppEnter = () => {
         let firepads = makeFirepads();
         let allFirepads = firepads[0];
         let orderManifesto = ['HTML', 'CSS', 'JS', 'Server', 'Database'];
-        let count = 0;
 
         madeFirepads = true;
 
-        const updatingText = Promise.map(allFirepads, (pad, i) => {
+        // creating firepads and updating state with text
+        Promise.map(allFirepads, (pad, i) => {
           return new Promise((resolve, reject) => {
             pad.on('ready', () => {
               store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
-              count++;
-              console.log('COUNT', count);
+              // count++;
               resolve();
             });
           });
-        });
-
-        updatingText.then(() => {
-          if (madeFrontendIframe === false && count === 5) {
-            makeFrontendIframe();
-            madeFrontendIframe = true;
-          }
-        });
-
-        const syncing = Promise.map(allFirepads, (pad, i) => {
-          return new Promise((resolve, reject) => {
-            pad.on('sync', isSynced => {
-              if (isSynced) store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
-              resolve();
+        })
+        // making the iFrames
+        .then(() => {
+          makeFrontendIframe();
+          })
+        // setting up event listeners to update state with new text every time firepads are edited
+        .then(() => {
+          Promise.map(allFirepads, (pad, i) => {
+            return new Promise((resolve, reject) => {
+              pad.on('synced', isSynced => {
+                if (isSynced) {
+                  store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
+                  resolve();
+                }
+              });
             });
-          });
+          })
+          .catch(console.error);
         });
       }
     } else {
