@@ -146,6 +146,7 @@ export default class PostwomanContainer extends Component {
     render(){
         return (
             <div>
+                <br/>
                 <FormGroup controlId="formControlsSelect">
                     <FormControl componentClass="select" placeholder="select" className="selectdropdown" onChange={this.handleRequestType}>
                         <option value="GET">GET</option>
@@ -167,7 +168,7 @@ export default class PostwomanContainer extends Component {
                     <InputGroup>
                         <FormControl type="text" value={this.state.path} onChange={this.handleChange} />
                         <InputGroup.Button>
-                            <Button onClick={this.handleSend}>Send</Button>
+                            {this.props.docker.dockerOn ? <Button onClick={this.handleSend}>Send</Button> : <Button disabled>Send</Button>}
                         </InputGroup.Button>
                     </InputGroup>
                 </FormGroup>
