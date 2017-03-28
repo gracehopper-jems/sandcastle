@@ -111,6 +111,7 @@ export default class PostwomanContainer extends Component {
             })
             .then((res) => {
                 console.log("RESPONSE FROM DELETE REQUEST")
+                // response from delete request needs to be the instance's id
                 console.log(res);
                 // return JSON
                 return JSON.stringify(res.data);

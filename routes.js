@@ -125,7 +125,7 @@ module.exports = router
       }
     })
 
-      .delete('/containerDelete', (req, res, next) => {
+    .delete('/containerDelete', (req, res, next) => {
       if (req.session.userId){
         const path = req.session.path;
         const userId = req.session.userId.toLowerCase();

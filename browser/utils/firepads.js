@@ -190,16 +190,19 @@ router.put('/markers/:name', (req, res) => {
 
 // delete a marker by name
 router.delete('/markers/:name', (req, res) => {
+  let id;
   models.MapMarker.findOne({
     where: {
       name: req.params.name
     }
   })
   .then((mapMarker) => {
+    id = mapMarker.id;
     mapMarker.destroy();
   })
   .then(() => {
-    res.send(req.params.name + ' deleted');
+    // response for delete route must be the deleted instance's id
+    res.json(id);
   })
   .catch(console.error)
 })
