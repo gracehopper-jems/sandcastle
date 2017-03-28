@@ -6,6 +6,7 @@ import firebase from 'firebase';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import SigninModal from '../Components/SigninModal';
+import SaveButton from '../Components/SaveButton';
 
 export default class NavbarContainer extends Component {
     constructor(props){
@@ -111,7 +112,9 @@ export default class NavbarContainer extends Component {
                         <ul className="nav navbar-nav nav-tabs">
 
                             { this.props.user.userId !== '' ? <li><a><LoadingButton code={this.props.code} handlers={this.props.handlers} /></a></li> : null }
-                            { this.props.user.userId !== '' ?  <li><a><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user}/></a></li> : null}
+														{this.props.user.userId !== '' ? <li><a><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
+
+														{this.props.user.userId !== '' ? <li><a><SaveButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
                             {this.state.signin ?
                                 <SigninModal handleSignin={this.handleSignin} handleChange={this.handleChange} handleClose={this.handleClose} /> : null
