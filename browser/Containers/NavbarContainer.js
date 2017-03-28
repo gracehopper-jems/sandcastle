@@ -103,7 +103,7 @@ export default class NavbarContainer extends Component {
                         <div className="navbar-header">
                             <Link className="navbar-brand" to="/">
                                 <span>
-                                    <img src='https://cdn0.iconfinder.com/data/icons/map-and-navigation-2/65/79-128.png' width="25px" height="25px" />
+                                    <img src='https://cdn0.iconfinder.com/data/icons/map-and-navigation-2/65/79-128.png' width="25px" height="25px" className="sandcastle-icon"/>
                                     Sandcastle
                                 </span>
                             </Link>
