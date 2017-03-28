@@ -19,13 +19,8 @@ const reducer = (state = initialState, action) => {
         newState.json = 'Error: Cannot PUT';
       } else if (action.json.includes('Error') && action.json.includes('Cannot DELETE')) {
         newState.json = 'Error: Cannot DELETE';
-<<<<<<< HEAD
       } else if (action.json.length && action.json.length < 4 && action.json !== "[]"){
         newState.json = `Deleted the entry with an id of ${action.json}.` 
-=======
-      } else if (action.json.length && action.json.length < 4){
-        newState.json = `Deleted the entry with an id of ${action.json}.`
->>>>>>> master
       } else {
         newState.json = action.json;
       }
