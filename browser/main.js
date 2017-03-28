@@ -16,6 +16,7 @@ import makeFrontendIframe from './utils/makeFrontendIframe';
 import axios from 'axios';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import tour from '../tour/tour';
 
 injectTapEventPlugin(); //need this for the progress indicator
 
@@ -119,6 +120,8 @@ const onAppEnter = () => {
       store.dispatch(setUserId(''));
     }
   });
+  tour.init();
+  tour.start();
 };
 
 
