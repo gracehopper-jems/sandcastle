@@ -6,7 +6,8 @@ const tour = new Tour({
 		{
 			element: '#run-frontend',
 			title: 'Text Editors',
-			content: 'Here you will find the editors to write your code in'
+			content: 'Here you will find the editors to write your code in',
+			backdrop: false,
 		},
 		// {
 		// 	element: '',
