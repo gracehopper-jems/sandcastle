@@ -57,28 +57,21 @@ export default class SignUp extends Component {
 						<div className="row">
 							<form>
 								<div className="form-group">
-									<label htmlFor="title" className="col-sm-4 control-label">First Name</label>
-									<div className="col-sm-6">
+									<label htmlFor="title" className="control-label">First Name</label>
 										<input name="firstname" type="text" className="form-control" onChange={this.handleChange}  autoFocus={focus} />
-									</div>
 								</div>
 								<div className="form-group">
-									<label htmlFor="title" className="col-sm-4 control-label">Last Name</label>
-									<div className="col-sm-6">
+									<label htmlFor="title" className="control-label">Last Name</label>
 										<input name="lastname" type="text" className="form-control" onChange={this.handleChange} />
-									</div>
 								</div>
 								<div className="form-group">
-									<label htmlFor="title" className="col-sm-4 control-label">Email</label>
-									<div className="col-sm-6">
+									<label htmlFor="title" className="control-label">Email</label>
 										<input name="email" type="text" className="form-control" onChange={this.handleChange} />
-									</div>
 								</div>
 								<div className="form-group">
-									<label htmlFor="title" className="col-sm-4 control-label">Password</label>
-									<div className="col-sm-6">
+									<label htmlFor="title" className="control-label">Password</label>
 										<input name="password" type="password" className="form-control" onChange={this.handleChange} />
-									</div>
+										<small id="passwordHelp" className="form-text text-muted">Password must be a minimum of 6 characters long.</small>
 								</div>
 
 								<div className="col-sm-offset-10 col-sm-10">
