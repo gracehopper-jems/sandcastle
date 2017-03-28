@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import firebase from 'firebase';
 import axios from 'axios';
 
+// import tour from '../../tour/tour';
+
 export default class SignUp extends Component {
 	constructor(props){
 		super(props)
@@ -34,9 +36,17 @@ export default class SignUp extends Component {
 	    .then(() => {
 	        console.log('posting userid and setting local state.signedup to true');
 					this.setState( { signedUp: true } );
-	    })
+				})
+			// 	.then(() => {
+			// 		tour.init();
+			// 		tour.start();
+			// })
 	    .catch(console.error);
-    })
+			})
+		// .then(() => {
+		// 	tour.init();
+		// 	tour.start();
+		// 	})
     .catch(err => alert("Invalid sign up!"))
     // .catch(console.error)
   }
