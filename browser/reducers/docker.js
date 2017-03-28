@@ -20,7 +20,7 @@ const reducer = (state = initialState, action) => {
       } else if (action.json.includes('Error') && action.json.includes('Cannot DELETE')) {
         newState.json = 'Error: Cannot DELETE';
       } else if (action.json.length && action.json.length < 4){
-        newState.json = `Deleted the entry with an id of ${action.json}.` 
+        newState.json = `Deleted the entry with an id of ${action.json}.`
       } else {
         newState.json = action.json;
       }
@@ -43,7 +43,7 @@ const reducer = (state = initialState, action) => {
 
     case DELETE_ENTRY:
       let deleteId = parseInt(action.id);
-      newState.database = newState.database.filter(item => item.id !== deleteId);
+      newState.database = newState.database.filter(item => parseInt(item.id) !== deleteId);
       return newState;
 
     case CLEAR_DB:
