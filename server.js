@@ -7,6 +7,10 @@ const finalHandler = require('finalhandler');
 const session = require('express-session')
 const routes = require('./routes');
 
+// add user ports as process environment variables
+process.env.userServerPort = 8080;
+process.env.userPostgresPort = 5432;
+
 const app = express();
 
 // const exec = Promise.promisify(require('child_process').exec);
