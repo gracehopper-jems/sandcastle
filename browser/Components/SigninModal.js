@@ -9,16 +9,22 @@ const SigninModal = (props) => (
         </Modal.Header>
 
         <Modal.Body>
-            <form onSubmit={props.handleSignin} >
-                <label className="sr-only" htmlFor="inlineFormInput">Email</label>
-                <input name="email" type="text" className="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Email" onChange={props.handleChange} />
-                <label className="sr-only" htmlFor="inlineFormInputGroup">Password</label>
-                    <input name="password" type="password" className="form-control" id="inlineFormInputGroup" placeholder="Password" onChange={props.handleChange} />
+            <form onSubmit={props.handleSignin}>
+                <div className="form-group">
+                    <label htmlFor="inlineFormInput">Email address</label>
+                    <input name="email" type="text" className="form-control" id="inlineFormInput" placeholder="Enter email" onChange={props.handleChange} autoFocus={focus} />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="inlineFormInputGroup">Password</label>
+                    <input name="password" type="password" className="form-control" id="inlineFormInputGroup" placeholder="Password" aria-describedby="passwordHelp" onChange={props.handleChange} />
+                    <small id="passwordHelp" className="form-text text-muted">Password must be over 5 characters long.</small>
+                </div>
+                <button type="submit" className="btn btn-primary">Sign In</button>
             </form>
+
         </Modal.Body>
 
         <Modal.Footer>
-            <button type="submit" className="btn btn-primary" onClick={props.handleSignin}>Sign In</button>
             <Button onClick={props.handleClose}>Close</Button>
         </Modal.Footer>
 
