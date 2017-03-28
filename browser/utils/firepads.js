@@ -69,10 +69,17 @@ h1 {
 if you are running frontend js only, click 'run frontend'
 if you are running backend js too, click 'run backend'*/
 
+var uniq = require('uniq');
+var lodash = require('lodash');
 var axios = require('axios');
 
+var unique = require('uniq');
+var data = [1, 2, 2, 3, 4, 5, 5, 5, 6];
+console.log(unique(data));
+
+
 $(document).ready(function() {
- 	console.log("document ready!");
+  console.log("document ready!");
     if (document.querySelectorAll('#map').length > 0) {
     var js_file = document.createElement('script');
     js_file.type = 'text/javascript';
@@ -84,14 +91,14 @@ $(document).ready(function() {
 let map;
 initMap = () => {
 
-	var gracehopper = {lat: 40.705344, lng: -74.009171};
-	map = new google.maps.Map(document.getElementById('map'), {
+  var gracehopper = {lat: 40.705344, lng: -74.009171};
+  map = new google.maps.Map(document.getElementById('map'), {
           zoom: 1,
           center: gracehopper
     });
 
-  	// add markers that are posted to server
-  	axios.get('/markers')
+    // add markers that are posted to server
+    axios.get('/markers')
     .then((res) => {
       console.log('markers', res.data);
       return res.data;
