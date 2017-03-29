@@ -16,33 +16,58 @@ import { setUserId } from './reducers/user';
 import makeFirepads from './utils/firepads';
 import * as updateActions from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
+import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from './reducers/code'
 
 
 injectTapEventPlugin(); //need this for the progress indicator
 
-var sharedCode; 
+var sharedText = false; 
+//var sharedCodePromise; 
+  if (location.pathname.startsWith('/share'))  {
+    sharedText = true; 
+    const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);  
+      axios.get(`/api/project/${hashedId}`)
+      .then(res => { 
+        return res.data
+      })
+      .then(data => {
+        return data.code 
+      })
+      .then(code => {
+        return JSON.parse(code);
+      })
+      .then(sharedCode => {
+        return sharedCode
+      })
+      .then(sharedCode => {
+        const html = sharedCode.htmlString; 
+        store.dispatch(updateHTML(html)); 
+        return sharedCode; 
+      })
+      .then(sharedCode => {
+        const css = sharedCode.cssString; 
+        store.dispatch(updateCSS(css)); 
+        return sharedCode; 
+      })  
+      .then(sharedCode => {
+        const jsString = sharedCode.jsString; 
+        store.dispatch(updateJS(jsString)); 
+        return sharedCode; 
+      })
+      .then(sharedCode => {
+        const serverString = sharedCode.serverString; 
+        store.dispatch(updateServer(serverString)); 
+        return sharedCode; 
+      }) 
+      .then(sharedCode => {
+        const databaseString = sharedCode.databaseString; 
+        store.dispatch(updateDatabase(databaseString)); 
+        return sharedCode; 
+      })
+      .then(browserHistory.push('/'))   
+      .catch(console.error)
+    }
 
-console.log("PATH IS", location.pathname); 
-if (location.pathname.startsWith('/share'))  {
-  console.log("IN HERE"); 
-  const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);  
-  console.log("HASHED ID IS", hashedId); 
-  axios.get(`/api/project/${hashedId}`)
-  .then(res => {
-    console.log("RESPONSe", res); 
-    // sharedCode = JSON.parse(res.data); 
-    return res.data
-  })
-  .then(data => {
-    return data.code 
-  })
-  .then(code => {
-    return JSON.parse(code);
-  })
-  .then(sharedCode => {console.log("SHARED CODE", sharedCode)})
-}
-
-//console.log("SHARED CODE IS", sharedCode); 
 
 const onAppEnter = () => {
 
@@ -89,18 +114,28 @@ const onAppEnter = () => {
         let firepads = makeFirepads();
         let allFirepads = firepads[0];
         let orderManifesto = ['HTML', 'CSS', 'JS', 'Server', 'Database'];
+        let stateOrderManifesto = ['htmlString', 'cssString', 'jsString', 'serverString', 'databaseString']; 
 
         madeFirepads = true;
 
         // creating firepads and updating state with text
         Promise.map(allFirepads, (pad, i) => {
+          var appState = store.getState();
+          var appCode = appState.code;  
           return new Promise((resolve, reject) => {
             pad.on('ready', () => {
-              store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
-              // count++;
-              resolve();
+              if (!sharedText){
+                store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
+                // count++;
+                resolve()
+              } else {
+                pad.setText(appCode[stateOrderManifesto[i]])
+                sharedText = false; 
+                window.location.reload(); 
+
+              }
             });
-          });
+          })
         })
         // making the iFrames
         .then(() => {
@@ -112,6 +147,7 @@ const onAppEnter = () => {
             return new Promise((resolve, reject) => {
               pad.on('synced', isSynced => {
                 if (isSynced) {
+                  console.log("******update triggered2*****");
                   store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
                   resolve();
                 }
