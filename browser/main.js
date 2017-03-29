@@ -21,6 +21,7 @@ import makeFrontendIframe from './utils/makeFrontendIframe';
 injectTapEventPlugin(); //need this for the progress indicator
 
 var sharedCode;
+let pads = [];
 
 console.log("PATH IS", location.pathname);
 if (location.pathname.startsWith('/share'))  {
@@ -91,13 +92,28 @@ const onAppEnter = () => {
         let orderManifesto = ['HTML', 'CSS', 'JS', 'Server', 'Database'];
 
         madeFirepads = true;
+        // store.setState({pads: allFirepads})
 
         // creating firepads and updating state with text
         Promise.map(allFirepads, (pad, i) => {
           return new Promise((resolve, reject) => {
             pad.on('ready', () => {
-              store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
+              console.log('store state projec tid', store.getState().code.currentProject === '')
+              if (store.getState().code.currentProject === '') {
+                pads.push(pad)
+                // store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
+                store.dispatch(updateActions[`update${orderManifesto[i]}`](pads[i].getText()));
+                console.log('PADS', pads)
+              } else {
+                console.log('ITS WORKING!!!!!!!!!!!!!!!!')
+              }
               // count++;
+              // const storeCodeObject = store.getState().code;
+              // const storeCodeKeys = Object.keys(storeCodeObject)
+              // console.log('DO THEY MATCH?', storeCodeKeys[i], storeCodeObject[storeCodeKeys[i]] === pad.getText() )
+              // console.log('BEFORE DISPATCH', store.getState())
+              // console.log('the things on state', store.getState().code[Object.keys(store.getState().code)[i]])
+              // console.log('the things on pad', pad.getText())
               resolve();
             });
           });
