@@ -83,7 +83,7 @@ export default class NavbarContainer extends Component {
     handleClose(event){
         event.preventDefault();
         this.setState({signin: false, signup: false});
-        browserHistory.push('/');
+        window.location.reload();
     }
 
     render(){
