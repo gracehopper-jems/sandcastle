@@ -6,6 +6,7 @@ import firebase from 'firebase';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import SigninModal from '../Components/SigninModal';
+import SaveButton from '../Components/SaveButton';
 
 export default class NavbarContainer extends Component {
     constructor(props){
@@ -33,7 +34,7 @@ export default class NavbarContainer extends Component {
         event.preventDefault();
         const {email, password} = this.state;
         firebase.auth().signInWithEmailAndPassword(email, password)
-        .then( () => {
+        .then(() => {
             const user = firebase.auth().currentUser;
             const userId = user.uid;
             this.props.handlers.handleSignin(userId);
@@ -61,11 +62,8 @@ export default class NavbarContainer extends Component {
         })
         .then(() => {
             this.props.handlers.handleSignout();
-            return axios.get('/removeUser')
-        })
-        .then(() => {
             console.log('removing userid');
-            window.location.reload();
+            return axios.get('/removeUser')
         })
         .catch(console.error)
     }
@@ -111,7 +109,9 @@ export default class NavbarContainer extends Component {
                         <ul className="nav navbar-nav nav-tabs">
 
                             { this.props.user.userId !== '' ? <li><a><LoadingButton code={this.props.code} handlers={this.props.handlers} /></a></li> : null }
-                            { this.props.user.userId !== '' ?  <li><a><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user}/></a></li> : null}
+														{this.props.user.userId !== '' ? <li><a><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
+
+														{this.props.user.userId !== '' ? <li><a><SaveButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
                             {this.state.signin ?
                                 <SigninModal handleSignin={this.handleSignin} handleChange={this.handleChange} handleClose={this.handleClose} /> : null
