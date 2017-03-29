@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateCurrentProject } from '../reducers/code';
+import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateCurrentProject, updateAllCode } from '../reducers/code';
 import { sendJson, sendPost, sendClearDB, sendUpdateDockerOn, sendPort, sendDelete, sendUpdate } from '../reducers/docker.js';
 import { updateTimeForTourTrue, updateTimeForTourFalse } from '../reducers/loading';
 import { setUserId } from '../reducers/user';
@@ -79,6 +79,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleCurrentProjectUpdate(...args) {
           dispatch(updateCurrentProject(...args));
+        },
+        handleUpdateAllCode(...args) {
+          dispatch(updateAllCode(...args));
         },
         handleSignin(...args) {
           dispatch(setUserId(...args));
