@@ -43,7 +43,7 @@ body {
 
 /* Note: CodeMirror applies its own styles which can be customized in the same way. To apply a background to the entire editor, we need to also apply it to CodeMirror. */
 .CodeMirror {
-  background-color: lightgray;
+  background-color: white;
   /*display: flexbox;*/
 }
 
