@@ -17,19 +17,19 @@ export const FirepadTabs = () => {
   return (
     <div onClick={handleClick}>
       <Tabs defaultActiveKey={1} id="FirepadTabContainer">
-        <Tab eventKey={1} title="HTML Editor">
+        <Tab className="frontend-color" eventKey={1} title="HTML Editor">
           <HTMLEditor />
         </Tab>
-        <Tab eventKey={2} title="CSS Editor">
+        <Tab className="frontend-color" eventKey={2} title="CSS Editor">
           <CSSEditor />
         </Tab>
-        <Tab eventKey={3} title="JS Editor">
+        <Tab className="frontend-color" eventKey={3} title="JS Editor">
           <JSEditor />
         </Tab>
-        <Tab eventKey={4} title="Server Editor">
+        <Tab className="backend-color" eventKey={4} title="Server Editor">
           <ServerEditor />
         </Tab>
-        <Tab eventKey={5} title="Models Editor">
+        <Tab className="backend-color" eventKey={5} title="Models Editor">
           <DatabaseEditor />
         </Tab>
       </Tabs>
