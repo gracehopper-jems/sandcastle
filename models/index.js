@@ -19,6 +19,9 @@ const Project = db.define('project', {
 	},
 	code: {
 		type: Sequelize.JSON,
+	},
+	projectName: {
+		type: Sequelize.STRING
 	}
 }
 	// {
