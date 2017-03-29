@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import tour from '../../tour';
 
 export default class DatabaseTable extends Component {
 	constructor(props){
