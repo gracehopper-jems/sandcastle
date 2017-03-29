@@ -21,7 +21,6 @@ import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from './r
 
 injectTapEventPlugin(); //need this for the progress indicator
 
-<<<<<<< HEAD
 var sharedCode;
 let pads = [];
 
