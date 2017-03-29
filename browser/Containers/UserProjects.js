@@ -81,7 +81,6 @@ export default class UserProjects extends Component {
       <div>
         <RaisedButton
           label="My Projects"
-          secondary={true}
           onTouchTap={this.handleToggle}
           style={buttonStyle}
         />
