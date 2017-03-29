@@ -8,6 +8,7 @@ import { Modal, Button } from 'react-bootstrap';
 import SigninModal from '../Components/SigninModal';
 import tour from '../../tour';
 import SaveButton from '../Components/SaveButton';
+import UserProjects from './UserProjects';
 import store from '../store';
 import ShareButton from '../Components/ShareButton';
 
@@ -125,15 +126,17 @@ export default class NavbarContainer extends Component {
 				<nav className="navbar navbar-default">
 					<div className="container-fluid">
 						<div className="navbar-header">
-                            <Link
-                                onClick={this.handleBrandClick} id="sandcastle-tour"
-                                className="navbar-brand"
-                                to="/">
+               <Link
+                  onClick={this.handleBrandClick}
+                  id="sandcastle-tour"
+                  className="navbar-brand"
+                  to="/">
 								<span>
 									<img
-                                        src='https://cdn0.iconfinder.com/data/icons/map-and-navigation-2/65/79-128.png'
-                                        width="25px"
+                    src='https://cdn0.iconfinder.com/data/icons/map-and-navigation-2/65/79-128.png'
+                    width="25px"
 										height="25px"
+                    className="sandcastle-icon"
 									/>
 									Sandcastle
 								</span>
@@ -141,18 +144,22 @@ export default class NavbarContainer extends Component {
 						</div>
 						<ul className="nav navbar-nav nav-tabs">
 
-							{this.props.user.userId !== '' ? <li><a id={"run-frontend"}><LoadingButton code={this.props.code} handlers={this.props.handlers} /></a></li> : null}
+							{this.props.user.userId !== '' ?
+                <li><a id={"run-frontend"}><LoadingButton code={this.props.code} handlers={this.props.handlers} /></a></li> : null}
 
-                            {this.props.user.userId !== '' ? <li><a id={"run-backend"}><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
+              {this.props.user.userId !== '' ?
+                 <li><a id={"run-backend"}><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
-                            {this.props.user.userId !== '' ? <li><a><SaveButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
+              {this.props.user.userId !== '' ? <li><a><SaveButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
-                            {this.props.user.userId !== '' ? <li><a><ShareButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
+              {this.props.user.userId !== '' ? <li><UserProjects code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></li> : null}
+
+              {this.props.user.userId !== '' ? <li><a><ShareButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
 							{this.state.signin ?
-                                <SigninModal
-                                    handleSignin={this.handleSignin} handleChange={this.handleChange} handleClose={this.handleClose}
-                                /> : null
+                 <SigninModal
+                     handleSignin={this.handleSignin} handleChange={this.handleChange} handleClose={this.handleClose}
+                 /> : null
 							}
 
 							{this.state.signup ? (<div className="static-modal">
