@@ -3,6 +3,7 @@ import axios from 'axios';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Link, browserHistory } from 'react-router';
 
 export default class UserProjects extends Component {
 
@@ -34,11 +35,37 @@ export default class UserProjects extends Component {
   handleOpenProject(hashedProjectId){
     return axios.get(`api/project/${hashedProjectId}`)
     .then((project) => {
-        console.log('GETTING YOUR PROJECT', project);
+        console.log('GETTING YOUR PROJECT', JSON.parse(project.data.code));
+        console.log('DAPROPS', this.props)
+        return JSON.parse(project.data.code)
+    })
+    .then((code) => {
+        console.log('PARSED CODE', code)
+        this.props.handlers.handleHTMLUpdate(code.htmlString);
+        // console.log('WHAT IS THE HTML', code.htmlString)
+        return code
+    })
+    .then((code) => {
+        this.props.handlers.handleCSSUpdate(code.cssString);
+        return code
+    })
+    .then((code) => {
+        this.props.handlers.handleJSUpdate(code.jsString);
+        return code
+    })
+    .then((code) => {
+        this.props.handlers.handleDatabaseUpdate(code.databaseString);
+        return code
+    })
+    .then((code) => {
+        this.props.handlers.handleServerUpdate(code.serverString);
     })
     .then(() => {
+        // browserHistory.push(`api/project/${hashedProjectId}`);
+        window.location.reload()
         this.setState({open: false});
     })
+    .catch(console.error)
   }
 
 
@@ -63,7 +90,12 @@ export default class UserProjects extends Component {
         >
           <h2>My Saved Projects</h2>
           { this.state.projects.map((project) => {
-                  return (<MenuItem onTouchTap={this.handleClose}>{project.hashedProjectId}</MenuItem>)
+                  return (
+                    <MenuItem
+                        key={project.id}
+                        onClick={() => this.handleOpenProject(this.state.projects[project.id-1].hashedProjectId)}>
+                    {project.hashedProjectId}
+                    </MenuItem>)
           })}
         </Drawer>
       </div>
