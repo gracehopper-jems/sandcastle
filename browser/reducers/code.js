@@ -4,6 +4,7 @@ const initialState = {
   jsString: '',
   serverString: '',
   databaseString: '',
+  currentProject: '',
 };
 
 // reducer
@@ -31,6 +32,10 @@ const reducer = (state = initialState, action) => {
       newState.databaseString = action.databaseString;
       return newState;
 
+    case RECEIVE_CURRENT_PROJECT:
+      newState.currentProject = action.currentProject;
+      return newState;
+
     default:
       return state;
   }
@@ -42,6 +47,7 @@ const RECEIVE_CSS = 'RECEIVE_CSS';
 const RECEIVE_JS = 'RECEIVE_JS';
 const RECEIVE_SERVER = 'RECEIVE_SERVER';
 const RECEIVE_DATABASE = 'RECEIVE_DATABASE';
+const RECEIVE_CURRENT_PROJECT = 'RECEIVE_CURRENT_PROJECT'
 
 // action creators
 export const receiveHTML = htmlString => ({
@@ -69,6 +75,12 @@ export const receiveDatabase = databaseString => ({
   databaseString
 });
 
+export const receiveCurrentProject = currentProject => ({
+  type: RECEIVE_CURRENT_PROJECT,
+  currentProject
+});
+
+
 
 
 export const updateHTML = (...args) => {
@@ -90,5 +102,9 @@ export const updateServer = (...args) => {
 export const updateDatabase = (...args) => {
   return receiveDatabase(...args);
 };
+
+export const updateCurrentProject = (...args)  => {
+  return receiveCurrentProject(...args);
+}
 
 export default reducer;
