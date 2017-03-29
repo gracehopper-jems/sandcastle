@@ -5,9 +5,7 @@ const tour = new Tour({
 		{
 			orphan: true,
 			title: 'Welcome!',
-			content: 'Welcome to Sandcasle! Click Next to begin a guided tour of our features.',
-			// next: 1,
-			// prev: -1,
+			content: 'Welcome to Sandcasle! \n Click Next to begin a guided tour of our features. \n We\'ve included a sample app to get you going!',
 		},
 		{
 			element: '#FirepadTabContainer',
@@ -18,38 +16,47 @@ const tour = new Tour({
 			element: '#FirepadTabContainer-tab-1',
 			title: 'HTML Editor',
 			content: '...in here you can write out your HTML file...',
-			// backdrop: false,
-			// duration: 1000,
+			duration: 2500,
 		},
 		{
 			element: '#FirepadTabContainer-tab-2',
 			title: 'CSS Editor',
-			content: '...and here, your stylesheet...'
+			content: '...and here, your stylesheet...',
+			duration: 2500,
 		},
 		{
 			element: '#FirepadTabContainer-tab-3',
 			title: 'JavaScript Editor',
 			content: '...and your JavaScript (frontend and backend!)...',
+			duration: 2500,
 		},
 		{
 			element: '#FirepadTabContainer-tab-4',
 			title: 'Server Editor',
 			content: '...define your routes here...',
+			duration: 2500,
 		},
 		{
 			element: '#FirepadTabContainer-tab-5',
 			title: 'Database Editor',
 			content: '...and your models here!',
+			duration: 2500,
 		},
 		{
 			element: '#run-frontend',
 			title: 'Run Your Frontend Code',
 			content: 'Once you\'ve entered some HTML (and CSS, and JS if you so please), click here on \'Run Frontend\' to view the result in the \'Browser View\' pane to the right',
+			duration: 4500,
 		},
 		{
 			element: '#run-backend',
 			title: 'Run Your Backend Code',
 			content: 'If you\'ve defined any routes or models, click here on \'Run Backend\' (there\'s a lot of logic going on here, please be patient!)',
+		},
+		{
+			orphan: true,
+			title: 'NOTE:',
+			content: 'If you\ve required any node modules into your JavaScript file, please \'Run Backend\' to install them!',
 		},
 		{
 			element: '#IframeTabContainer-tab-2',
@@ -93,7 +100,8 @@ const tour = new Tour({
 			content: 'Go! Now!'
 		}
 	],
-	backdrop: true
+	backdrop: true,
+	duration: 4000,
 });
 
 export default tour;
