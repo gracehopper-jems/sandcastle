@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
 import { sendJson, sendPost, sendClearDB, sendUpdateDockerOn, sendPort, sendDelete, sendUpdate } from '../reducers/docker.js';
-import { updateTimeForTourTrue, updateTimeForTourFalse } from '../reducers/loading';
+import { updateTimeForTourTrue, updateTimeForTourFalse, updateRenderModalTrue,  updateRenderModalFalse} from '../reducers/loading';
 import {setUserId} from '../reducers/user';
 import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';
@@ -25,7 +25,7 @@ class AppContainer extends Component {
   }
 
   render(){
-    console.log("LOCATION", this.props.location.pathname); 
+    console.log("LOCATION", this.props.location.pathname);
     return (
         <div>
             <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} docker={this.props.docker}/>
@@ -110,6 +110,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleSetTimeForTourFalse(...args) {
           dispatch(updateTimeForTourFalse(...args));
+        },
+        handleUpdateRenderModalTrue(...args) {
+          dispatch(updateRenderModalTrue(...args));
+        },
+        handleUpdateRenderModalFalse(...args) {
+          dispatch(updateRenderModalFalse(...args));
         }
       }
   };
