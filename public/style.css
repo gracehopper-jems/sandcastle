@@ -7,6 +7,19 @@ body {
   height: 100%;
   position: relative;
   font-family: 'Roboto', sans-serif;
+  /*background-image: url('dimension.png');*/
+}
+
+body::after {
+  content: "";
+  background: url(dimension.png);
+  opacity: 0.35;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
 }
 
 .container {
@@ -43,7 +56,7 @@ body {
 
 /* Note: CodeMirror applies its own styles which can be customized in the same way. To apply a background to the entire editor, we need to also apply it to CodeMirror. */
 .CodeMirror {
-  background-color: lightgray;
+  background-color: #f8f8f8;
   /*display: flexbox;*/
 }
 
