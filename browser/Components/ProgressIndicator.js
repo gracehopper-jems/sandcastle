@@ -16,7 +16,7 @@ export const ProgressModal = (props) => (
         <Modal.Title>Building {props.view}...</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body>
+      <Modal.Body id="progress-modal-body">
         <center>
         <CircularProgress size={200} thickness={10} />
         </center>
