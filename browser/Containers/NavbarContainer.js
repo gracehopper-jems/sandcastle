@@ -173,7 +173,7 @@ export default class NavbarContainer extends Component {
                             {this.state.signup ? <SignupModal children={children} handleClose={this.handleClose} /> : null
                             }
 
-                            {this.state.renderModal ? <CustomProjectNameModal handleSaveModalClose={this.handleSaveModalClose} user={this.props.user} handleModalClose={this.handleModalClose} /> : null}
+                            {this.state.renderModal ? <CustomProjectNameModal handleSaveModalClose={this.handleSaveModalClose} user={this.props.user} handleModalClose={this.handleModalClose} code={this.props.code}/> : null}
                         </ul>
 
                         {this.props.user.userId !== ''

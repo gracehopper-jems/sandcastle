@@ -22,7 +22,7 @@ export default class CustomProjectNameModal extends Component {
 		// post to db
 		const hashedProjectId = randomstring.generate(10);
 		// const projectName = this.state.projectName;
-
+		console.log('project name out of .then', this.state.projectName);
 		console.log('clicked save');
 		const stringifiedCode = JSON.stringify(this.props.code);
 		axios.post(`/api/user/${this.props.user.userId}`, {
@@ -32,7 +32,9 @@ export default class CustomProjectNameModal extends Component {
 		})
 			.then(() => {
 				console.log('posted successfully');
-			});
+				console.log('project name in .then', this.state.projectName);
+			})
+			.catch(console.error);
 		this.props.handleModalClose();
 	}
 
