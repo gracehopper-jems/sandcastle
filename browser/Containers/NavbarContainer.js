@@ -9,6 +9,7 @@ import SigninModal from '../Components/SigninModal';
 import tour from '../../tour';
 import SaveButton from '../Components/SaveButton';
 import store from '../store';
+import ShareButton from '../Components/ShareButton';
 
 export default class NavbarContainer extends Component {
 	constructor(props) {
@@ -122,10 +123,14 @@ export default class NavbarContainer extends Component {
 				<nav className="navbar navbar-default">
 					<div className="container-fluid">
 						<div className="navbar-header">
-							<Link onClick={this.handleBrandClick} id="sandcastle-tour" className="navbar-brand" to="/">
+                            <Link
+                                onClick={this.handleBrandClick} id="sandcastle-tour"
+                                className="navbar-brand"
+                                to="/">
 								<span>
 									<img
-										src='https://cdn0.iconfinder.com/data/icons/map-and-navigation-2/65/79-128.png' width="25px"
+                                        src='https://cdn0.iconfinder.com/data/icons/map-and-navigation-2/65/79-128.png'
+                                        width="25px"
 										height="25px"
 									/>
 									Sandcastle
@@ -136,10 +141,16 @@ export default class NavbarContainer extends Component {
 
 							{this.props.user.userId !== '' ? <li><a id={"run-frontend"}><LoadingButton code={this.props.code} handlers={this.props.handlers} /></a></li> : null}
 
-							{this.props.user.userId !== '' ? <li><a id={"run-backend"}><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
+                            {this.props.user.userId !== '' ? <li><a id={"run-backend"}><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
+
+                            {this.props.user.userId !== '' ? <li><a><SaveButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
+
+                            {this.props.user.userId !== '' ? <li><a><ShareButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
 							{this.state.signin ?
-								<SigninModal handleSignin={this.handleSignin} handleChange={this.handleChange} handleClose={this.handleClose} /> : null
+                                <SigninModal
+                                    handleSignin={this.handleSignin} handleChange={this.handleChange} handleClose={this.handleClose}
+                                /> : null
 							}
 
 							{this.state.signup ? (<div className="static-modal">
@@ -164,16 +175,30 @@ export default class NavbarContainer extends Component {
 							?
 							<ul className="nav navbar-nav navbar-right">
 								<li>
-									<button className="btn btn-primary" onClick={this.handleSignout}>Sign Out</button>
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={this.handleSignout}>
+                                        Sign Out
+                                    </button>
 								</li>
 							</ul>
 							:
 							<div className="nav navbar-nav navbar-right">
 								<li>
-									<button type="submit" className="btn btn-primary" onClick={this.showSigninModal}>Sign In</button>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary"
+                                        onClick={this.showSigninModal}>
+                                    Sign In
+                                    </button>
 								</li>
 								<li>
-									<button type="submit" className="btn btn-info" onClick={this.handleSignup} >Sign Up</button>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-info"
+                                        onClick={this.handleSignup}>
+                                        Sign Up
+                                    </button>
 								</li>
 							</div>
 						}
