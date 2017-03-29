@@ -18,7 +18,7 @@ export const ProgressModal = (props) => (
 
       <Modal.Body>
         <center>
-        <CircularProgress size={300} thickness={20} />
+        <CircularProgress size={300} thickness={10} />
         </center>
       </Modal.Body>
     </Modal.Dialog>

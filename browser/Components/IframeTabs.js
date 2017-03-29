@@ -7,7 +7,7 @@ export const IframeTabs = (props) => {
   return (
     <Tabs defaultActiveKey={1} id="IframeTabContainer">
       <Tab eventKey={1} title="Frontend View">
-        <div id="frame" />
+          <div id="frame" />
       </Tab>
       <Tab eventKey={2} title="Server View">
         <div className="tab-div">
@@ -25,13 +25,11 @@ export const IframeTabs = (props) => {
         </div>
       </Tab>
       <Tab eventKey={4} title="Full App View">
-        <div className="tab-div">
-          { !props.docker ? null
-            : props.docker.dockerOn === false
-            ? null
-            : <iframe className="app-frame" src={`http://127.0.0.1:${props.docker.port}`} />
-            }
-          </div>
+        { !props.docker ? null
+          : props.docker.dockerOn === false
+          ? <div className="tab-div" />
+          : <iframe className="app-frame" src={`http://127.0.0.1:${props.docker.port}`} />
+          }
       </Tab>
     </Tabs>
   )
