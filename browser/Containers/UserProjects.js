@@ -63,7 +63,8 @@ export default class UserProjects extends Component {
     })
     .then(() => {
         // browserHistory.push(`api/project/${hashedProjectId}`);
-        // window.location.reload()
+        //  window.location.reload()
+        // browserHistory.push('/');
         this.setState({open: false});
     })
     .catch(console.error)
