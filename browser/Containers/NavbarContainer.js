@@ -103,9 +103,13 @@ export default class NavbarContainer extends Component {
             tour.init();
             tour.restart(true);
             this.props.handlers.handleSetTimeForTourFalse();
+            this.setState({signin: false, signup: false});
+            browserHistory.push('/');
+        } else {
+           this.setState({signin: false, signup: false});
+            browserHistory.push('/');
+            window.location.reload();
         }
-        this.setState({signin: false, signup: false, renderModal: false});
-        window.location.reload();
     }
 
     handleBrandClick() {
@@ -160,8 +164,6 @@ export default class NavbarContainer extends Component {
                                     </div>
                                 </a></li> : null}
 
-                            {this.props.user.userId !== '' ? <li><UserProjects code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></li> : null}
-
                             {this.props.user.userId !== '' ? <li><a><ShareButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
                             {this.state.signin ?
@@ -177,8 +179,12 @@ export default class NavbarContainer extends Component {
                         {this.props.user.userId !== ''
                             ?
                             <ul className="nav navbar-nav navbar-right">
+
                                 <li>
-                                    <button className="btn btn-primary" onClick={this.handleSignout}>Sign Out</button>
+                                    <UserProjects code={this.props.code} handlers={this.props.handlers} user={this.props.user} />
+                                </li>
+                                <li>
+                                    <button className="signout" className="btn btn-primary" onClick={this.handleSignout}>Sign Out</button>
                                 </li>
                             </ul>
                             :
