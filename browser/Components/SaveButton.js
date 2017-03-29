@@ -12,7 +12,6 @@ export default class SaveButton extends Component {
 
 	handleSave(event) {
 		event.preventDefault();
-		// console.log(typeof JSON.stringify(this.props.code));
 		// post to db
 		const hashedProjectId = randomstring.generate(10);
 
