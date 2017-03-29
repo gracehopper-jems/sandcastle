@@ -8,6 +8,7 @@ import { Modal, Button } from 'react-bootstrap';
 import SigninModal from '../Components/SigninModal';
 import tour from '../../tour';
 import SaveButton from '../Components/SaveButton';
+import ShareButton from '../Components/ShareButton';
 
 export default class NavbarContainer extends Component {
 	constructor(props) {
@@ -92,7 +93,7 @@ export default class NavbarContainer extends Component {
 		this.setState({ signin: false, signup: false });
         browserHistory.push('/');
         tour.init();
-            tour.restart(true);
+        tour.restart(true);
 	}
 
 	handleBrandClick() {

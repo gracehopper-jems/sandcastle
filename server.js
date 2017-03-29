@@ -8,6 +8,7 @@ const session = require('express-session');
 const containerRoutes = require('./containerRoutes');
 const userRoutes = require('./userRoutes');
 const models = require('./models');
+const Project = models.Project; 
 const db = models.db;
 
 // add user ports as process environment variables
@@ -48,6 +49,7 @@ module.exports = app
   .use('/api', userRoutes)
   .use('/', containerRoutes)
 
+
   // Send index.html for anything else.
   .get('/*', (_, res) => res.sendFile(resolve(__dirname, 'public', 'index.html')))
 
@@ -57,7 +59,7 @@ module.exports = app
   // https://github.com/pillarjs/finalhandler/blob/master/index.js#L172
 
 
-  db.sync({force: true})
+  db.sync({force: false})
     .then(() => {
       const server = app.listen(
         3000,
