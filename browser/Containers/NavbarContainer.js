@@ -25,6 +25,7 @@ export default class NavbarContainer extends Component {
 	this.handleSignout = this.handleSignout.bind(this);
 	this.handleSignup = this.handleSignup.bind(this);
 	this.handleClose = this.handleClose.bind(this);
+	this.handleBrandClick = this.handleBrandClick.bind(this);
 }
 
 	componentDidMount() {
@@ -98,6 +99,10 @@ export default class NavbarContainer extends Component {
 		browserHistory.push('/');
 	}
 
+	handleBrandClick() {
+		tour.restart();
+	}
+
 	render(){
 		const children = React.Children.map(this.props.children, (child) => {
 			return React.cloneElement(child, {
@@ -112,17 +117,21 @@ export default class NavbarContainer extends Component {
 				<nav className="navbar navbar-default">
 					<div className="container-fluid">
 						<div className="navbar-header">
-							<Link className="navbar-brand" to="/">
+							<Link onClick={this.handleBrandClick} id="sandcastle-tour" className="navbar-brand" to="/">
 								<span>
-									<img src='https://cdn0.iconfinder.com/data/icons/map-and-navigation-2/65/79-128.png' width="25px" height="25px" />
+									<img
+										src='https://cdn0.iconfinder.com/data/icons/map-and-navigation-2/65/79-128.png' width="25px"
+										height="25px"
+									/>
 									Sandcastle
 								</span>
 							</Link>
 						</div>
 						<ul className="nav navbar-nav nav-tabs">
 
-							{ this.props.user.userId !== '' ? <li><a><LoadingButton code={this.props.code} handlers={this.props.handlers} /></a></li> : null }
-							{ this.props.user.userId !== '' ?  <li><a><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user}/></a></li> : null}
+							{this.props.user.userId !== '' ? <li><a id={"run-frontend"}><LoadingButton code={this.props.code} handlers={this.props.handlers} /></a></li> : null}
+
+							{this.props.user.userId !== '' ? <li><a id={"run-backend"}><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user}/></a></li> : null}
 
 							{this.state.signin ?
 								<SigninModal handleSignin={this.handleSignin} handleChange={this.handleChange} handleClose={this.handleClose} /> : null

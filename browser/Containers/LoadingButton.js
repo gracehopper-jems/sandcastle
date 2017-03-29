@@ -28,7 +28,6 @@ export default class LoadingButton extends Component {
 		let isLoading = this.state.isLoading;
 		return (
 			<div
-				id="run-frontend"
 				disabled={isLoading}
 				onClick={!isLoading ? this.handleClick : null}>
 				{isLoading ? <ProgressModal view={'Frontend'} /> : 'Run Frontend'}

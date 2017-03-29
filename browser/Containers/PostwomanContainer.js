@@ -164,7 +164,7 @@ export default class PostwomanContainer extends Component {
                 }
                     <ControlLabel>Enter route:</ControlLabel>
                     <InputGroup>
-                        <FormControl type="text" value={this.state.path} onChange={this.handleChange} />
+                        <FormControl id={"route-form"} type="text" value={this.state.path} onChange={this.handleChange} />
                         <InputGroup.Button>
                             <Button onClick={this.handleSend}>Send</Button>
                         </InputGroup.Button>
