@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import SigninModal from '../Components/SigninModal';
 import SaveButton from '../Components/SaveButton';
+import ShareButton from '../Components/ShareButton'; 
 
 export default class NavbarContainer extends Component {
     constructor(props){
@@ -112,6 +113,8 @@ export default class NavbarContainer extends Component {
 														{this.props.user.userId !== '' ? <li><a><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
 														{this.props.user.userId !== '' ? <li><a><SaveButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
+
+                                                        {this.props.user.userId !== '' ? <li><a><ShareButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
                             {this.state.signin ?
                                 <SigninModal handleSignin={this.handleSignin} handleChange={this.handleChange} handleClose={this.handleClose} /> : null
