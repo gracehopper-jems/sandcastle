@@ -1,24 +1,23 @@
 import React, {Component} from 'react';
 
-
 export default class DatabaseTable extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            entries: [],
-            headings: [],
-        }
-  }
+	constructor(props){
+			super(props)
+			this.state = {
+					entries: [],
+					headings: [],
+			}
+	}
 
-	componentWillReceiveProps(nextProps){ 
-  		const entries = nextProps.database; 
+	componentWillReceiveProps(nextProps){
+  		const entries = nextProps.database;
 
   		if (entries.length){
-  		  	
-		  	this.setState({entries: entries}); 
 
-		  	const headings = Object.keys(entries[0]); 
-		  	this.setState({headings: headings}); 
+		  	this.setState({entries: entries});
+
+		  	const headings = Object.keys(entries[0]);
+		  	this.setState({headings: headings});
 
   		}
 
@@ -26,27 +25,27 @@ export default class DatabaseTable extends Component {
 
 
 	render() {
-		let count = 0; 
+		let count = 0;
 		return (
 
-			<table> 
+			<table>
 				<tbody>
-					<tr> 
+					<tr>
 						{this.state.headings.map(heading => <th key={heading}>{heading}</th>) }
-					</tr> 
+					</tr>
 				 </tbody>
 
-			{this.state.entries.map(entry => { 
+			{this.state.entries.map(entry => {
 				return (
 					 <tbody key={"" + count++}>
 					 	<tr key={"" + count++}>
-					 		{this.state.headings.map( col => <td key={"" + count++}>{entry[col]}</td>) } 
-					 	</tr> 
-					 </tbody> 
-				) 
-			})} 
+					 		{this.state.headings.map( col => <td key={"" + count++}>{entry[col]}</td>) }
+					 	</tr>
+					 </tbody>
+				)
+			})}
 
 			</table>
-		) 
-	} 
-} 
+		)
+	}
+}
