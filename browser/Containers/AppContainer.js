@@ -38,16 +38,16 @@ class AppContainer extends Component {
                         <FirepadTabs />
                     </div>
                     <div className='iframe-container'>
-                    <div className="container-fluid">
-                        <div className="row">
-                        <div className="col-md-6">
-                            <IframeTabs docker={this.props.docker} handlers={this.props.handlers} />
-                        </div>
-                        </div>
+                      <div className="container-fluid">
+                          <div className="row">
+                            <div className="col-md-6">
+                                <IframeTabs docker={this.props.docker} handlers={this.props.handlers} />
+                            </div>
+                          </div>
+                      </div>
                     </div>
-                    </div>
-                </div>)
-                }
+                </div>
+                )}
         </div>
     );
   }
