@@ -135,10 +135,13 @@ li {
 }
 
 .modal-body {
-  height: 60vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+#progress-modal-body {
+  height: 60vh;
 }
 
 .sandcastle-icon {
