@@ -19,21 +19,21 @@ export default class UserProjects extends Component {
     this.handleOpenProject = this.handleOpenProject.bind(this);
   }
 
-  handleToggle(){
-      return axios.get(`/api/user/${this.props.user.userId}`)
-      .then((projects) => {
-          console.log("getting the projects", this.state.projects);
-          this.setState({open: !this.state.open, projects: projects.data});
-          console.log("getting the projects after", this.state.projects);
-      })
-      .catch(console.error)
-  }
+    handleToggle(){
+        return axios.get(`/api/user/${this.props.user.userId}`)
+        .then((projects) => {
+            console.log("getting the projects", this.state.projects);
+            this.setState({open: !this.state.open, projects: projects.data});
+            console.log("getting the projects after", this.state.projects);
+        })
+        .catch(console.error)
+    }
 
-  handleClose(){
-      this.setState({open: false});
-  }
+    handleClose(){
+        this.setState({open: false});
+    }
 
-  handleOpenProject(hashedProjectId){
+    handleOpenProject(hashedProjectId){
     return axios.get(`api/project/${hashedProjectId}`)
     .then((project) => {
         console.log('GETTING YOUR PROJECT', (project.data.code));
@@ -77,6 +77,8 @@ export default class UserProjects extends Component {
         margin: '6px',
     };
 
+    console.log('THE PROJECTS', this.state.projects)
+
     return (
       <div>
         <RaisedButton
@@ -92,11 +94,11 @@ export default class UserProjects extends Component {
           onRequestChange={(open) => this.setState({open})}
         >
           <h2>My Saved Projects</h2>
-            {this.state.projects && this.state.projects.map((project) => {
+            {this.state.projects && this.state.projects.map((project, i) => {
                 return (
                     <MenuItem
                         key={project.id}
-                        onClick={() => this.handleOpenProject(this.state.projects[project.id-1].hashedProjectId)}>
+                        onClick={() => this.handleOpenProject(this.state.projects[i].hashedProjectId)}>
                     {project.hashedProjectId}
                     </MenuItem>)
             })}
@@ -106,11 +108,3 @@ export default class UserProjects extends Component {
   }
 }
 
-// {this.state.projects && this.state.projects.map((project) => {
-//                   return (
-//                     <MenuItem
-//                         key={project.id}
-//                         onClick={() => this.handleOpenProject(this.state.projects[project.id-1].hashedProjectId)}>
-//                     {project.hashedProjectId}
-//                     </MenuItem>)
-//           })}
