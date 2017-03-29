@@ -99,12 +99,12 @@ initMap = () => {
     // add markers that are posted to server
     axios.get('/markers')
     .then((res) => {
-      console.log('markers', res.data);
+      console.log('markerData', res.data);
       return res.data;
     })
-    .then((markers) => {
-      if (markers.length > 0) {
-        plotMarkers(markers);
+    .then((markerData) => {
+      if (markerData.length > 0) {
+        plotMarkers(markerData);
       }
     })
     .catch(console.error);
@@ -117,16 +117,24 @@ function plotMarkers(m) {
   markers = [];
   bounds = new google.maps.LatLngBounds();
 
-  m.forEach(function (marker) {
-    var position = new google.maps.LatLng(marker.lat, marker.lng);
+  m.forEach(function (markerDataPt) {
+    const position = new google.maps.LatLng(markerDataPt.lat, markerDataPt.lng);
 
-    markers.push(
-      new google.maps.Marker({
+    const marker = new google.maps.Marker({
         position: position,
         map: map,
         animation: google.maps.Animation.DROP
-      })
-    );
+    })
+
+    const infowindow = new google.maps.InfoWindow({
+          content: markerDataPt.name
+    });
+
+    marker.addListener('click', function() {
+          infowindow.open(map, marker);
+    });
+
+    markers.push(marker);
   });
 }`
 	});
