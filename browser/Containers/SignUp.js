@@ -55,7 +55,6 @@ export default class SignUp extends Component {
 					(<div>
 						<div>Thanks for signing up! You are now logged in and can create your first project...BUT! We recommend taking a tour before you do that...
 						</div>
-						<Button>Take the tour!</Button>
 					</div>
 					)
 					: ( <div className="container-fluid">

@@ -30,13 +30,6 @@ export default class NavbarContainer extends Component {
 	}
 	// <<<<<<< HEAD
 
-	componentDidMount() {
-		tour.init();
-		setTimeout(function () {
-			tour.start(true);
-		}, 1000);
-	}
-
 	handleChange(event) {
 		const value = event.target.value;
 		const name = event.target.name;
@@ -98,7 +91,11 @@ export default class NavbarContainer extends Component {
 	handleClose(event) {
 		event.preventDefault();
 		this.setState({ signin: false, signup: false });
-		browserHistory.push('/');
+        browserHistory.push('/');
+        tour.init();
+        // setTimeout(function () {
+            tour.start(true);
+        // }, 500);
 	}
 
 	handleBrandClick() {
@@ -150,7 +147,7 @@ export default class NavbarContainer extends Component {
 									</Modal.Body>
 
 									<Modal.Footer>
-										<Button onClick={this.handleClose}>Start working right away...</Button>
+										<Button onClick={this.handleClose}>Close</Button>
 									</Modal.Footer>
 
 								</Modal.Dialog>
