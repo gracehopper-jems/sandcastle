@@ -14,6 +14,7 @@ export default class UserProjects extends Component {
     };
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleOpenProject = this.handleOpenProject.bind(this);
   }
 
   handleToggle(){
@@ -30,13 +31,29 @@ export default class UserProjects extends Component {
       this.setState({open: false});
   }
 
+  handleOpenProject(hashedProjectId){
+    return axios.get(`api/project/${hashedProjectId}`)
+    .then((project) => {
+        console.log('GETTING YOUR PROJECT', project);
+    })
+    .then(() => {
+        this.setState({open: false});
+    })
+  }
+
+
   render() {
+    const buttonStyle = {
+        margin: '6px',
+    };
+
     return (
       <div>
         <RaisedButton
           label="My Projects"
-          primary={true}
+          secondary={true}
           onTouchTap={this.handleToggle}
+          style={buttonStyle}
         />
         <Drawer
           docked={false}
@@ -44,7 +61,7 @@ export default class UserProjects extends Component {
           open={this.state.open}
           onRequestChange={(open) => this.setState({open})}
         >
-          <h2>My Awesome Projects</h2>
+          <h2>My Saved Projects</h2>
           { this.state.projects.map((project) => {
                   return (<MenuItem onTouchTap={this.handleClose}>{project.hashedProjectId}</MenuItem>)
           })}
