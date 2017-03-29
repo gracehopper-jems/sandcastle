@@ -159,7 +159,8 @@ const onAppEnter = () => {
               } else {
                 pad.setText(appCode[stateOrderManifesto[i]])
                 sharedText = false;
-                window.location.reload();
+                // window.location.reload();
+                pad.refresh();
               }
               // const storeCodeObject = store.getState().code;
               // const storeCodeKeys = Object.keys(storeCodeObject)
