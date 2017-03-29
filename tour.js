@@ -1,4 +1,4 @@
-// 	TOUR INITIALIZED & STARTED IN NAVBAR CONTAINER
+// 	TOUR INITIALIZED & STARTED IN LOADING BUTTON
 
 const tour = new Tour({
 	steps: [
@@ -6,11 +6,11 @@ const tour = new Tour({
 			orphan: true,
 			title: 'Welcome!',
 			content: 'Welcome to Sandcasle! Click Next to begin a guided tour of our features.',
-			next: 1,
-			prev: -1,
+			// next: 1,
+			// prev: -1,
 		},
 		{
-			element: 'FirepadTabContainer',
+			element: '#FirepadTabContainer',
 			title: 'Text Editors',
 			content: 'Here you will find all the text editors...',
 		},

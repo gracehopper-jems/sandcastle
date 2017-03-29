@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 // import { Button } from 'react-bootstrap';
 import Progress, { ProgressModal } from '../Components/ProgressIndicator';
+import tour from '../../tour';
+import store from '../store';
 
 export default class LoadingButton extends Component {
 	constructor(props) {
@@ -12,6 +14,16 @@ export default class LoadingButton extends Component {
 
 		this.handleClick = this.handleClick.bind(this);
 	}
+
+	// componentDidMount() {
+	// 	console.log('PROPS IN LB', this.props);
+	// 	console.log('STORE STATE IN LOADING BUTTON', store.getState());
+	// 	console.log('LOCAL STATE IN LoadingButton', this.state);
+	// 	tour.init();
+	// 	setTimeout(function () {
+	// 		tour.start(true);
+	// 	}, 1000);
+	// }
 
 	handleClick() {
 		this.setState({isLoading: true});
