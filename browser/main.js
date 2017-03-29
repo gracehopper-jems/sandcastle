@@ -128,8 +128,8 @@ const onAppEnter = () => {
             pad.on('ready', () => {
               console.log('store state projec tid', store.getState().code.currentProject === '')
               // if (store.getState().code.currentProject === '') {
+              pads.push(pad)
               if (!sharedText){
-                pads.push(pad)
                 store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
                 // count++;
                 console.log('PADS', pads)
@@ -137,8 +137,9 @@ const onAppEnter = () => {
               } else {
                 pad.setText(appCode[stateOrderManifesto[i]])
                 sharedText = false;
+                resolve()
                 // window.location.reload();
-                pad.refresh();
+                // pad.refresh();
               }
               // const storeCodeObject = store.getState().code;
               // const storeCodeKeys = Object.keys(storeCodeObject)
