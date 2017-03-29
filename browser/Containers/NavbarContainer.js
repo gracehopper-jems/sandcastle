@@ -8,6 +8,7 @@ import { Modal, Button } from 'react-bootstrap';
 import SigninModal from '../Components/SigninModal';
 import tour from '../../tour';
 import SaveButton from '../Components/SaveButton';
+import store from '../store';
 
 export default class NavbarContainer extends Component {
 	constructor(props) {
@@ -17,7 +18,8 @@ export default class NavbarContainer extends Component {
 			email: "",
 			password: "",
 			signup: false,
-			signin: false
+            signin: false,
+            timeForTour: false,
 		};
 
 		this.handleSignin = this.handleSignin.bind(this);
@@ -79,7 +81,7 @@ export default class NavbarContainer extends Component {
 	handleSignup(event) {
 		event.preventDefault();
 		browserHistory.push('/signup');
-		this.setState({ signup: true })
+		this.setState({ signup: true, timeForTour: true })
 	}
 
 	showSigninModal(event) {
@@ -88,11 +90,18 @@ export default class NavbarContainer extends Component {
 	}
 
 	handleClose(event) {
-		event.preventDefault();
+        event.preventDefault();
+
+        const state = store.getState();
+        console.log('state in navbar', state);
+
+
+        if (state.loading.timeForTour) {
+            tour.init();
+            tour.restart(true);
+        }
 		this.setState({ signin: false, signup: false });
         browserHistory.push('/');
-        tour.init();
-            tour.restart(true);
 	}
 
 	handleBrandClick() {

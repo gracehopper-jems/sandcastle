@@ -1,8 +1,10 @@
 //const
 const SET_LOADING_STATE = 'SET_LOADING_STATE';
+const SET_TIME_FOR_TOUR_TRUE = 'SET_TIME_FOR_TOUR_TRUE';
 
 const initialState = {
-  loadingState: false
+  loadingState: false,
+  timeForTour: false,
 };
 
 // reducer
@@ -12,6 +14,10 @@ const reducer = (state=initialState, action) => {
 
     case SET_LOADING_STATE:
       newState.loadingState = true;
+      return newState;
+
+    case SET_TIME_FOR_TOUR_TRUE:
+      newState.timeForTour = true;
       return newState;
 
     default:
@@ -27,5 +33,13 @@ export const setLoadingState = () => ({
 export const updateLoadingState = () => {
   return setLoadingState();
 };
+
+export const updateTimeForTourTrue = () => {
+  return setTimeForTourTrue();
+};
+
+export const setTimeForTourTrue = () => ({
+  type: SET_TIME_FOR_TOUR_TRUE,
+})
 
 export default reducer;
