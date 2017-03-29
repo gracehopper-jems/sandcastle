@@ -30,7 +30,7 @@ class AppContainer extends Component {
                 {(this.props.user.userId === '' && this.state.renderWelcomeMessage === true)
                 ? <WelcomeMessage />
                 :
-                (<div className='giant-container'>
+                (<div id="start-tour-here" className='giant-container'>
                     <div className='editor-container'>
                         <FirepadTabs />
                     </div>
