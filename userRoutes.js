@@ -23,6 +23,19 @@ router.post('/:firebaseId', (req, res, next) => {
 		.catch(console.error);
 });
 
+router.get('/project/:hashedProjectId', (req, res, next) => {
+	Project.findOne({
+		where: {
+			hashedProjectId: req.params.hashedProjectId
+		}
+	})
+		.then(project => {
+			// console.log('PROJECT', project.code)
+			res.status(200).send(project);
+		})
+		.catch(next);
+});
+
 router.get('/:firebaseId', (req, res, next) => {
 	User.findOne({ where: { firebaseId: req.params.firebaseId } })
 		.then(user => {
