@@ -98,9 +98,13 @@ export default class NavbarContainer extends Component {
             tour.init();
             tour.restart(true);
             this.props.handlers.handleSetTimeForTourFalse();
+            this.setState({signin: false, signup: false});
+            browserHistory.push('/');
+        } else {
+           this.setState({signin: false, signup: false});
+            browserHistory.push('/');
+            window.location.reload();
         }
-        this.setState({signin: false, signup: false});
-        window.location.reload();
     }
 
     handleBrandClick() {
