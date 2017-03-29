@@ -37,15 +37,15 @@ router.get('/user/:firebaseId', (req, res, next) => {
 
 router.get('/project/:hashedProjectId', (req, res, next) => {
 	console.log("IN THIS ROUTE");
-	console.log(req.params.hashedId);
+	console.log(req.params.hashedProjectId);
 	Project.findOne({
 		where: {
-			hashedProjectId: req.params.hashedId
+			hashedProjectId: req.params.hashedProjectId
 		}
 	})
 	.then( project => {
 		console.log("PROJECT", project)
-		res.send(project)
+		res.status(200).send(project)
 	})
 	.catch(console.error)
 })
