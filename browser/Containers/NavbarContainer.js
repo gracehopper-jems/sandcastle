@@ -28,7 +28,6 @@ export default class NavbarContainer extends Component {
 		this.handleClose = this.handleClose.bind(this);
 		this.handleBrandClick = this.handleBrandClick.bind(this);
 	}
-	// <<<<<<< HEAD
 
 	handleChange(event) {
 		const value = event.target.value;
@@ -93,9 +92,7 @@ export default class NavbarContainer extends Component {
 		this.setState({ signin: false, signup: false });
         browserHistory.push('/');
         tour.init();
-        // setTimeout(function () {
-            tour.start(true);
-        // }, 500);
+            tour.restart(true);
 	}
 
 	handleBrandClick() {
