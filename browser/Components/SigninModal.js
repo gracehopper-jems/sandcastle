@@ -17,7 +17,7 @@ const SigninModal = (props) => (
                 <div className="form-group">
                     <label htmlFor="inlineFormInputGroup">Password</label>
                     <input name="password" type="password" className="form-control" id="inlineFormInputGroup" placeholder="Password" aria-describedby="passwordHelp" onChange={props.handleChange} />
-                    <small id="passwordHelp" className="form-text text-muted">Password must be over 5 characters long.</small>
+
                 </div>
                 <button type="submit" className="btn btn-primary">Sign In</button>
             </form>

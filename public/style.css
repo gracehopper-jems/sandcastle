@@ -1,12 +1,27 @@
 html {
   height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 body {
   margin: 0;
   height: 100%;
+  width: 100%;
   position: relative;
   font-family: 'Roboto', sans-serif;
+}
+
+body::after {
+  content: "";
+  background: url(dimension.png);
+  opacity: 0.15;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
 }
 
 .container {
@@ -19,7 +34,7 @@ body {
 
 #html-firepad-container, #css-firepad-container, #js-firepad-container, #server-firepad-container, #db-firepad-container {
   width: 100%;
-  height: 98vh;
+  height: 100vh;
 }
 
 .app-frame {
@@ -43,8 +58,11 @@ body {
 
 /* Note: CodeMirror applies its own styles which can be customized in the same way. To apply a background to the entire editor, we need to also apply it to CodeMirror. */
 .CodeMirror {
-  background-color: white;
-  /*display: flexbox;*/
+  background-color: #f8f8f8;
+  border: 1px solid #e2e2e2;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border-top-right-radius: 25px;
 }
 
 .navbar-default .navbar-nav > li > a:hover,
@@ -64,12 +82,19 @@ body {
 
 .editor-container, .iframe-container {
   width: 50%;
+  margin: 0;
+  padding: 0;
 }
 
 .welcome img {
   width: 200px;
   margin: auto;
   display: block;
+}
+
+.welcome-inner {
+  margin-left: 20%;
+  margin-right: 20%;
 }
 
 .selectdropdown {
@@ -109,6 +134,13 @@ li {
   margin-top: 15px;
 }
 
+.modal-body {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .sandcastle-icon {
   margin-right: 5px;
 }
@@ -121,3 +153,25 @@ li {
   background-color: #EC9192;
 }*/
 
+iframe {
+    border: 1px solid #e2e2e2;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
+    padding: 5%;
+    background-color: white;
+}
+
+ul.nav.nav-tabs {
+  border: 0px;
+}
+
+.tab-div {
+  border: 1px solid #e2e2e2;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border-top-right-radius: 25px;
+  background-color: white;
+  height: 100vh;
+  padding: 5%;
+}
