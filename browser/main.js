@@ -20,21 +20,21 @@ import makeFrontendIframe from './utils/makeFrontendIframe';
 
 injectTapEventPlugin(); //need this for the progress indicator
 
-var sharedCode; 
+var sharedCode;
 
-console.log("PATH IS", location.pathname); 
+console.log("PATH IS", location.pathname);
 if (location.pathname.startsWith('/share'))  {
-  console.log("IN HERE"); 
-  const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);  
-  console.log("HASHED ID IS", hashedId); 
+  console.log("IN HERE");
+  const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);
+  console.log("HASHED ID IS", hashedId);
   axios.get(`/api/project/${hashedId}`)
   .then(res => {
-    console.log("RESPONSe", res); 
-    // sharedCode = JSON.parse(res.data); 
+    console.log("RESPONSe", res);
+    // sharedCode = JSON.parse(res.data);
     return res.data
   })
   .then(data => {
-    return data.code 
+    return data.code
   })
   .then(code => {
     return JSON.parse(code);
@@ -42,7 +42,7 @@ if (location.pathname.startsWith('/share'))  {
   .then(sharedCode => {console.log("SHARED CODE", sharedCode)})
 }
 
-//console.log("SHARED CODE IS", sharedCode); 
+//console.log("SHARED CODE IS", sharedCode);
 
 const onAppEnter = () => {
 
@@ -134,7 +134,7 @@ ReactDOM.render(
         <Route path="/" component={AppContainer} onEnter={onAppEnter}>
           <Route path="/signup" component={SignUp} />
         </Route>
-      </Router> 
+      </Router>
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('app')
