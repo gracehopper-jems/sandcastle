@@ -237,7 +237,7 @@ module.exports = {
 	});
 
 	let allFirepads = [[htmlFirepad, cssFirepad, jsFirepad, serverFirepad, databaseFirepad], fires];
-	// setTimeout(() => {
+	// setInterval(() => {
 	// 	console.log('got here');
 	// 	fires[1].refresh();
 	// }, 3000);

@@ -21,17 +21,41 @@ import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from './r
 
 injectTapEventPlugin(); //need this for the progress indicator
 
-var sharedText = false; 
-//var sharedCodePromise; 
+var sharedCode;
+let pads = [];
+
+console.log("PATH IS", location.pathname);
+if (location.pathname.startsWith('/share'))  {
+  console.log("IN HERE");
+  const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);
+  console.log("HASHED ID IS", hashedId);
+  axios.get(`/api/project/${hashedId}`)
+  .then(res => {
+    console.log("RESPONSe", res);
+    // sharedCode = JSON.parse(res.data);
+    return res.data
+  })
+  .then(data => {
+    return data.code
+  })
+  .then(code => {
+    return JSON.parse(code);
+  })
+  .then(sharedCode => {console.log("SHARED CODE", sharedCode)})
+}
+
+//console.log("SHARED CODE IS", sharedCode);
+var sharedText = false;
+//var sharedCodePromise;
   if (location.pathname.startsWith('/share'))  {
-    sharedText = true; 
-    const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);  
+    sharedText = true;
+    const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);
       axios.get(`/api/project/${hashedId}`)
-      .then(res => { 
+      .then(res => {
         return res.data
       })
       .then(data => {
-        return data.code 
+        return data.code
       })
       .then(code => {
         return JSON.parse(code);
@@ -40,34 +64,33 @@ var sharedText = false;
         return sharedCode
       })
       .then(sharedCode => {
-        const html = sharedCode.htmlString; 
-        store.dispatch(updateHTML(html)); 
-        return sharedCode; 
+        const html = sharedCode.htmlString;
+        store.dispatch(updateHTML(html));
+        return sharedCode;
       })
       .then(sharedCode => {
-        const css = sharedCode.cssString; 
-        store.dispatch(updateCSS(css)); 
-        return sharedCode; 
-      })  
-      .then(sharedCode => {
-        const jsString = sharedCode.jsString; 
-        store.dispatch(updateJS(jsString)); 
-        return sharedCode; 
+        const css = sharedCode.cssString;
+        store.dispatch(updateCSS(css));
+        return sharedCode;
       })
       .then(sharedCode => {
-        const serverString = sharedCode.serverString; 
-        store.dispatch(updateServer(serverString)); 
-        return sharedCode; 
-      }) 
-      .then(sharedCode => {
-        const databaseString = sharedCode.databaseString; 
-        store.dispatch(updateDatabase(databaseString)); 
-        return sharedCode; 
+        const jsString = sharedCode.jsString;
+        store.dispatch(updateJS(jsString));
+        return sharedCode;
       })
-      .then(browserHistory.push('/'))   
+      .then(sharedCode => {
+        const serverString = sharedCode.serverString;
+        store.dispatch(updateServer(serverString));
+        return sharedCode;
+      })
+      .then(sharedCode => {
+        const databaseString = sharedCode.databaseString;
+        store.dispatch(updateDatabase(databaseString));
+        return sharedCode;
+      })
+      .then(browserHistory.push('/'))
       .catch(console.error)
     }
-
 
 const onAppEnter = () => {
 
@@ -114,26 +137,36 @@ const onAppEnter = () => {
         let firepads = makeFirepads();
         let allFirepads = firepads[0];
         let orderManifesto = ['HTML', 'CSS', 'JS', 'Server', 'Database'];
-        let stateOrderManifesto = ['htmlString', 'cssString', 'jsString', 'serverString', 'databaseString']; 
+        let stateOrderManifesto = ['htmlString', 'cssString', 'jsString', 'serverString', 'databaseString'];
 
         madeFirepads = true;
+        // store.setState({pads: allFirepads})
 
         // creating firepads and updating state with text
         Promise.map(allFirepads, (pad, i) => {
           var appState = store.getState();
-          var appCode = appState.code;  
+          var appCode = appState.code;
           return new Promise((resolve, reject) => {
             pad.on('ready', () => {
+              console.log('store state projec tid', store.getState().code.currentProject === '')
+              // if (store.getState().code.currentProject === '') {
               if (!sharedText){
+                pads.push(pad)
                 store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
                 // count++;
+                console.log('PADS', pads)
                 resolve()
               } else {
                 pad.setText(appCode[stateOrderManifesto[i]])
-                sharedText = false; 
-                window.location.reload(); 
-
+                sharedText = false;
+                window.location.reload();
               }
+              // const storeCodeObject = store.getState().code;
+              // const storeCodeKeys = Object.keys(storeCodeObject)
+              // console.log('DO THEY MATCH?', storeCodeKeys[i], storeCodeObject[storeCodeKeys[i]] === pad.getText() )
+              // console.log('BEFORE DISPATCH', store.getState())
+              // console.log('the things on state', store.getState().code[Object.keys(store.getState().code)[i]])
+              // console.log('the things on pad', pad.getText())
             });
           })
         })
@@ -170,7 +203,7 @@ ReactDOM.render(
         <Route path="/" component={AppContainer} onEnter={onAppEnter}>
           <Route path="/signup" component={SignUp} />
         </Route>
-      </Router> 
+      </Router>
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('app')
