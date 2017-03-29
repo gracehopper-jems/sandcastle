@@ -16,7 +16,7 @@ import { setUserId } from './reducers/user';
 import makeFirepads from './utils/firepads';
 import * as updateActions from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
-import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from './reducers/code'
+import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateAllCode } from './reducers/code'
 
 
 injectTapEventPlugin(); //need this for the progress indicator
@@ -62,31 +62,9 @@ var sharedText = false;
       })
       .then(sharedCode => {
         return sharedCode
-      })
+        })
       .then(sharedCode => {
-        const html = sharedCode.htmlString;
-        store.dispatch(updateHTML(html));
-        return sharedCode;
-      })
-      .then(sharedCode => {
-        const css = sharedCode.cssString;
-        store.dispatch(updateCSS(css));
-        return sharedCode;
-      })
-      .then(sharedCode => {
-        const jsString = sharedCode.jsString;
-        store.dispatch(updateJS(jsString));
-        return sharedCode;
-      })
-      .then(sharedCode => {
-        const serverString = sharedCode.serverString;
-        store.dispatch(updateServer(serverString));
-        return sharedCode;
-      })
-      .then(sharedCode => {
-        const databaseString = sharedCode.databaseString;
-        store.dispatch(updateDatabase(databaseString));
-        return sharedCode;
+        store.dispatch(updateAllCode(sharedCode));
       })
       .then(browserHistory.push('/'))
       .catch(console.error)
@@ -150,8 +128,8 @@ const onAppEnter = () => {
             pad.on('ready', () => {
               console.log('store state projec tid', store.getState().code.currentProject === '')
               // if (store.getState().code.currentProject === '') {
+              pads.push(pad)
               if (!sharedText){
-                pads.push(pad)
                 store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
                 // count++;
                 console.log('PADS', pads)
@@ -159,7 +137,9 @@ const onAppEnter = () => {
               } else {
                 pad.setText(appCode[stateOrderManifesto[i]])
                 sharedText = false;
-                window.location.reload();
+                resolve()
+                // window.location.reload();
+                // pad.refresh();
               }
               // const storeCodeObject = store.getState().code;
               // const storeCodeKeys = Object.keys(storeCodeObject)

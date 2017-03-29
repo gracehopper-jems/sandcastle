@@ -81,7 +81,6 @@ export default class UserProjects extends Component {
       <div>
         <RaisedButton
           label="My Projects"
-          secondary={true}
           onTouchTap={this.handleToggle}
           style={buttonStyle}
         />
@@ -92,13 +91,13 @@ export default class UserProjects extends Component {
           onRequestChange={(open) => this.setState({open})}
         >
           <h2>My Saved Projects</h2>
-            {this.state.projects && this.state.projects.map((project) => {
-                return (
-                    <MenuItem
-                        key={project.id}
-                        onClick={() => this.handleOpenProject(this.state.projects[project.id-1].hashedProjectId)}>
-                    {project.hashedProjectId}
-                    </MenuItem>)
+            {this.state.projects && this.state.projects.map((project, i) => {
+                    return (
+                        <MenuItem
+                            key={project.id}
+                            onClick={() => this.handleOpenProject(this.state.projects[i].hashedProjectId)}>
+                            {project.projectName ? project.projectName : 'untitled'}
+                        </MenuItem>);
             })}
         </Drawer>
       </div>
