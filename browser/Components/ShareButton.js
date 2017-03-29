@@ -39,11 +39,11 @@ export default class ShareButton extends Component {
 				( <div className="static-modal">
 				    <Modal.Dialog>
 				      <Modal.Header>
-				        <Modal.Title>Sharing is Caring!</Modal.Title>
+				        <Modal.Title>Share your project with this link:</Modal.Title>
 				      </Modal.Header>
 
 				      <Modal.Body>
-				        {`You can share a snapshot of your project with this link /share${this.state.projectId}.`}
+				        {`/share${this.state.projectId}`}
 				      </Modal.Body>
 
 				      <Modal.Footer>
