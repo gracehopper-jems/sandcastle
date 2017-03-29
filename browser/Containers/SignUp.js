@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import firebase from 'firebase';
 import axios from 'axios';
+import store from '../store';
 
 export default class SignUp extends Component {
 	constructor(props){
@@ -19,25 +20,26 @@ export default class SignUp extends Component {
 	handleSubmit(event){
 		event.preventDefault();
 		const {email, password} = this.state;
+		this.props.handlers.handleSetTimeForTourTrue();
 
 		firebase.auth().createUserWithEmailAndPassword(email, password)
-		.then(() => {
-			console.log('was able to create user')
-			firebase.auth().signInWithEmailAndPassword(email, password)
-		})
-		.then(() => {
-	    const user = firebase.auth().currentUser;
-	    const userId = user.uid;
-	    this.props.handlers.handleSignin(userId);
+			.then(() => {
+				console.log('was able to create user')
+				firebase.auth().signInWithEmailAndPassword(email, password)
+			})
+			.then(() => {
+				const user = firebase.auth().currentUser;
+				const userId = user.uid;
+				this.props.handlers.handleSignin(userId);
 
-	    axios.post('/setUser', {userId: userId})
-	    .then(() => {
-	        console.log('posting userid and setting local state.signedup to true');
-			this.setState( { signedUp: true } );
-	    })
-	    .catch(console.error);
-    })
-    .catch(err => alert("Invalid sign up!"))
+				axios.post('/setUser', { userId: userId })
+					.then(() => {
+						console.log('posting userid and setting local state.signedup to true');
+						this.setState({ signedUp: true });
+					})
+					.catch(console.error);
+			})
+			.catch(err => alert("Invalid sign up!"));
     // .catch(console.error)
   }
 
@@ -52,7 +54,11 @@ export default class SignUp extends Component {
 			<div>
 				{ this.state.signedUp ?
 
-					( <div>Thanks for signing up! You are now logged in and can create your first project.</div>)
+					(<div>
+						<div>Thanks for signing up! You are now logged in and can create your first project...BUT! We recommend taking a tour before you do that...
+						</div>
+					</div>
+					)
 					: ( <div className="container-fluid">
 						<div className="row">
 							<form>
