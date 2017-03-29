@@ -153,7 +153,12 @@ export default class NavbarContainer extends Component {
 
                             {this.props.user.userId !== '' ? <li><a id="run-backend"><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
-                            {this.props.user.userId !== '' ? <li><a><SaveButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} handleSaveModal={this.handleSaveModal} handleSaveModalClose={this.handleSaveModalClose} handleClose={this.handleClose} /></a></li> : null}
+                            {this.props.user.userId !== '' ?
+                                <li><a>
+                                    <div onClick={this.handleSaveModal}>
+                                        Save
+                                    </div>
+                                </a></li> : null}
 
                             {this.props.user.userId !== '' ? <li><UserProjects code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></li> : null}
 
@@ -166,7 +171,7 @@ export default class NavbarContainer extends Component {
                             {this.state.signup ? <SignupModal children={children} handleClose={this.handleClose} /> : null
                             }
 
-                            {this.state.renderModal ? <CustomProjectNameModal handleSaveModal={this.handleSaveModal} handleSaveModalClose={this.handleSaveModalClose} handleClose={this.handleClose} code={this.props.code} handlers={this.props.handlers} user={this.props.user} handleModalClose={this.handleModalClose} /> : null}
+                            {this.state.renderModal ? <CustomProjectNameModal handleSaveModalClose={this.handleSaveModalClose} user={this.props.user} handleModalClose={this.handleModalClose} /> : null}
                         </ul>
 
                         {this.props.user.userId !== ''

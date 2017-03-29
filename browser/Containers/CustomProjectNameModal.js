@@ -11,13 +11,10 @@ export default class CustomProjectNameModal extends Component {
 
 		this.state = {
 			projectName: '',
-			// text: '',
-			// renderModal: this.props.renderModal,
 		};
 
 		this.handleSave = this.handleSave.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-		// this.onSaveClick = this.onSaveClick.bind(this);
 	}
 
 	handleSave(event) {
