@@ -24,8 +24,6 @@ export default class SaveButton extends Component {
 	}
 
 	render() {
-		console.log('RANDO STRINGO', randomstring.generate(10));
-
 		return (
 			<div onClick={this.handleSave}>
 				Save
