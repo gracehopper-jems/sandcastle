@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import firebase from 'firebase';
 import axios from 'axios';
+import store from '../store';
 
 export default class SignUp extends Component {
 	constructor(props){
@@ -19,6 +20,7 @@ export default class SignUp extends Component {
 	handleSubmit(event){
 		event.preventDefault();
 		const {email, password} = this.state;
+		this.props.handlers.handleSetTimeForTourTrue();
 
 		firebase.auth().createUserWithEmailAndPassword(email, password)
 			.then(() => {
