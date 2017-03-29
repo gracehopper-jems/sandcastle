@@ -1,4 +1,5 @@
 // 	TOUR INITIALIZED & STARTED IN LOADING BUTTON
+import {browserHistory} from 'react-router';
 
 const tour = new Tour({
 	steps: [
@@ -102,6 +103,10 @@ const tour = new Tour({
 	],
 	backdrop: true,
 	duration: 4000,
+	onEnd: function () {
+		browserHistory.push('/');
+		window.location.reload();
+	}
 });
 
 export default tour;
