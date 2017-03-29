@@ -20,6 +20,30 @@ import makeFrontendIframe from './utils/makeFrontendIframe';
 
 injectTapEventPlugin(); //need this for the progress indicator
 
+var sharedCode; 
+
+console.log("PATH IS", location.pathname); 
+if (location.pathname.startsWith('/share'))  {
+  console.log("IN HERE"); 
+  const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);  
+  console.log("HASHED ID IS", hashedId); 
+  axios.get(`/api/project/${hashedId}`)
+  .then(res => {
+    console.log("RESPONSe", res); 
+    // sharedCode = JSON.parse(res.data); 
+    return res.data
+  })
+  .then(data => {
+    return data.code 
+  })
+  .then(code => {
+    return JSON.parse(code);
+  })
+  .then(sharedCode => {console.log("SHARED CODE", sharedCode)})
+}
+
+//console.log("SHARED CODE IS", sharedCode); 
+
 const onAppEnter = () => {
 
   // initialize firebase
@@ -106,11 +130,11 @@ const onAppEnter = () => {
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider>
-    <Router history={browserHistory}>
-      <Route path="/" component={AppContainer} onEnter={onAppEnter}>
-        <Route path="/signup" component={SignUp} />
-      </Route>
-    </Router>
+      <Router history={browserHistory}>
+        <Route path="/" component={AppContainer} onEnter={onAppEnter}>
+          <Route path="/signup" component={SignUp} />
+        </Route>
+      </Router> 
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('app')
