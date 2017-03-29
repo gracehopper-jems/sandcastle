@@ -127,11 +127,16 @@ const onAppEnter = () => {
         let firepads = makeFirepads();
         let allFirepads = firepads[0];
         let orderManifesto = ['HTML', 'CSS', 'JS', 'Server', 'Database'];
+        let stateOrderManifesto = ['htmlString', 'cssString', 'jsString', 'serverString', 'databaseString']; 
 
         madeFirepads = true;
 
         // creating firepads and updating state with text
         Promise.map(allFirepads, (pad, i) => {
+          console.log("******STORE STATE*******", store.getState())
+          var appState = store.getState();
+          var appCode = appState.code; 
+          console.log("HERE IS THE CODE!!!!", appCode);  
           return new Promise((resolve, reject) => {
             pad.on('ready', () => {
               if (!sharedText){
@@ -139,6 +144,9 @@ const onAppEnter = () => {
                 store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
                 // count++;
                 resolve();
+              } else {
+                console.log("******getting shared text triggered*****");
+                pad.setText(appCode[stateOrderManifesto[i]]);
               }
             });
           });
