@@ -159,6 +159,26 @@ const runContainer = (argsObj) => {
         // change into user folder
         console.log('change into user app directory')
         process.chdir('../');
+
+        // find all required modules in argsObj.userJS
+        // assumes each required module is on a separate line and required in using 'require'
+        const requiredModulesStr = argsObj.userJS.split('\n').filter(line => {
+                return line.includes('require');
+            })
+            .map(line => {
+                const beforeModuleStr = 'require(\'';
+                const afterModuleStr = '\');';
+                let startIndex = line.indexOf(beforeModuleStr);
+                let endIndex = line.indexOf(afterModuleStr);
+                return line.slice(startIndex + beforeModuleStr.length, endIndex);
+            })
+            .join(' ');
+
+        // npm install modules
+        console.log('npm installing modules');
+        return exec(`npm install --save ${requiredModulesStr}`);
+    })
+    .then(() => {
         // write docker-compose to user-app folder
         return writeFile('docker-compose.yml', makeDockerCompose({'serverPort': argsObj.serverPort, 'postgresPort': argsObj.postgresPort, 'userServerPort': process.env.userServerPort, 'userPostgresPort': process.env.userPostgresPort}));
     })

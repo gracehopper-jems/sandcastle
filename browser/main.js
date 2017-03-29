@@ -7,10 +7,8 @@ import { Promise } from 'bluebird';
 import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Provider } from 'react-redux';
-
 import AppContainer from './Containers/AppContainer';
 import SignUp from './Containers/SignUp';
-// import WelcomeMessage from './Components/WelcomeMessage';
 import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
@@ -29,17 +27,14 @@ const onAppEnter = () => {
   var config = { apiKey, authDomain, databaseURL };
   firebase.initializeApp(config);
 
-  // let user = firebase.auth().currentUser;
-
   let madeFirepads = false;
-  let madeFrontendIframe = false;
 
   firebase.auth().onAuthStateChanged((user) => {
     console.log("USER IN ON APP ENTER", user);
 
     if (user) {
       let userId = user.uid;
-      store.dispatch(setUserId(userId))
+      store.dispatch(setUserId(userId));
 
       axios.post('/setUser', {userId: userId})
       .then(() => {
@@ -71,11 +66,11 @@ const onAppEnter = () => {
         let firepads = makeFirepads();
         let allFirepads = firepads[0];
         let orderManifesto = ['HTML', 'CSS', 'JS', 'Server', 'Database'];
-        // let count = 0;
 
         madeFirepads = true;
 
-        const updatingText = Promise.map(allFirepads, (pad, i) => {
+        // creating firepads and updating state with text
+        Promise.map(allFirepads, (pad, i) => {
           return new Promise((resolve, reject) => {
             pad.on('ready', () => {
               store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
@@ -84,25 +79,24 @@ const onAppEnter = () => {
             });
           });
         })
-          .then(() => {
-            // if (madeFrontendIframe === false && count === 5) {
-            makeFrontendIframe();
-            // madeFrontendIframe = true;
-            // }
+        // making the iFrames
+        .then(() => {
+          makeFrontendIframe();
           })
-          .then(() => {
-            Promise.map(allFirepads, (pad, i) => {
-              return new Promise((resolve, reject) => {
-                pad.on('synced', isSynced => {
-                  if (isSynced) {
-                    store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
-                    resolve();
-                  }
-                });
+        // setting up event listeners to update state with new text every time firepads are edited
+        .then(() => {
+          Promise.map(allFirepads, (pad, i) => {
+            return new Promise((resolve, reject) => {
+              pad.on('synced', isSynced => {
+                if (isSynced) {
+                  store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
+                  resolve();
+                }
               });
-            })
-              .catch(console.error);
-          });
+            });
+          })
+          .catch(console.error);
+        });
       }
     } else {
       store.dispatch(setUserId(''));

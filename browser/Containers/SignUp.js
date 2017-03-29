@@ -64,7 +64,7 @@ export default class SignUp extends Component {
 								<div className="form-group">
 									<label htmlFor="title" className="col-sm-4 control-label">First Name</label>
 									<div className="col-sm-6">
-										<input name="firstname" type="text" className="form-control" onChange={this.handleChange} />
+										<input name="firstname" type="text" className="form-control" onChange={this.handleChange}  autoFocus={focus} />
 									</div>
 								</div>
 								<div className="form-group">
