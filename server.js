@@ -8,7 +8,7 @@ const session = require('express-session');
 const containerRoutes = require('./containerRoutes');
 const userRoutes = require('./userRoutes');
 const models = require('./models');
-const Project = models.Project; 
+const Project = models.Project;
 const db = models.db;
 
 // add user ports as process environment variables
@@ -59,7 +59,7 @@ module.exports = app
   // https://github.com/pillarjs/finalhandler/blob/master/index.js#L172
 
 
-  db.sync({force: false})
+  db.sync({force: true})
     .then(() => {
       const server = app.listen(
         3000,

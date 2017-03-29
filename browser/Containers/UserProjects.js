@@ -92,12 +92,12 @@ export default class UserProjects extends Component {
         >
           <h2>My Saved Projects</h2>
             {this.state.projects && this.state.projects.map((project, i) => {
-                return (
-                    <MenuItem
-                        key={project.id}
-                        onClick={() => this.handleOpenProject(this.state.projects[i].hashedProjectId)}>
-                    {project.hashedProjectId}
-                    </MenuItem>)
+                    return (
+                        <MenuItem
+                            key={project.id}
+                            onClick={() => this.handleOpenProject(this.state.projects[i].hashedProjectId)}>
+                            {project.projectName ? project.projectName : 'untitled'}
+                        </MenuItem>);
             })}
         </Drawer>
       </div>
