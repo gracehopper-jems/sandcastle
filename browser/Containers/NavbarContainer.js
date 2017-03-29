@@ -12,6 +12,7 @@ import SaveButton from '../Components/SaveButton';
 import UserProjects from './UserProjects';
 import store from '../store';
 import ShareButton from '../Components/ShareButton';
+import CustomProjectNameModal from './CustomProjectNameModal';
 
 export default class NavbarContainer extends Component {
 	constructor(props) {
@@ -23,6 +24,7 @@ export default class NavbarContainer extends Component {
 			signup: false,
             signin: false,
             timeForTour: false,
+            renderModal: false,
 		};
 
 		this.handleSignin = this.handleSignin.bind(this);
@@ -31,7 +33,10 @@ export default class NavbarContainer extends Component {
 		this.handleSignout = this.handleSignout.bind(this);
 		this.handleSignup = this.handleSignup.bind(this);
 		this.handleClose = this.handleClose.bind(this);
-		this.handleBrandClick = this.handleBrandClick.bind(this);
+        this.handleBrandClick = this.handleBrandClick.bind(this);
+        this.handleSaveModal = this.handleSaveModal.bind(this);
+        this.handleSaveModalClose = this.handleSaveModalClose.bind(this);
+        this.handleModalClose = this.handleModalClose.bind(this);
 	}
 
 	handleChange(event) {
@@ -99,13 +104,27 @@ export default class NavbarContainer extends Component {
             tour.restart(true);
             this.props.handlers.handleSetTimeForTourFalse();
         }
-        this.setState({signin: false, signup: false});
+        this.setState({signin: false, signup: false, renderModal: false});
         window.location.reload();
     }
 
     handleBrandClick() {
 		tour.restart();
-	}
+    }
+
+    handleSaveModal(event) {
+        event.preventDefault();
+        this.setState({ renderModal: true });
+    }
+
+    handleSaveModalClose(event) {
+        event.preventDefault();
+        this.setState({ renderModal: false });
+    }
+
+    handleModalClose() {
+        this.setState({ renderModal: false });
+    }
 
     render(){
         const children = React.Children.map(this.props.children, (child) => {
@@ -134,7 +153,7 @@ export default class NavbarContainer extends Component {
 
                             {this.props.user.userId !== '' ? <li><a id="run-backend"><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
-                            {this.props.user.userId !== '' ? <li><a><SaveButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
+                            {this.props.user.userId !== '' ? <li><a><SaveButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} handleSaveModal={this.handleSaveModal} handleSaveModalClose={this.handleSaveModalClose} handleClose={this.handleClose} /></a></li> : null}
 
                             {this.props.user.userId !== '' ? <li><UserProjects code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></li> : null}
 
@@ -146,6 +165,8 @@ export default class NavbarContainer extends Component {
 
                             {this.state.signup ? <SignupModal children={children} handleClose={this.handleClose} /> : null
                             }
+
+                            {this.state.renderModal ? <CustomProjectNameModal handleSaveModal={this.handleSaveModal} handleSaveModalClose={this.handleSaveModalClose} handleClose={this.handleClose} code={this.props.code} handlers={this.props.handlers} user={this.props.user} handleModalClose={this.handleModalClose} /> : null}
                         </ul>
 
                         {this.props.user.userId !== ''

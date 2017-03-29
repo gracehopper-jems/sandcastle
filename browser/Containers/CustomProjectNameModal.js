@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 const randomstring = require('randomstring');
+import { Modal, Button } from 'react-bootstrap';
+
 
 
 export default class CustomProjectNameModal extends Component {
@@ -9,18 +11,20 @@ export default class CustomProjectNameModal extends Component {
 
 		this.state = {
 			projectName: '',
-			text: '',
+			// text: '',
+			// renderModal: this.props.renderModal,
 		};
 
 		this.handleSave = this.handleSave.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+		// this.onSaveClick = this.onSaveClick.bind(this);
 	}
 
 	handleSave(event) {
 		event.preventDefault();
 		// post to db
 		const hashedProjectId = randomstring.generate(10);
-		const projectName = this.state.projectName;
+		// const projectName = this.state.projectName;
 
 		console.log('clicked save');
 		const stringifiedCode = JSON.stringify(this.props.code);
@@ -32,34 +36,38 @@ export default class CustomProjectNameModal extends Component {
 			.then(() => {
 				console.log('posted successfully');
 			});
+		this.props.handleModalClose();
 	}
 
 	handleChange(event) {
 		event.preventDefault();
-		this.setState({ text: event.target.value });
+		this.setState({ projectName: event.target.value });
 	}
 
 	render() {
 		return (
-			<div className="modal fade" tabIndex="-1" role="dialog">
-				<div className="modal-dialog" role="document">
-					<div className="modal-content">
-						<div className="modal-header">
-							<button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 className="modal-title">Please enter a name for your project:</h4>
-						</div>
-						<div className="modal-body">
-							<div className="input-group">
-								{/*<span className="input-group-addon" id="basic-addon1">@</span>*/}
-								<input type="text" className="form-control" placeholder="Username" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.text} />
+			<div className="static-modal">
+				<Modal.Dialog>
+					<Modal.Header>
+						<Modal.Title>Please enter a name for your project:</Modal.Title>
+					</Modal.Header>
+
+					<Modal.Body>
+						<form onSubmit={this.handleSave}>
+							<div className="form-group">
+								<label htmlFor="inlineFormInput">Name:</label>
+								<input name="project-name" type="text" className="form-control" id="inlineFormInput" placeholder="Project Name" onChange={this.handleChange} autoFocus={focus} value={this.state.projectName} />
 							</div>
-						</div>
-						<div className="modal-footer">
-							<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" className="btn btn-primary" onClick={this.handleSave}>Save</button>
-						</div>
-					</div>
-				</div>
+
+								<Button type="submit">Save</Button>
+
+						</form>
+					</Modal.Body>
+
+					<Modal.Footer>
+            <Button onClick={this.props.handleSaveModalClose}>Close</Button>
+         	</Modal.Footer>
+				</Modal.Dialog>
 			</div>
 		);
 	}
