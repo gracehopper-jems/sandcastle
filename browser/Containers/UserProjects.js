@@ -4,6 +4,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link, browserHistory } from 'react-router';
+import { updateCurrentProject } from '../reducers';
 
 export default class UserProjects extends Component {
 
@@ -37,6 +38,7 @@ export default class UserProjects extends Component {
     .then((project) => {
         console.log('GETTING YOUR PROJECT', (project.data.code));
         console.log('DAPROPS', this.props)
+        this.props.handlers.handleCurrentProjectUpdate(project.data.hashedProjectId);
         return JSON.parse(project.data.code)
     })
     .then((code) => {
@@ -61,7 +63,9 @@ export default class UserProjects extends Component {
     })
     .then(() => {
         // browserHistory.push(`api/project/${hashedProjectId}`);
-//         window.location.reload()
+        //  window.location.reload()
+        browserHistory.push(`/share${hashedProjectId}`);
+        window.location.reload()
         this.setState({open: false});
     })
     .catch(console.error)
