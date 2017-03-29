@@ -33,7 +33,7 @@ export default class SignUp extends Component {
 	    axios.post('/setUser', {userId: userId})
 	    .then(() => {
 	        console.log('posting userid and setting local state.signedup to true');
-			this.setState( { signedUp: true } );
+					this.setState( { signedUp: true } );
 	    })
 	    .catch(console.error);
     })

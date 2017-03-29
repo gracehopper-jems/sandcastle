@@ -43,6 +43,7 @@ export default class NavbarContainer extends Component {
             .then(() => {
                 console.log('posting userid');
                 this.setState({signin: false, modal: false})
+                window.location.reload();
             })
             .catch(console.error);
         })
