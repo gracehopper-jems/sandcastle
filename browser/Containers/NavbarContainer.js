@@ -6,6 +6,7 @@ import firebase from 'firebase';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import SigninModal from '../Components/SigninModal';
+import SignupModal from '../Components/SignupModal';
 import SaveButton from '../Components/SaveButton';
 
 export default class NavbarContainer extends Component {
@@ -110,30 +111,17 @@ export default class NavbarContainer extends Component {
                         <ul className="nav navbar-nav nav-tabs">
 
                             { this.props.user.userId !== '' ? <li><a><LoadingButton code={this.props.code} handlers={this.props.handlers} /></a></li> : null }
-														{this.props.user.userId !== '' ? <li><a><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
-														{this.props.user.userId !== '' ? <li><a><SaveButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
+							{this.props.user.userId !== '' ? <li><a><BackendButton docker={this.props.docker} code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
+
+							{this.props.user.userId !== '' ? <li><a><SaveButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
                             {this.state.signin ?
                                 <SigninModal handleSignin={this.handleSignin} handleChange={this.handleChange} handleClose={this.handleClose} /> : null
                             }
 
-                            {this.state.signup ? (<div className="static-modal">
-                                    <Modal.Dialog>
-                                    <Modal.Header>
-                                        <Modal.Title>Sign Up</Modal.Title>
-                                    </Modal.Header>
-
-                                    <Modal.Body>
-                                        {children} {/*this is where the signup form shows up*/}
-                                    </Modal.Body>
-
-                                    <Modal.Footer>
-                                        <Button onClick={this.handleClose}>Close</Button>
-                                    </Modal.Footer>
-
-                                    </Modal.Dialog>
-                                </div>) : null}
+                            {this.state.signup ? <SignupModal children={children} handleClose={this.handleClose} /> : null
+                            }
                         </ul>
 
                         {this.props.user.userId !== ''
