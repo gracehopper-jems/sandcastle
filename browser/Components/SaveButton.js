@@ -17,15 +17,13 @@ export default class SaveButton extends Component {
 
 		console.log('clicked save');
 		const stringifiedCode = JSON.stringify(this.props.code);
-		axios.post(`/api/${this.props.user.userId}`, { code: stringifiedCode, hashedProjectId })
+		axios.post(`/api/user/${this.props.user.userId}`, { code: stringifiedCode, hashedProjectId })
 			.then(() => {
 				console.log('posted successfully');
 			});
 	}
 
 	render() {
-		console.log('RANDO STRINGO', randomstring.generate(10));
-
 		return (
 			<div onClick={this.handleSave}>
 				Save
