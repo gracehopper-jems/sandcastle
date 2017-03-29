@@ -4,6 +4,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link, browserHistory } from 'react-router';
+import { updateCurrentProject } from '../reducers';
 
 export default class UserProjects extends Component {
 
@@ -37,6 +38,7 @@ export default class UserProjects extends Component {
     .then((project) => {
         console.log('GETTING YOUR PROJECT', (project.data.code));
         console.log('DAPROPS', this.props)
+        this.props.handlers.handleCurrentProjectUpdate(project.data.hashedProjectId);
         return JSON.parse(project.data.code)
     })
     .then((code) => {
@@ -61,7 +63,9 @@ export default class UserProjects extends Component {
     })
     .then(() => {
         // browserHistory.push(`api/project/${hashedProjectId}`);
-//         window.location.reload()
+        //  window.location.reload()
+        browserHistory.push(`/share${hashedProjectId}`);
+        window.location.reload()
         this.setState({open: false});
     })
     .catch(console.error)
@@ -77,7 +81,6 @@ export default class UserProjects extends Component {
       <div>
         <RaisedButton
           label="My Projects"
-          secondary={true}
           onTouchTap={this.handleToggle}
           style={buttonStyle}
         />
@@ -88,11 +91,11 @@ export default class UserProjects extends Component {
           onRequestChange={(open) => this.setState({open})}
         >
           <h2>My Saved Projects</h2>
-            {this.state.projects && this.state.projects.map((project) => {
+            {this.state.projects && this.state.projects.map((project, i) => {
                 return (
                     <MenuItem
                         key={project.id}
-                        onClick={() => this.handleOpenProject(this.state.projects[project.id-1].hashedProjectId)}>
+                        onClick={() => this.handleOpenProject(this.state.projects[i].hashedProjectId)}>
                     {project.hashedProjectId}
                     </MenuItem>)
             })}
