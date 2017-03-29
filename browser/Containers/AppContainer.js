@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from '../reducers/code';
 import { sendJson, sendPost, sendClearDB, sendUpdateDockerOn, sendPort, sendDelete, sendUpdate } from '../reducers/docker.js';
-import { updateTimeForTourTrue } from '../reducers/loading';
+import { updateTimeForTourTrue, updateTimeForTourFalse } from '../reducers/loading';
 import {setUserId} from '../reducers/user';
 import { IframeTabs } from '../Components/IframeTabs';
 import { FirepadTabs } from '../Components/FirepadTabs';
@@ -106,6 +106,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleSetTimeForTourTrue(...args) {
           dispatch(updateTimeForTourTrue(...args));
+        },
+        handleSetTimeForTourFalse(...args) {
+          dispatch(updateTimeForTourFalse(...args));
         }
       }
   };

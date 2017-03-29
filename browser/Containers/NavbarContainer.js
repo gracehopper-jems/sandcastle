@@ -93,13 +93,13 @@ export default class NavbarContainer extends Component {
         event.preventDefault();
 
         const state = store.getState();
-        console.log('state in navbar', state);
-
 
         if (state.loading.timeForTour) {
             tour.init();
             tour.restart(true);
+            this.props.handlers.handleSetTimeForTourFalse();
         }
+
 		this.setState({ signin: false, signup: false });
         browserHistory.push('/');
 	}
