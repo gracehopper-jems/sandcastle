@@ -21,18 +21,13 @@ import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from './r
 
 injectTapEventPlugin(); //need this for the progress indicator
 
-console.log("PATH IS", location.pathname); 
 var sharedText = false; 
 //var sharedCodePromise; 
   if (location.pathname.startsWith('/share'))  {
     sharedText = true; 
-    console.log("IN HERE"); 
     const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);  
-    console.log("HASHED ID IS", hashedId); 
       axios.get(`/api/project/${hashedId}`)
-      .then(res => {
-        console.log("RESPONSe", res); 
-        // sharedCode = JSON.parse(res.data); 
+      .then(res => { 
         return res.data
       })
       .then(data => {
@@ -42,37 +37,30 @@ var sharedText = false;
         return JSON.parse(code);
       })
       .then(sharedCode => {
-        console.log("SHARED CODE", sharedCode); 
         return sharedCode
       })
       .then(sharedCode => {
         const html = sharedCode.htmlString; 
-        console.log("HTML", html); 
         store.dispatch(updateHTML(html)); 
-        console.log("DISPATCH TRIGGERED?!?!")
         return sharedCode; 
       })
       .then(sharedCode => {
         const css = sharedCode.cssString; 
-        console.log("css", css); 
         store.dispatch(updateCSS(css)); 
         return sharedCode; 
       })  
       .then(sharedCode => {
         const jsString = sharedCode.jsString; 
-        console.log("JS", jsString); 
         store.dispatch(updateJS(jsString)); 
         return sharedCode; 
       })
       .then(sharedCode => {
         const serverString = sharedCode.serverString; 
-        console.log("Server", serverString); 
         store.dispatch(updateServer(serverString)); 
         return sharedCode; 
       }) 
       .then(sharedCode => {
         const databaseString = sharedCode.databaseString; 
-        console.log("Database", databaseString); 
         store.dispatch(updateDatabase(databaseString)); 
         return sharedCode; 
       })
@@ -80,7 +68,6 @@ var sharedText = false;
       .catch(console.error)
     }
 
-//console.log("SHARED CODE IS", sharedCode); 
 
 const onAppEnter = () => {
 
@@ -133,23 +120,22 @@ const onAppEnter = () => {
 
         // creating firepads and updating state with text
         Promise.map(allFirepads, (pad, i) => {
-          console.log("******STORE STATE*******", store.getState())
           var appState = store.getState();
-          var appCode = appState.code; 
-          console.log("HERE IS THE CODE!!!!", appCode);  
+          var appCode = appState.code;  
           return new Promise((resolve, reject) => {
             pad.on('ready', () => {
               if (!sharedText){
-                console.log("******update triggered*****");
                 store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
                 // count++;
-                resolve();
+                resolve()
               } else {
-                console.log("******getting shared text triggered*****");
-                pad.setText(appCode[stateOrderManifesto[i]]);
+                pad.setText(appCode[stateOrderManifesto[i]])
+                sharedText = false; 
+                window.location.reload(); 
+
               }
             });
-          });
+          })
         })
         // making the iFrames
         .then(() => {
@@ -160,7 +146,7 @@ const onAppEnter = () => {
           Promise.map(allFirepads, (pad, i) => {
             return new Promise((resolve, reject) => {
               pad.on('synced', isSynced => {
-                if (isSynced && !sharedText) {
+                if (isSynced) {
                   console.log("******update triggered2*****");
                   store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
                   resolve();
