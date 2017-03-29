@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require('./models').User;
 const Project = require('./models').Project;
 
-router.post('/:firebaseId', (req, res, next) => {
+router.post('/user/:firebaseId', (req, res, next) => {
 	User.findOrCreate({
 		where: {
 			firebaseId: req.params.firebaseId
@@ -23,7 +23,7 @@ router.post('/:firebaseId', (req, res, next) => {
 		.catch(console.error);
 });
 
-router.get('/:firebaseId', (req, res, next) => {
+router.get('/user/:firebaseId', (req, res, next) => {
 	User.findOne({ where: { firebaseId: req.params.firebaseId } })
 		.then(user => {
 			return user.getProjects();
@@ -34,6 +34,24 @@ router.get('/:firebaseId', (req, res, next) => {
 		})
 		.catch(next);
 });
+
+router.get('/project/:hashedId', (req, res, next) => {
+	console.log("IN THIS ROUTE");
+	console.log(req.params.hashedId);
+	Project.findOne({
+		where: { 
+			hashedProjectId: req.params.hashedId
+		}
+	})
+	.then( project => {
+		console.log("PROJECT", project)
+		res.send(project)
+	})
+	.catch(console.error)
+})
+
+
+
 
 module.exports = router;
 

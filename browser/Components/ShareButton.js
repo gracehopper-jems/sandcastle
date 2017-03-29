@@ -17,17 +17,11 @@ export default class ShareButton extends Component {
 
 	handleSave(event) {
 		event.preventDefault();
-		// post to db
 		const hashedProjectId = randomstring.generate(10);
-
-		console.log('clicked share');
 		const stringifiedCode = JSON.stringify(this.props.code);
 		this.setState({clicked:true}); 
 		this.setState({projectId: hashedProjectId}); 
-		console.log("STATE", this.state)
-		axios.post(`/api/${this.props.user.userId}`, { code: stringifiedCode, hashedProjectId })
-
-		
+		axios.post(`/api/user/${this.props.user.userId}`, { code: stringifiedCode, hashedProjectId })
 	}
 
 	handleClose(event){
@@ -49,7 +43,7 @@ export default class ShareButton extends Component {
 				      </Modal.Header>
 
 				      <Modal.Body>
-				        {`You can share a snapshot of your project with this link ${this.state.projectId}.`}
+				        {`You can share a snapshot of your project with this link /share${this.state.projectId}.`}
 				      </Modal.Body>
 
 				      <Modal.Footer>
