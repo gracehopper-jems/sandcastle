@@ -26,6 +26,7 @@ class AppContainer extends Component {
 
   render(){
     console.log("LOCATION", this.props.location.pathname);
+    console.log("PROPS", this.props);
     return (
         <div>
             <NavbarContainer code={this.props.code} handlers={this.props.handlers} user={this.props.user} children={this.props.children} docker={this.props.docker}/>
