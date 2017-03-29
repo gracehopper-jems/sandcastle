@@ -16,10 +16,12 @@ import { setUserId } from './reducers/user';
 import makeFirepads from './utils/firepads';
 import * as updateActions from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
+import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from './reducers/code'
 
 
 injectTapEventPlugin(); //need this for the progress indicator
 
+<<<<<<< HEAD
 var sharedCode;
 let pads = [];
 
@@ -44,6 +46,52 @@ if (location.pathname.startsWith('/share'))  {
 }
 
 //console.log("SHARED CODE IS", sharedCode);
+var sharedText = false;
+//var sharedCodePromise;
+  if (location.pathname.startsWith('/share'))  {
+    sharedText = true;
+    const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);
+      axios.get(`/api/project/${hashedId}`)
+      .then(res => {
+        return res.data
+      })
+      .then(data => {
+        return data.code
+      })
+      .then(code => {
+        return JSON.parse(code);
+      })
+      .then(sharedCode => {
+        return sharedCode
+      })
+      .then(sharedCode => {
+        const html = sharedCode.htmlString;
+        store.dispatch(updateHTML(html));
+        return sharedCode;
+      })
+      .then(sharedCode => {
+        const css = sharedCode.cssString;
+        store.dispatch(updateCSS(css));
+        return sharedCode;
+      })
+      .then(sharedCode => {
+        const jsString = sharedCode.jsString;
+        store.dispatch(updateJS(jsString));
+        return sharedCode;
+      })
+      .then(sharedCode => {
+        const serverString = sharedCode.serverString;
+        store.dispatch(updateServer(serverString));
+        return sharedCode;
+      })
+      .then(sharedCode => {
+        const databaseString = sharedCode.databaseString;
+        store.dispatch(updateDatabase(databaseString));
+        return sharedCode;
+      })
+      .then(browserHistory.push('/'))
+      .catch(console.error)
+    }
 
 const onAppEnter = () => {
 
@@ -90,33 +138,38 @@ const onAppEnter = () => {
         let firepads = makeFirepads();
         let allFirepads = firepads[0];
         let orderManifesto = ['HTML', 'CSS', 'JS', 'Server', 'Database'];
+        let stateOrderManifesto = ['htmlString', 'cssString', 'jsString', 'serverString', 'databaseString'];
 
         madeFirepads = true;
         // store.setState({pads: allFirepads})
 
         // creating firepads and updating state with text
         Promise.map(allFirepads, (pad, i) => {
+          var appState = store.getState();
+          var appCode = appState.code;
           return new Promise((resolve, reject) => {
             pad.on('ready', () => {
               console.log('store state projec tid', store.getState().code.currentProject === '')
-              if (store.getState().code.currentProject === '') {
+              // if (store.getState().code.currentProject === '') {
+              if (!sharedText){
                 pads.push(pad)
-                // store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
-                store.dispatch(updateActions[`update${orderManifesto[i]}`](pads[i].getText()));
+                store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
+                // count++;
                 console.log('PADS', pads)
+                resolve()
               } else {
-                console.log('ITS WORKING!!!!!!!!!!!!!!!!')
+                pad.setText(appCode[stateOrderManifesto[i]])
+                sharedText = false;
+                window.location.reload();
               }
-              // count++;
               // const storeCodeObject = store.getState().code;
               // const storeCodeKeys = Object.keys(storeCodeObject)
               // console.log('DO THEY MATCH?', storeCodeKeys[i], storeCodeObject[storeCodeKeys[i]] === pad.getText() )
               // console.log('BEFORE DISPATCH', store.getState())
               // console.log('the things on state', store.getState().code[Object.keys(store.getState().code)[i]])
               // console.log('the things on pad', pad.getText())
-              resolve();
             });
-          });
+          })
         })
         // making the iFrames
         .then(() => {
@@ -128,6 +181,7 @@ const onAppEnter = () => {
             return new Promise((resolve, reject) => {
               pad.on('synced', isSynced => {
                 if (isSynced) {
+                  console.log("******update triggered2*****");
                   store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
                   resolve();
                 }
