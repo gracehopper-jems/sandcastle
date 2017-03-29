@@ -16,31 +16,69 @@ import { setUserId } from './reducers/user';
 import makeFirepads from './utils/firepads';
 import * as updateActions from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
+import {updateHTML, updateCSS, updateJS, updateServer, updateDatabase} from './reducers/code'
 
 
 injectTapEventPlugin(); //need this for the progress indicator
 
-var sharedCode; 
-
 console.log("PATH IS", location.pathname); 
-if (location.pathname.startsWith('/share'))  {
-  console.log("IN HERE"); 
-  const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);  
-  console.log("HASHED ID IS", hashedId); 
-  axios.get(`/api/project/${hashedId}`)
-  .then(res => {
-    console.log("RESPONSe", res); 
-    // sharedCode = JSON.parse(res.data); 
-    return res.data
-  })
-  .then(data => {
-    return data.code 
-  })
-  .then(code => {
-    return JSON.parse(code);
-  })
-  .then(sharedCode => {console.log("SHARED CODE", sharedCode)})
-}
+var sharedText = false; 
+//var sharedCodePromise; 
+  if (location.pathname.startsWith('/share'))  {
+    sharedText = true; 
+    console.log("IN HERE"); 
+    const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);  
+    console.log("HASHED ID IS", hashedId); 
+      axios.get(`/api/project/${hashedId}`)
+      .then(res => {
+        console.log("RESPONSe", res); 
+        // sharedCode = JSON.parse(res.data); 
+        return res.data
+      })
+      .then(data => {
+        return data.code 
+      })
+      .then(code => {
+        return JSON.parse(code);
+      })
+      .then(sharedCode => {
+        console.log("SHARED CODE", sharedCode); 
+        return sharedCode
+      })
+      .then(sharedCode => {
+        const html = sharedCode.htmlString; 
+        console.log("HTML", html); 
+        store.dispatch(updateHTML(html)); 
+        console.log("DISPATCH TRIGGERED?!?!")
+        return sharedCode; 
+      })
+      .then(sharedCode => {
+        const css = sharedCode.cssString; 
+        console.log("css", css); 
+        store.dispatch(updateCSS(css)); 
+        return sharedCode; 
+      })  
+      .then(sharedCode => {
+        const jsString = sharedCode.jsString; 
+        console.log("JS", jsString); 
+        store.dispatch(updateJS(jsString)); 
+        return sharedCode; 
+      })
+      .then(sharedCode => {
+        const serverString = sharedCode.serverString; 
+        console.log("Server", serverString); 
+        store.dispatch(updateServer(serverString)); 
+        return sharedCode; 
+      }) 
+      .then(sharedCode => {
+        const databaseString = sharedCode.databaseString; 
+        console.log("Database", databaseString); 
+        store.dispatch(updateDatabase(databaseString)); 
+        return sharedCode; 
+      })
+      .then(browserHistory.push('/'))   
+      .catch(console.error)
+    }
 
 //console.log("SHARED CODE IS", sharedCode); 
 
@@ -96,9 +134,12 @@ const onAppEnter = () => {
         Promise.map(allFirepads, (pad, i) => {
           return new Promise((resolve, reject) => {
             pad.on('ready', () => {
-              store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
-              // count++;
-              resolve();
+              if (!sharedText){
+                console.log("******update triggered*****");
+                store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
+                // count++;
+                resolve();
+              }
             });
           });
         })
@@ -111,7 +152,8 @@ const onAppEnter = () => {
           Promise.map(allFirepads, (pad, i) => {
             return new Promise((resolve, reject) => {
               pad.on('synced', isSynced => {
-                if (isSynced) {
+                if (isSynced && !sharedText) {
+                  console.log("******update triggered2*****");
                   store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
                   resolve();
                 }
