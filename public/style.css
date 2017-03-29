@@ -92,6 +92,11 @@ body::after {
   display: block;
 }
 
+.welcome-inner {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
 .selectdropdown {
   font-size: 14px;
   width: auto;
@@ -145,6 +150,8 @@ iframe {
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
     border-top-right-radius: 25px;
+    padding: 5%;
+    background-color: white;
 }
 
 ul.nav.nav-tabs {
