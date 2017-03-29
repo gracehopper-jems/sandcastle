@@ -140,8 +140,6 @@ export default class NavbarContainer extends Component {
 
                             {this.props.user.userId !== '' ? <li><a><SaveButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
-                            {this.props.user.userId !== '' ? <li><UserProjects code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></li> : null}
-
                             {this.props.user.userId !== '' ? <li><a><ShareButton code={this.props.code} handlers={this.props.handlers} user={this.props.user} /></a></li> : null}
 
                             {this.state.signin ?
@@ -155,8 +153,12 @@ export default class NavbarContainer extends Component {
                         {this.props.user.userId !== ''
                             ?
                             <ul className="nav navbar-nav navbar-right">
+
                                 <li>
-                                    <button className="btn btn-primary" onClick={this.handleSignout}>Sign Out</button>
+                                    <UserProjects code={this.props.code} handlers={this.props.handlers} user={this.props.user} />
+                                </li> 
+                                <li>
+                                    <button className="signout" className="btn btn-primary" onClick={this.handleSignout}>Sign Out</button>
                                 </li>
                             </ul>
                             :
