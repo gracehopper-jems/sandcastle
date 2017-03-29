@@ -1,20 +1,99 @@
-// import { Tour } from 'bootstrap-tour';
-// console.log(Tour);
+// 	TOUR INITIALIZED & STARTED IN NAVBAR CONTAINER
 
 const tour = new Tour({
 	steps: [
 		{
-			element: '#run-frontend',
-			title: 'Text Editors',
-			content: 'Here you will find the editors to write your code in',
-			backdrop: false,
+			orphan: true,
+			title: 'Welcome!',
+			content: 'Welcome to Sandcasle! Click Next to begin a guided tour of our features.',
+			next: 1,
+			prev: -1,
 		},
-		// {
-		// 	element: '',
-		// 	title: '',
-		// 	content: ''
-		// },
-	]
+		{
+			element: 'FirepadTabContainer',
+			title: 'Text Editors',
+			content: 'Here you will find all the text editors...',
+		},
+		{
+			element: '#FirepadTabContainer-tab-1',
+			title: 'HTML Editor',
+			content: '...in here you can write out your HTML file...',
+			// backdrop: false,
+			// duration: 1000,
+		},
+		{
+			element: '#FirepadTabContainer-tab-2',
+			title: 'CSS Editor',
+			content: '...and here, your stylesheet...'
+		},
+		{
+			element: '#FirepadTabContainer-tab-3',
+			title: 'JavaScript Editor',
+			content: '...and your JavaScript (frontend and backend!)...',
+		},
+		{
+			element: '#FirepadTabContainer-tab-4',
+			title: 'Server Editor',
+			content: '...define your routes here...',
+		},
+		{
+			element: '#FirepadTabContainer-tab-5',
+			title: 'Database Editor',
+			content: '...and your models here!',
+		},
+		{
+			element: '#run-frontend',
+			title: 'Run Your Frontend Code',
+			content: 'Once you\'ve entered some HTML (and CSS, and JS if you so please), click here on \'Run Frontend\' to view the result in the \'Browser View\' pane to the right',
+		},
+		{
+			element: '#run-backend',
+			title: 'Run Your Backend Code',
+			content: 'If you\'ve defined any routes or models, click here on \'Run Backend\' (there\'s a lot of logic going on here, please be patient!)',
+		},
+		{
+			element: '#IframeTabContainer-tab-2',
+			title: 'Test Your Routes',
+			content: 'Once you\'ve sucessfully run your backend, click on over to the \'Server View\' pane to test out your routes.',
+		},
+		{
+			element: '#formControlsSelect.selectdropdown.form-control',
+			title: 'Request Type',
+			content: 'Choose which request type you want to make...',
+		},
+		{
+			element: '#route-form',
+			title: 'Choose Your Route',
+			content: '...and enter your route',
+		},
+		{
+			// element: '',
+			orphan: true,
+			title: 'Sit back and watch your app build!',
+			content: 'If everything is defined correctly, you will see your returned data as a JSON object',
+		},
+		{
+			element: '#IframeTabContainer-tab-3',
+			title: 'View Your Database',
+			content: 'Click on over to \'Database View\' to see your models!'
+		},
+		{
+			element: '#IframeTabContainer-tab-4',
+			title: 'La Pièce de Résistance',
+			content: 'And finally, what you\'ve ultimately been waiting for, is your app, rendered in all its shining glory over here in the \'App View\' pane'
+		},
+		{
+			element: '#sandcastle-tour',
+			title: 'Want more?',
+			content: 'We know its a lot to take in, so if you\'d like to run through this tutorial again at any point just click on the \'Sandcasle\' icon to take another spin!'
+		},
+		{
+			orphan: true,
+			title: 'GET CODING!',
+			content: 'Go! Now!'
+		}
+	],
+	backdrop: true
 });
 
 export default tour;
