@@ -7,13 +7,12 @@ body {
   height: 100%;
   position: relative;
   font-family: 'Roboto', sans-serif;
-  /*background-image: url('dimension.png');*/
 }
 
 body::after {
   content: "";
   background: url(dimension.png);
-  opacity: 0.35;
+  opacity: 0.3;
   top: 0;
   left: 0;
   bottom: 0;
@@ -77,6 +76,8 @@ body::after {
 
 .editor-container, .iframe-container {
   width: 50%;
+  margin: 0;
+  padding: 0;
 }
 
 .welcome img {
@@ -133,3 +134,6 @@ li {
   margin-right: 5px;
 }
 
+iframe {
+    border: none;
+}
