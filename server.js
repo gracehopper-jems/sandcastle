@@ -63,8 +63,6 @@ app
 
   db.sync({force: true})
     .then(() => {
-      console.log("PROCESS", process);
-      console.log("PROCESS.ENV", process.env);
       const server = app.listen(
         process.env.PORT || 3000,
         () => {

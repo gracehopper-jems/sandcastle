@@ -17,7 +17,7 @@ import makeFirepads from './utils/firepads';
 import * as updateActions from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateAllCode } from './reducers/code'
-//import { process } from '../server.js'; 
+
 
 
 injectTapEventPlugin(); //need this for the progress indicator
@@ -27,13 +27,9 @@ let pads = [];
 
 console.log("PATH IS", location.pathname);
 if (location.pathname.startsWith('/share'))  {
-  console.log("IN HERE");
   const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);
-  console.log("HASHED ID IS", hashedId);
   axios.get(`/api/project/${hashedId}`)
   .then(res => {
-    console.log("RESPONSe", res);
-    // sharedCode = JSON.parse(res.data);
     return res.data
   })
   .then(data => {
@@ -110,9 +106,6 @@ const onAppEnter = () => {
         })
         .catch(console.error);
 
-        // var confirmationMessage = "\o/";
-        // e.returnValue = confirmationMessage;
-        // return confirmationMessage;
       });
 
       // render firepads
@@ -131,27 +124,17 @@ const onAppEnter = () => {
           var appCode = appState.code;
           return new Promise((resolve, reject) => {
             pad.on('ready', () => {
-              console.log('store state projec tid', store.getState().code.currentProject === '')
-              // if (store.getState().code.currentProject === '') {
+              console.log('store state project id', store.getState().code.currentProject === '')
               pads.push(pad)
               if (!sharedText){
                 store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
-                // count++;
                 console.log('PADS', pads)
                 resolve()
               } else {
                 pad.setText(appCode[stateOrderManifesto[i]])
                 sharedText = false;
                 resolve()
-                // window.location.reload();
-                // pad.refresh();
               }
-              // const storeCodeObject = store.getState().code;
-              // const storeCodeKeys = Object.keys(storeCodeObject)
-              // console.log('DO THEY MATCH?', storeCodeKeys[i], storeCodeObject[storeCodeKeys[i]] === pad.getText() )
-              // console.log('BEFORE DISPATCH', store.getState())
-              // console.log('the things on state', store.getState().code[Object.keys(store.getState().code)[i]])
-              // console.log('the things on pad', pad.getText())
             });
           })
         })
