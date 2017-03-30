@@ -73,7 +73,11 @@ var sharedText = false;
 const onAppEnter = () => {
 
   // initialize firebase
-  var config = { process.env.API, process.env.AUTH, process.env.DB };
+  var config = { 
+      apiKey: process.env.API, 
+      authDomain: process.env.AUTH, 
+      databaseURL: process.env.DB 
+  };
   firebase.initializeApp(config);
 
   let madeFirepads = false;
