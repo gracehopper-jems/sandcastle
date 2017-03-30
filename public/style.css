@@ -93,8 +93,10 @@ body::after {
 }
 
 .welcome-inner {
-  margin-left: 20%;
-  margin-right: 20%;
+  margin-left: 5%;
+  margin-right: 5%;
+  padding-left: 15%;
+  padding-right: 15%;
 }
 
 .selectdropdown {
@@ -122,11 +124,15 @@ li {
 .welcome {
     background-image: linear-gradient(rgba(255,255,255,0.9),rgba(255,255,255,0.5)), url('http://www.wallpaperup.com/uploads/wallpapers/2014/01/18/231587/81ad20119d092dd1f122cffca660d27d.jpg');
     height: 100vh;
+    width: 95vw;
     left: 0;
     right:0;
-    margin:-20px;
+    margin-top:-20px;
+    margin-left: auto;
+    margin-right: auto;
     overflow: hidden;
     position: fixed;
+    border: 1px solid #e2e2e2;
 }
 
 .custom-modal {

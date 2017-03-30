@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
+const postgresPath = require('../variables').postgresPath; 
 
-const db = new Sequelize('postgres://localhost:5432/sandcastle', {
+const db = new Sequelize(postgresPath, {
 	logging: false
 });
 
