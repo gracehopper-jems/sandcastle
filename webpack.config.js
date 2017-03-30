@@ -15,8 +15,6 @@ module.exports = {
     plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'ENV': JSON.stringify(metadata.ENV),
-        'NODE_ENV': JSON.stringify(metadata.ENV),
         'API': JSON.stringify(process.env.API), 
         'AUTH': JSON.stringify(process.env.AUTH), 
         'DB': JSON.stringify(process.env.DB)
