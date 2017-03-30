@@ -21,9 +21,9 @@
 
 const postgresPath = 'postgres://sandcastles:sandcastles@localhost:5432/sandcastles'
 
-const dockerCmd = 'sudo docker'; 
+const dockerCmd = 'docker'; 
 
-const dockerComposeCmd = 'sudo docker-compose'; 
+const dockerComposeCmd = 'docker-compose'; 
 
 const ipAddress = '104.236.111.206'; 
 
