@@ -68,13 +68,10 @@ h1 {
 if you are running frontend js only, click 'run frontend'
 if you are running backend js too, click 'run backend'*/
 
-var uniq = require('uniq');
-var lodash = require('lodash');
+var _ = require('lodash');
 var axios = require('axios');
 
-var unique = require('uniq');
-var data = [1, 2, 2, 3, 4, 5, 5, 5, 6];
-console.log(unique(data));
+console.log('====chunk', _.chunk(['a', 'b', 'c', 'd'], 2));
 
 
 $(document).ready(function() {
