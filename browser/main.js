@@ -9,7 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Provider } from 'react-redux';
 import AppContainer from './Containers/AppContainer';
 import SignUp from './Containers/SignUp';
-import {apiKey, authDomain, databaseURL} from '../secrets';
+//import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
 import { setUserId } from './reducers/user';
@@ -73,7 +73,7 @@ var sharedText = false;
 const onAppEnter = () => {
 
   // initialize firebase
-  var config = { apiKey, authDomain, databaseURL };
+  var config = { process.env.API, process.env.AUTH, process.env.DB };
   firebase.initializeApp(config);
 
   let madeFirepads = false;
