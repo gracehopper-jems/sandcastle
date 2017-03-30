@@ -4,7 +4,7 @@ const path = require('path');
 const _ = require('lodash');
 const createHTML = require('./createHTML');
 const dockerCmd = require('../variables').dockerCmd; 
-const dockerCmd = require('../variables').dockerComposeCmd; 
+const dockerComposeCmd = require('../variables').dockerComposeCmd; 
 
 const dockerComposeStr = `db:
   image: postgres
