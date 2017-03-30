@@ -72,7 +72,8 @@ var sharedText = false;
 
 const onAppEnter = () => {
 
-  console.log("PROCESS.ENV", process.env)
+  console.log("PROCESS", process);
+  console.log("PROCESS.ENV", process.env);
 
   // initialize firebase
   var config = { 
