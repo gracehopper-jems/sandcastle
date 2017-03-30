@@ -17,6 +17,7 @@ import makeFirepads from './utils/firepads';
 import * as updateActions from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateAllCode } from './reducers/code'
+import { process.ENV } from '../server.js'; 
 
 
 injectTapEventPlugin(); //need this for the progress indicator

@@ -28,7 +28,9 @@ prettyError.skipNodeFiles()
 // Skip all the trace lines about express' core and sub-modules.
 prettyError.skipPackage('express')
 
-module.exports = app
+module.exports = { app, process.ENV } 
+
+app
   // Body parsing middleware
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
@@ -79,14 +81,5 @@ module.exports = app
     console.error(prettyError.render(err))
     finalHandler(req, res)(err)
   });
-// const server = app.listen(
-//   3000,
-//   () => {
-//     console.log(`--- Started HTTP Server ---`);
-//     const { address, port } = server.address();
-//     const host = address === '::' ? 'localhost' : address;
-//     const urlSafeHost = host.includes(':') ? `[${host}]` : host;
-//     console.log(`Listening on http://${urlSafeHost}:${port}`);
-//   }
-// )
+
 
