@@ -6,11 +6,11 @@ const WelcomeMessage = (props) => {
 	    <div className="jumbotron welcome">
 	    <div className="welcome-inner">
 				<h1>Welcome to Sandcastle!</h1>
-				<hr />
+
 				<img src="sandcastle.png" alt="Sandcastle"/>
-				<h2>Sandcastle is an in-browser text editor that lets you try out frontend and backend code.</h2>
+				<h3>Sandcastle is an in-browser text editor that lets you try out frontend and backend code.</h3>
 				<br/>
-				<h2>Please sign up or log in to begin using Sandcastle today!</h2>
+				<h3>Please sign up or log in to begin using Sandcastle today!</h3>
 				</div>
 			</div>
 	)
