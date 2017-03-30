@@ -28,7 +28,7 @@ prettyError.skipNodeFiles()
 // Skip all the trace lines about express' core and sub-modules.
 prettyError.skipPackage('express')
 
-module.exports = { app, process.ENV } 
+module.exports = app ; 
 
 app
   // Body parsing middleware
