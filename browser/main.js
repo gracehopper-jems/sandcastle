@@ -72,9 +72,6 @@ var sharedText = false;
 
 const onAppEnter = () => {
 
-  console.log("PROCESS", process);
-  console.log("PROCESS.ENV", process.env);
-
   // initialize firebase
   var config = { 
       apiKey: process.env.API, 
