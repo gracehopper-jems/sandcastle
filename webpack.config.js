@@ -11,15 +11,15 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.json', '*']
   },
-  module: {
-    plugins: [
+  plugins: [
     new webpack.DefinePlugin({
       'process.env': {
         'API': JSON.stringify(process.env.API), 
         'AUTH': JSON.stringify(process.env.AUTH), 
         'DB': JSON.stringify(process.env.DB)
       }
-    })], 
+  })], 
+  module: {
     rules: [
       {
         test: /\.jsx?$/,
