@@ -11,6 +11,8 @@
 
 // const appURL = 'http://localhost:3000';
 
+// const const dockerComposeCmd = 'docker-compose'; 
+
 
 
 /*  ====================
@@ -21,6 +23,8 @@ const postgresPath = 'postgres://sandcastles:sandcastles@localhost:5432/sandcast
 
 const dockerCmd = 'sudo docker'; 
 
+const dockerComposeCmd = 'sudo docker-compose'; 
+
 const ipAddress = '104.236.111.206'; 
 
 const appURL = 'http://www.sandcastle.world'; 
@@ -29,6 +33,7 @@ const appURL = 'http://www.sandcastle.world';
 
 module.exports = { 
 	postgresPath, 
-	dockerCmd,  
+	dockerCmd, 
+	dockerComposeCmd,  
 	ipAddress
 }; 

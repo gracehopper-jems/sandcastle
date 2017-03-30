@@ -3,6 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
 const createHTML = require('./createHTML');
+const dockerCmd = require('../variables').dockerCmd; 
+const dockerCmd = require('../variables').dockerComposeCmd; 
 
 const dockerComposeStr = `db:
   image: postgres
@@ -59,7 +61,7 @@ const runContainer = (argsObj) => {
             console.log('THERE IS ALREADY A USER APP')
 
             console.log('docker compose down');
-            return exec('docker-compose down')
+            return exec(`${dockerComposeCmd} down`)
             .then(() => {
                 // change into docker folder and delete user app folder
                 process.chdir('../');
@@ -190,12 +192,12 @@ const runContainer = (argsObj) => {
     .then(() => {
         // build docker container
         console.log('building docker container')
-        return exec('docker-compose build');
+        return exec(`${dockerComposeCmd} build`);
     })
     .then(() => {
         // run docker container
         console.log('running docker-compose up');
-        const runningProcess = require('child_process').spawn('docker-compose', ['up'], {stdio: ['pipe', 'pipe', 'pipe']});
+        const runningProcess = require('child_process').spawn(dockerComposeCmd, ['up'], {stdio: ['pipe', 'pipe', 'pipe']});
         runningProcess.on('exit', statusCode => {
             console.log('status code', statusCode);
         });
