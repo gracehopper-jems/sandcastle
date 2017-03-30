@@ -6,7 +6,7 @@ const tour = new Tour({
 		{
 			orphan: true,
 			title: 'Welcome!',
-			content: 'Welcome to Sandcasle! \n Click Next to begin a guided tour of our features. \n We\'ve included a sample app to get you going!',
+			content: 'Welcome to Sandcastle! \n Click Next to begin a guided tour of our features. \n We\'ve included a sample app to get you going!',
 		},
 		{
 			element: '#FirepadTabContainer',
@@ -57,7 +57,7 @@ const tour = new Tour({
 		{
 			orphan: true,
 			title: 'NOTE:',
-			content: 'If you\ve required any node modules into your JavaScript file, please \'Run Backend\' to install them!',
+			content: 'If you\'ve required any node modules into your JavaScript file, please \'Run Backend\' to install them!',
 		},
 		{
 			element: '#IframeTabContainer-tab-2',
