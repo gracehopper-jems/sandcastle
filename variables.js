@@ -3,13 +3,13 @@
 	====================  */ 
 
 
-const postgresPath = 'postgres://localhost:5432/sandcastle'; 
+// const postgresPath = 'postgres://localhost:5432/sandcastle'; 
 
-const dockerCmd = 'docker'; 
+// const dockerCmd = 'docker'; 
 
-const ipAddress = 'http://localhost:8080'; 
+// const ipAddress = 'http://localhost:8080'; 
 
-const appURL = 'http://localhost:3000';
+// const appURL = 'http://localhost:3000';
 
 
 
@@ -17,13 +17,13 @@ const appURL = 'http://localhost:3000';
 	DEPLOYED VARIABLES 
 	====================  */ 
 
-// const postgresPath = 'postgres://sandcastles:sandcastles@localhost:5432/sandcastles'
+const postgresPath = 'postgres://sandcastles:sandcastles@localhost:5432/sandcastles'
 
-// const dockerCmd = 'sudo docker'; 
+const dockerCmd = 'sudo docker'; 
 
-// const ipAddress = ??????
+const ipAddress = '104.236.111.206'; 
 
-// const appURL = 'http://www.sandcastle.world'; 
+const appURL = 'http://www.sandcastle.world'; 
 
 
 
