@@ -9,6 +9,8 @@ const dockerCmd = 'docker';
 
 const ipAddress = 'http://localhost:8080'; 
 
+const appURL = 'http://localhost:3000';
+
 
 
 /*  ====================
@@ -20,6 +22,8 @@ const ipAddress = 'http://localhost:8080';
 // const dockerCmd = 'sudo docker'; 
 
 // const ipAddress = ??????
+
+// const appURL = 'http://www.sandcastle.world'; 
 
 
 
