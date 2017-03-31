@@ -16,7 +16,7 @@ export const FirepadTabs = () => {
 
   return (
     <div onClick={handleClick}>
-      <Tabs defaultActiveKey={1} id="FirepadTabContainer">
+      <Tabs defaultActiveKey={1} id="FirepadTabContainer" className="firepad-only">
         <Tab className="frontend-color" eventKey={1} title="HTML Editor">
           <HTMLEditor />
         </Tab>
