@@ -1,0 +1,11 @@
+/*write css here*/
+h1 {
+  color: green;
+  font-family: 'Space Mono', monospace;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+  background-color: red; 
+}

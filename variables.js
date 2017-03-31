@@ -25,7 +25,7 @@ const dockerCmd = 'docker';
 
 const dockerComposeCmd = 'docker-compose'; 
 
-const ipAddress = '104.236.111.206'; 
+const ipAddress = 'http://localhost:8080'; 
 
 const appURL = 'http://www.sandcastle.world'; 
 
