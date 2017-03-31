@@ -171,14 +171,6 @@ li {
   margin-left: 6%;
 }
 
-/*.frontend-color {
-  background-color: #B5BD89;
-}
-
-.backend-color {
-  background-color: #EC9192;
-}*/
-
 iframe {
     border: 1px solid #e2e2e2;
     border-bottom-left-radius: 25px;
@@ -191,6 +183,9 @@ iframe {
 
 ul.nav.nav-tabs {
   border: 0px;
+}
+
+#FirepadTabContainer ul.nav.nav-tabs {
   margin-left: 1.7%;
 }
 
