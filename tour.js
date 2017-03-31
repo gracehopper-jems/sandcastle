@@ -126,10 +126,12 @@ export default tour;
 // 			g. 	Point to Server iframe tab -
 // 			h. 	Point to Database iframe tab -
 // 			i. 	Point to App view iframe tab -
-// 			j. 	That's it! When you log in next time your work will be waiting for 							you! -
+// 			j. 	That's it! When you log in next time your work will be waiting for you! -
 
 // 	ADD CLEAR ALL PADS button
-// 	ADD SAVE APP BUTTON AND GIVE THEM A SHAREABLE LINK AND A PAGE TO REVISIT 				PAST APPS
+// 	ADD SAVE APP BUTTON AND GIVE THEM A SHAREABLE LINK AND A PAGE TO REVISIT PAST APPS
 
 
 
+//  WHAT TO TALK ABOUT IN DEMO
+// 	Welcome --> Sign Up --> tour autostarts (tiny app default) -->
