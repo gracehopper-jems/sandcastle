@@ -1,3 +1,3 @@
 
 
-![Sandcastle App View](sandcastle_app.png "Sandcastle App View")
+![Sandcastle App View](./public/sandcastle_app.png "Sandcastle App View")
