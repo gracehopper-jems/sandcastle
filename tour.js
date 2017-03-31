@@ -52,7 +52,7 @@ const tour = new Tour({
 		{
 			element: '#run-backend',
 			title: 'Run Your Backend Code',
-			content: 'If you\'ve defined any routes or models, click here on \'Run Backend\' (there\'s a lot of logic going on here, please be patient!)',
+			content: 'If you\'ve defined any routes or models, click here on \'Run Full App\' (there\'s a lot of logic going on here, so please be patient!)',
 		},
 		{
 			orphan: true,
