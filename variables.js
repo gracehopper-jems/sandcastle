@@ -35,5 +35,6 @@ module.exports = {
 	postgresPath, 
 	dockerCmd, 
 	dockerComposeCmd,  
-	ipAddress
+	ipAddress, 
+	appURL
 }; 

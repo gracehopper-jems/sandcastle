@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 const randomstring = require('randomstring');
 import { Modal, Button } from 'react-bootstrap';
+const appURL = require('../../variables').appURL; 
 
 
 export default class ShareButton extends Component {
