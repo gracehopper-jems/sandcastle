@@ -11,36 +11,36 @@ const tour = new Tour({
 		{
 			element: '#FirepadTabContainer',
 			title: 'Text Editors',
-			content: 'Here you will find all the text editors...',
+			content: 'Here you will find all the text editors.',
 		},
 		{
 			element: '#FirepadTabContainer-tab-1',
 			title: 'HTML Editor',
-			content: '...in here you can write out your HTML file...',
+			content: 'In here you can write out your HTML file.',
 			duration: 2500,
 		},
 		{
 			element: '#FirepadTabContainer-tab-2',
 			title: 'CSS Editor',
-			content: '...and here, your stylesheet...',
+			content: 'And here, your stylesheet!',
 			duration: 2500,
 		},
 		{
 			element: '#FirepadTabContainer-tab-3',
 			title: 'JavaScript Editor',
-			content: '...and your JavaScript (frontend and backend!)...',
+			content: 'Your JavaScript...',
 			duration: 2500,
 		},
 		{
 			element: '#FirepadTabContainer-tab-4',
 			title: 'Server Editor',
-			content: '...define your routes here...',
+			content: 'Your routes...',
 			duration: 2500,
 		},
 		{
 			element: '#FirepadTabContainer-tab-5',
 			title: 'Database Editor',
-			content: '...and your models here!',
+			content: 'And your models!',
 			duration: 2500,
 		},
 		{
@@ -57,23 +57,23 @@ const tour = new Tour({
 		{
 			orphan: true,
 			title: 'NOTE:',
-			content: 'If you\ve required any node modules into your JavaScript file, please \'Run Backend\' to install them!',
+			content: 'If you\'ve required any node modules into your JavaScript file, please \'Run Full App\' to install them!',
 		},
 		{
 			element: '#IframeTabContainer-tab-2',
 			title: 'Test Your Routes',
 			content: 'Once you\'ve sucessfully run your backend, click on over to the \'Server View\' pane to test out your routes.',
 		},
-		{
-			element: '#formControlsSelect.selectdropdown.form-control',
-			title: 'Request Type',
-			content: 'Choose which request type you want to make...',
-		},
-		{
-			element: '#route-form',
-			title: 'Choose Your Route',
-			content: '...and enter your route',
-		},
+		// {
+		// 	element: '#formControlsSelect.selectdropdown.form-control',
+		// 	title: 'Request Type',
+		// 	content: 'Choose which request type you want to make...',
+		// },
+		// {
+		// 	element: '#route-form',
+		// 	title: 'Choose Your Route',
+		// 	content: '...and enter your route',
+		// },
 		{
 			// element: '',
 			orphan: true,
@@ -98,14 +98,14 @@ const tour = new Tour({
 		{
 			orphan: true,
 			title: 'GET CODING!',
-			content: 'Go! Now!'
+			content: 'Go! Now!!!'
 		}
 	],
 	backdrop: true,
 	duration: 4000,
 	onEnd: function () {
 		browserHistory.push('/');
-		window.location.reload();
+		// window.location.reload();
 	}
 });
 
