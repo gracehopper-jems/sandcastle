@@ -22,17 +22,16 @@ class BackendButton extends Component {
 
         this.setState({isLoading: true});
         axios.post('/container', {userRoutes: this.props.code.serverString,
-          userModels: this.props.code.databaseString,
-          userHTML: this.props.code.htmlString,
-          userCSS: this.props.code.cssString,
-          userJS: this.props.code.jsString
+            userModels: this.props.code.databaseString,
+            userHTML: this.props.code.htmlString,
+            userCSS: this.props.code.cssString,
+            userJS: this.props.code.jsString
         })
         .then((res) => {
-          console.log(res.data.response, res.data.port);
-          const userServerPort = res.data.port;
-          this.props.handlers.handleSendPort(userServerPort);
-          this.props.handlers.handleUpdateDockerOn(true);
-          this.setState({isLoading: false});
+            const userServerPort = res.data.port;
+            this.props.handlers.handleSendPort(userServerPort);
+            this.props.handlers.handleUpdateDockerOn(true);
+            this.setState({isLoading: false});
         })
         .catch(console.error);
     }
@@ -40,11 +39,11 @@ class BackendButton extends Component {
     render(){
         const isLoading = this.state.isLoading;
         return (
-          <div
-            disabled={isLoading}
-            onClick={!isLoading ? this.handleClick: null}>
-            {isLoading ? <ProgressModal view={'Backend'}/> : 'Run Full App'}
-          </div>
+            <div
+                disabled={isLoading}
+                onClick={!isLoading ? this.handleClick: null}>
+                {isLoading ? <ProgressModal view={'Backend'}/> : 'Run Full App'}
+            </div>
         )
     }
 }
