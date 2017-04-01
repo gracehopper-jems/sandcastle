@@ -22,9 +22,7 @@ export default class UserProjects extends Component {
     handleToggle(){
         return axios.get(`/api/user/${this.props.user.userId}`)
         .then((projects) => {
-            console.log("getting the projects", this.state.projects);
             this.setState({open: !this.state.open, projects: projects.data});
-            console.log("getting the projects after", this.state.projects);
         })
         .catch(console.error)
     }
