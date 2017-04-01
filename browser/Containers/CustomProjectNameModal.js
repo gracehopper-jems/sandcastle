@@ -34,35 +34,35 @@ export default class CustomProjectNameModal extends Component {
 		}
 
 		handleChange(event) {
-			event.preventDefault();
-			this.setState({ projectName: event.target.value });
+				event.preventDefault();
+				this.setState({ projectName: event.target.value });
 		}
 
 		render() {
 				return (
-					<div className="static-modal">
-							<Modal.Dialog>
-									<Modal.Header>
-											<Modal.Title>Please enter a name for your project:</Modal.Title>
-									</Modal.Header>
+						<div className="static-modal">
+								<Modal.Dialog>
+										<Modal.Header>
+												<Modal.Title>Please enter a name for your project:</Modal.Title>
+										</Modal.Header>
 
-									<Modal.Body>
-											<form onSubmit={this.handleSave}>
-													<div className="form-group">
-															<label htmlFor="inlineFormInput">Name:</label>
-															<input name="project-name" type="text" className="form-control" id="inlineFormInput" placeholder="Project Name" onChange={this.handleChange} autoFocus={focus} value={this.state.projectName} />
-													</div>
+										<Modal.Body>
+												<form onSubmit={this.handleSave}>
+														<div className="form-group">
+																<label htmlFor="inlineFormInput">Name:</label>
+																<input name="project-name" type="text" className="form-control" id="inlineFormInput" placeholder="Project Name" onChange={this.handleChange} autoFocus={focus} value={this.state.projectName} />
+														</div>
 
-													<Button type="submit">Save</Button>
+														<Button type="submit">Save</Button>
 
-											</form>
-									</Modal.Body>
+												</form>
+										</Modal.Body>
 
-									<Modal.Footer>
-				            	<Button onClick={this.props.handleSaveModalClose}>Close</Button>
-				         	</Modal.Footer>
-							</Modal.Dialog>
-					</div>
+										<Modal.Footer>
+					            	<Button onClick={this.props.handleSaveModalClose}>Close</Button>
+					         	</Modal.Footer>
+								</Modal.Dialog>
+						</div>
 				);
 		}
 }

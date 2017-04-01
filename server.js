@@ -17,8 +17,6 @@ process.env.userPostgresPort = 5432;
 
 const app = express();
 
-// const exec = Promise.promisify(require('child_process').exec);
-
 // Pretty error prints errors all pretty. PrettyError docs: https://www.npmjs.com/package/pretty-error
 const prettyError = new PrettyError();
 
@@ -77,14 +75,3 @@ module.exports = app
     console.error(prettyError.render(err))
     finalHandler(req, res)(err)
   });
-// const server = app.listen(
-//   3000,
-//   () => {
-//     console.log(`--- Started HTTP Server ---`);
-//     const { address, port } = server.address();
-//     const host = address === '::' ? 'localhost' : address;
-//     const urlSafeHost = host.includes(':') ? `[${host}]` : host;
-//     console.log(`Listening on http://${urlSafeHost}:${port}`);
-//   }
-// )
-
