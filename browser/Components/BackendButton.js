@@ -28,7 +28,6 @@ class BackendButton extends Component {
       userJS: this.props.code.jsString
     })
     .then((res) => {
-      console.log(res.data.response, res.data.port);
       const userServerPort = res.data.port;
       this.props.handlers.handleSendPort(userServerPort);
       this.props.handlers.handleUpdateDockerOn(true);

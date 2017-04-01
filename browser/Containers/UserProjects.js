@@ -22,9 +22,7 @@ export default class UserProjects extends Component {
   handleToggle(){
       return axios.get(`/api/user/${this.props.user.userId}`)
       .then((projects) => {
-          console.log("getting the projects", this.state.projects);
           this.setState({open: !this.state.open, projects: projects.data});
-          console.log("getting the projects after", this.state.projects);
       })
       .catch(console.error)
   }
@@ -36,27 +34,24 @@ export default class UserProjects extends Component {
   handleOpenProject(hashedProjectId){
     return axios.get(`api/project/${hashedProjectId}`)
     .then((project) => {
-        console.log('GETTING YOUR PROJECT', (project.data.code));
-        console.log('DAPROPS', this.props)
         this.props.handlers.handleCurrentProjectUpdate(project.data.hashedProjectId);
-        return JSON.parse(project.data.code)
+        return JSON.parse(project.data.code);
     })
     .then((code) => {
-        console.log('PARSED CODE', code)
         this.props.handlers.handleHTMLUpdate(code.htmlString);
-        return code
+        return code;
     })
     .then((code) => {
         this.props.handlers.handleCSSUpdate(code.cssString);
-        return code
+        return code;
     })
     .then((code) => {
         this.props.handlers.handleJSUpdate(code.jsString);
-        return code
+        return code;
     })
     .then((code) => {
         this.props.handlers.handleDatabaseUpdate(code.databaseString);
-        return code
+        return code;
     })
     .then((code) => {
         this.props.handlers.handleServerUpdate(code.serverString);

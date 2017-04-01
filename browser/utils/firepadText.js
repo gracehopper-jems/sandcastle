@@ -19,9 +19,6 @@ const css = `h1 {
 const js = `var _ = require('lodash');
 var axios = require('axios');
 
-console.log('====chunk', _.chunk(['a', 'b', 'c', 'd'], 2));
-
-
 $(document).ready(function() {
   console.log("document ready!");
     if (document.querySelectorAll('#map').length > 0) {

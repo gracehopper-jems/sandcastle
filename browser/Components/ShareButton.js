@@ -30,8 +30,6 @@ export default class ShareButton extends Component {
 	}
 
 	render() {
-		console.log("STATE", this.state);
-
 		return (
 			<div>
 				{this.state.clicked ?
