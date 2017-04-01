@@ -1,7 +1,6 @@
 import React from 'react';
 
 const WelcomeMessage = (props) => {
-		console.log('Welcome page triggered');
   	return (
 	    <div className="jumbotron welcome">
 	    <div className="welcome-inner">
