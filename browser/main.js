@@ -117,7 +117,9 @@ const onAppEnter = () => {
               } else {
                 pad.setText(appCode[stateOrderManifesto[i]]);
                 sharedText = false;
-                resolve();
+                resolve()
+                 window.location.reload();
+                // pad.refresh();
               }
             });
           });
