@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const User = require('./models').User;
-const Project = require('./models').Project;
+const User = require('../models').User;
+const Project = require('../models').Project;
 
 router.post('/user/:firebaseId', (req, res, next) => {
 	User.findOrCreate({
@@ -49,9 +49,6 @@ router.get('/project/:hashedProjectId', (req, res, next) => {
 	})
 	.catch(console.error)
 })
-
-
-
 
 module.exports = router;
 
