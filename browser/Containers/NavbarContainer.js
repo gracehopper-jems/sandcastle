@@ -56,7 +56,6 @@ export default class NavbarContainer extends Component {
 
                 axios.post('/setUser', {userId: userId})
                 .then(() => {
-                    console.log('posting userid');
                     this.setState({signin: false, modal: false})
                     window.location.reload();
                 })
@@ -84,7 +83,6 @@ export default class NavbarContainer extends Component {
             return axios.get('/removeContainer')
             .then((res) => {
                 console.log('removing container');
-                console.log('res', res)
             });
         })
         .then(() => {

@@ -29,25 +29,21 @@ router.get('/user/:firebaseId', (req, res, next) => {
 			return user.getProjects();
 		})
 		.then(projects => {
-			console.log('PROJECTS', projects);
 			res.status(200).send(projects);
 		})
 		.catch(next);
 });
 
 router.get('/project/:hashedProjectId', (req, res, next) => {
-	console.log("IN THIS ROUTE");
-	console.log(req.params.hashedProjectId);
 	Project.findOne({
 		where: {
 			hashedProjectId: req.params.hashedProjectId
 		}
 	})
 	.then( project => {
-		console.log("PROJECT", project)
-		res.status(200).send(project)
+		res.status(200).send(project);
 	})
-	.catch(console.error)
+	.catch(console.error);
 })
 
 
