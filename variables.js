@@ -1,7 +1,6 @@
 /*  ====================
-	PRODUCTION VARIABLES 
-	====================  */ 
-
+	PRODUCTION VARIABLES
+	====================  */
 
 // const postgresPath = 'postgres://localhost:5432/sandcastle'; 
 
@@ -16,8 +15,8 @@
 
 
 /*  ====================
-	DEPLOYED VARIABLES 
-	====================  */ 
+	DEPLOYED VARIABLES
+	====================  */
 
 const postgresPath = 'postgres://sandcastles:sandcastles@localhost:5432/sandcastles'
 
