@@ -8,103 +8,92 @@ import { updateCurrentProject } from '../reducers';
 
 export default class UserProjects extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-        open: false,
-        projects: [],
-    };
-    this.handleToggle = this.handleToggle.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleOpenProject = this.handleOpenProject.bind(this);
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            projects: [],
+        };
+        this.handleToggle = this.handleToggle.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleOpenProject = this.handleOpenProject.bind(this);
+    }
 
-  handleToggle(){
-      return axios.get(`/api/user/${this.props.user.userId}`)
-      .then((projects) => {
-          this.setState({open: !this.state.open, projects: projects.data});
+    handleToggle(){
+        return axios.get(`/api/user/${this.props.user.userId}`)
+        .then((projects) => {
+            this.setState({open: !this.state.open, projects: projects.data});
+        })
+        .catch(console.error)
+    }
+
+    handleClose(){
+        this.setState({open: false});
+    }
+
+    handleOpenProject(hashedProjectId){
+      return axios.get(`api/project/${hashedProjectId}`)
+      .then((project) => {
+          this.props.handlers.handleCurrentProjectUpdate(project.data.hashedProjectId);
+          return JSON.parse(project.data.code)
+      })
+      .then((code) => {
+          this.props.handlers.handleHTMLUpdate(code.htmlString);
+          return code
+      })
+      .then((code) => {
+          this.props.handlers.handleCSSUpdate(code.cssString);
+          return code
+      })
+      .then((code) => {
+          this.props.handlers.handleJSUpdate(code.jsString);
+          return code
+      })
+      .then((code) => {
+          this.props.handlers.handleDatabaseUpdate(code.databaseString);
+          return code
+      })
+      .then((code) => {
+          this.props.handlers.handleServerUpdate(code.serverString);
+      })
+      .then(() => {
+          browserHistory.push(`/share${hashedProjectId}`);
+          window.location.reload()
+          this.setState({open: false});
       })
       .catch(console.error)
-  }
-
-  handleClose(){
-      this.setState({open: false});
-  }
-
-  handleOpenProject(hashedProjectId){
-    return axios.get(`api/project/${hashedProjectId}`)
-    .then((project) => {
-        this.props.handlers.handleCurrentProjectUpdate(project.data.hashedProjectId);
-        return JSON.parse(project.data.code);
-    })
-    .then((code) => {
-        this.props.handlers.handleHTMLUpdate(code.htmlString);
-        return code;
-    })
-    .then((code) => {
-        this.props.handlers.handleCSSUpdate(code.cssString);
-        return code;
-    })
-    .then((code) => {
-        this.props.handlers.handleJSUpdate(code.jsString);
-        return code;
-    })
-    .then((code) => {
-        this.props.handlers.handleDatabaseUpdate(code.databaseString);
-        return code;
-    })
-    .then((code) => {
-        this.props.handlers.handleServerUpdate(code.serverString);
-    })
-    .then(() => {
-        // browserHistory.push(`api/project/${hashedProjectId}`);
-        //  window.location.reload()
-        browserHistory.push(`/share${hashedProjectId}`);
-        window.location.reload()
-        this.setState({open: false});
-    })
-    .catch(console.error)
-  }
+    }
 
 
-  render() {
-    const buttonStyle = {
-        margin: '6px',
-    };
+    render() {
+      const buttonStyle = {
+          margin: '6px',
+      };
 
-    return (
-      <div>
-        <RaisedButton
-          label="My Projects"
-          onTouchTap={this.handleToggle}
-          style={buttonStyle}
-        />
-        <Drawer
-          docked={false}
-          width={200}
-          open={this.state.open}
-          onRequestChange={(open) => this.setState({open})}
-        >
-          <h2>My Saved Projects</h2>
-            {this.state.projects && this.state.projects.map((project, i) => {
-                    return (
-                        <MenuItem
-                            key={project.id}
-                            onClick={() => this.handleOpenProject(this.state.projects[i].hashedProjectId)}>
-                            {project.projectName ? project.projectName : 'untitled'}
-                        </MenuItem>);
-            })}
-        </Drawer>
-      </div>
-    );
-  }
+      return (
+          <div>
+              <RaisedButton
+                  label="My Projects"
+                  onTouchTap={this.handleToggle}
+                  style={buttonStyle}
+              />
+              <Drawer
+                  docked={false}
+                  width={200}
+                  open={this.state.open}
+                  onRequestChange={(open) => this.setState({open})}
+              >
+              <h2>My Saved Projects</h2>
+                  {this.state.projects && this.state.projects.map((project, i) => {
+                      return (
+                          <MenuItem
+                              key={project.id}
+                              onClick={() => this.handleOpenProject(this.state.projects[i].hashedProjectId)}>
+                              {project.projectName ? project.projectName : 'untitled'}
+                          </MenuItem>);
+                  })}
+            </Drawer>
+          </div>
+      );
+    }
 }
-
-// {this.state.projects && this.state.projects.map((project) => {
-//                   return (
-//                     <MenuItem
-//                         key={project.id}
-//                         onClick={() => this.handleOpenProject(this.state.projects[project.id-1].hashedProjectId)}>
-//                     {project.hashedProjectId}
-//                     </MenuItem>)
-//           })}
