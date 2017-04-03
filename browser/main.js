@@ -18,31 +18,12 @@ import * as updateActions from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateAllCode } from './reducers/code'
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> master
 injectTapEventPlugin(); //need this for the progress indicator
 
 var sharedCode;
 let pads = [];
 
 if (location.pathname.startsWith('/share'))  {
-<<<<<<< HEAD
-  const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);
-  axios.get(`/api/project/${hashedId}`)
-  .then(res => {
-    return res.data
-  })
-  .then(data => {
-    return data.code
-  })
-  .then(code => {
-    return JSON.parse(code);
-  })
-  .then(sharedCode => {console.log("SHARED CODE", sharedCode)})
-=======
     const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);
     axios.get(`/api/project/${hashedId}`)
     .then(res => {
@@ -55,7 +36,6 @@ if (location.pathname.startsWith('/share'))  {
         return JSON.parse(code);
     })
     .catch(console.error);
->>>>>>> master
 }
 
 var sharedText = false;
@@ -66,13 +46,22 @@ var sharedText = false;
         .then(res => {
             return res.data
         })
-<<<<<<< HEAD
-      .then(sharedCode => {
-        store.dispatch(updateAllCode(sharedCode));
-      })
-      .then(browserHistory.push('/'))
-      .catch(console.error)
-    }
+        .then(data => {
+            return data.code
+        })
+        .then(code => {
+            return JSON.parse(code);
+        })
+        .then(sharedCode => {
+            return sharedCode
+        })
+        .then(sharedCode => {
+            store.dispatch(updateAllCode(sharedCode));
+        })
+        .then(browserHistory.push('/'))
+        .catch(console.error)
+}
+
 
 const onAppEnter = () => {
 
