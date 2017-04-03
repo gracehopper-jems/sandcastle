@@ -9,7 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Provider } from 'react-redux';
 import AppContainer from './Containers/AppContainer';
 import SignUp from './Containers/SignUp';
-//import {apiKey, authDomain, databaseURL} from '../secrets';
+import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
 import { setUserId } from './reducers/user';
@@ -62,94 +62,6 @@ var sharedText = false;
         .catch(console.error)
 }
 
-
-const onAppEnter = () => {
-
-  // initialize firebase
-  var config = { 
-      apiKey: process.env.API, 
-      authDomain: process.env.AUTH, 
-      databaseURL: process.env.DB 
-  };
-  firebase.initializeApp(config);
-
-  let madeFirepads = false;
-
-  firebase.auth().onAuthStateChanged((user) => {
-    console.log("USER IN ON APP ENTER", user);
-
-    if (user) {
-      let userId = user.uid;
-      store.dispatch(setUserId(userId));
-
-      axios.post('/setUser', {userId: userId})
-      .then(() => {
-          console.log('posting userid');
-      })
-      .catch(console.error);
-
-      // if user is logged in add an event listener to window to check if user is leaving page
-      // send get request to server to remove container if container is running
-      window.addEventListener("beforeunload", function (e) {
-        e.preventDefault();
-        console.log('WINDOW');
-        console.log('EVENT');
-
-        axios.get('/removeContainer')
-        .then((res) => {
-          console.log('removing container');
-          console.log('res', res)
-        })
-        .catch(console.error);
-
-      });
-
-      // render firepads
-      if (madeFirepads === false) {
-        let firepads = makeFirepads();
-        let allFirepads = firepads[0];
-        let orderManifesto = ['HTML', 'CSS', 'JS', 'Server', 'Database'];
-        let stateOrderManifesto = ['htmlString', 'cssString', 'jsString', 'serverString', 'databaseString'];
-
-        madeFirepads = true;
-        // store.setState({pads: allFirepads})
-
-        // creating firepads and updating state with text
-        Promise.map(allFirepads, (pad, i) => {
-          var appState = store.getState();
-          var appCode = appState.code;
-          return new Promise((resolve, reject) => {
-            pad.on('ready', () => {
-              console.log('store state project id', store.getState().code.currentProject === '')
-              pads.push(pad)
-              if (!sharedText){
-                store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
-                console.log('PADS', pads)
-                resolve()
-              } else {
-                pad.setText(appCode[stateOrderManifesto[i]])
-                sharedText = false;
-                resolve()
-                 window.location.reload();
-                // pad.refresh();
-              }
-=======
-        .then(data => {
-            return data.code
-        })
-        .then(code => {
-            return JSON.parse(code);
-        })
-        .then(sharedCode => {
-            return sharedCode
-        })
-        .then(sharedCode => {
-            store.dispatch(updateAllCode(sharedCode));
-        })
-        .then(browserHistory.push('/'))
-        .catch(console.error)
-}
-
 const onAppEnter = () => {
     // initialize firebase
     var config = { apiKey, authDomain, databaseURL };
@@ -179,7 +91,6 @@ const onAppEnter = () => {
                     console.log('removing container');
                 })
                 .catch(console.error);
->>>>>>> master
             });
 
         // render firepads
