@@ -43,7 +43,7 @@ export default class ShareButton extends Component {
 				      </Modal.Header>
 
 				      <Modal.Body>
-				        {`/share${this.state.projectId}`}
+				        {`${appURL}/share${this.state.projectId}`}
 				      </Modal.Body>
 
 				      <Modal.Footer>
