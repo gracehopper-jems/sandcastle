@@ -1,7 +1,7 @@
 
 
 # Sandcastle
-## [www.sandcastle.world](www.sandcastle.world)
+## [www.sandcastle.world](http://www.sandcastle.world)
 
 ### A project by Elliott Brooks, Susanna Huang, Meredith Kiung, and Jin Wang 
 
