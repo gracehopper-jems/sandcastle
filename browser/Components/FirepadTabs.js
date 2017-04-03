@@ -5,14 +5,14 @@ import Editors from './Editors';
 
 export const FirepadTabs = () => {
 
-  const handleClick = (event) => {
-  }
+    const handleClick = (event) => {
+    }
 
-  let HTMLEditor = Editors[0];
-  let CSSEditor = Editors[1];
-  let JSEditor = Editors[2];
-  let ServerEditor = Editors[3];
-  let DatabaseEditor = Editors[4];
+    let HTMLEditor = Editors[0];
+    let CSSEditor = Editors[1];
+    let JSEditor = Editors[2];
+    let ServerEditor = Editors[3];
+    let DatabaseEditor = Editors[4];
 
   return (
     <div onClick={handleClick}>
