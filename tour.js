@@ -64,18 +64,7 @@ const tour = new Tour({
 			title: 'Test Your Routes',
 			content: 'Once you\'ve sucessfully run your backend, click on over to the \'Server View\' pane to test out your routes.',
 		},
-		// {
-		// 	element: '#formControlsSelect.selectdropdown.form-control',
-		// 	title: 'Request Type',
-		// 	content: 'Choose which request type you want to make...',
-		// },
-		// {
-		// 	element: '#route-form',
-		// 	title: 'Choose Your Route',
-		// 	content: '...and enter your route',
-		// },
 		{
-			// element: '',
 			orphan: true,
 			title: 'Sit back and watch your app build!',
 			content: 'If everything is defined correctly, you will see your returned data as a JSON object',
@@ -105,33 +94,7 @@ const tour = new Tour({
 	duration: 4000,
 	onEnd: function () {
 		browserHistory.push('/');
-		// window.location.reload();
 	}
 });
 
 export default tour;
-
-
-
-// TOUR steps
-// 1. User signs up
-// 2. User enters app and tour initializes, asking them if they want to continue
-// 3. Things to cover in tour:
-// 			a. 	Intro - 'Sandcastle is an in-browser sandbox for running your app. 							Enter javascript, html, and css files to render a frontend view, or 						add backend routes and models to see your app come to life.' -
-// 			b. 	Point to HTML, CSS, and JS pads -
-// 			c. 	Point to 'Run Frontend' button - #run-frontend
-// 			d. 	Point to 'Browser iframe tab' -
-// 			e. 	Point to Server and Database pads -
-// 			f. 	Point to 'Run Backend' button -
-// 			g. 	Point to Server iframe tab -
-// 			h. 	Point to Database iframe tab -
-// 			i. 	Point to App view iframe tab -
-// 			j. 	That's it! When you log in next time your work will be waiting for you! -
-
-// 	ADD CLEAR ALL PADS button
-// 	ADD SAVE APP BUTTON AND GIVE THEM A SHAREABLE LINK AND A PAGE TO REVISIT PAST APPS
-
-
-
-//  WHAT TO TALK ABOUT IN DEMO
-// 	Welcome --> Sign Up --> tour autostarts (tiny app default) -->
