@@ -8,7 +8,6 @@ import { Modal, Button } from 'react-bootstrap';
 import SigninModal from '../Components/SigninModal';
 import SignupModal from '../Components/SignupModal';
 import tour from '../../tour';
-import SaveButton from '../Components/SaveButton';
 import UserProjects from './UserProjects';
 import store from '../store';
 import ShareButton from '../Components/ShareButton';
