@@ -64,7 +64,6 @@ export default class UserProjects extends Component {
       .catch(console.error)
     }
 
-
     render() {
       const buttonStyle = {
           margin: '6px',
