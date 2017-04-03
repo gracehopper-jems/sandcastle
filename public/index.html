@@ -1,61 +1,62 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset='utf-8'>
-        <!-- Firebase -->
-        <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+  <head>
+    <meta charset='utf-8'>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
 
-        <!-- CodeMirror -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/codemirror.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/mode/javascript/javascript.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/mode/css/css.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/mode/xml/xml.js"></script>
-        <script src="https://codemirror.net/addon/edit/matchbrackets.js"></script>
-        <script src="https://codemirror.net/addon/edit/closebrackets.js"></script>
-        <script src="https://codemirror.net/addon/edit/closetag.js"></script>
-        <script src="https://codemirror.net/addon/comment/comment.js"></script>
-        <script src="https://codemirror.net/addon/fold/foldcode.js"></script>
-        <script src="https://codemirror.net/addon/hint/javascript-hint.js"></script>
-        <script src="https://codemirror.net/addon/hint/show-hint.js"></script>
-        <script src="https://codemirror.net/addon/display/autorefresh.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/codemirror.css" />
+    <!-- CodeMirror -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/codemirror.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/mode/javascript/javascript.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/mode/css/css.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/mode/xml/xml.js"></script>
+    <script src="https://codemirror.net/addon/edit/matchbrackets.js"></script>
+    <script src="https://codemirror.net/addon/edit/closebrackets.js"></script>
+    <script src="https://codemirror.net/addon/edit/closetag.js"></script>
+    <script src="https://codemirror.net/addon/comment/comment.js"></script>
+    <script src="https://codemirror.net/addon/fold/foldcode.js"></script>
+    <script src="https://codemirror.net/addon/hint/javascript-hint.js"></script>
+    <script src="https://codemirror.net/addon/hint/show-hint.js"></script>
+    <script src="https://codemirror.net/addon/display/autorefresh.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/codemirror.css" />
 
-        <!-- Firepad -->
-        <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.css" />
-        <script src="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.min.js"></script>
+    <!-- Firepad -->
+    <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.css" />
+    <script src="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.min.js"></script>
 
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Quattrocento|Roboto:300|Merriweather" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quattrocento|Roboto:300|Merriweather" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
 
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/css/bootstrap-tour-standalone.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/css/bootstrap-tour-standalone.min.css" rel="stylesheet">
 
 
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
 
-        <!-- CSS -->
-        <link rel="stylesheet" href="style.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
 
-        <!-- Scripts for Bootstrap Tour -->
-        <script
-          src="https://code.jquery.com/jquery-3.2.1.min.js"
-          integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-          crossorigin="anonymous">
-        </script>
+    <!-- Scripts for Bootstrap Tour -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous">
+    </script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/js/bootstrap-tour-standalone.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/js/bootstrap-tour-standalone.min.js" defer></script>
 
-        <!-- Favicon -->
-        <link rel="icon" href="https://cdn0.iconfinder.com/data/icons/map-and-navigation-2/65/79-128.png">
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn0.iconfinder.com/data/icons/map-and-navigation-2/65/79-128.png">
 
-        <!-- bundle -->
-        <script src="bundle.js" defer></script>
+    <!-- bundle -->
+    <script src="bundle.js" defer></script>
 
-        <title>Sandcastle</title>
-    </head>
-    <body>
+    <title>Sandcastle</title>
+  </head>
+  <body>
         <div id="app"></div>
-    </body>
+  </body>
 </html>

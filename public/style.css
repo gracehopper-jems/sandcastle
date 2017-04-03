@@ -113,8 +113,12 @@ table {
 }
 
 h1, h2, h3 {
-    font-family: 'Quattrocento', serif;
-    text-align: center;
+  font-family: 'Roboto Slab', serif;
+  text-align: center;
+}
+
+h4 {
+  text-align: center;
 }
 
 li {
@@ -135,6 +139,15 @@ li {
     border: 1px solid #e2e2e2;
 }
 
+#welcome, #sandcastle-picture, #welcome-to-sandcastle {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.welcome-text {
+  font-family: 'Roboto', sans-serif;
+}
+
 .custom-modal {
     width: 80%;
     margin-top: 15px;
@@ -151,7 +164,11 @@ li {
 }
 
 .sandcastle-icon {
-   margin-right: 5px;
+  margin-right: 5px;
+}
+
+#FirepadTabContainer {
+  margin-left: 6%;
 }
 
 iframe {
@@ -166,6 +183,10 @@ iframe {
 
 ul.nav.nav-tabs {
     border: 0px;
+}
+
+#FirepadTabContainer ul.nav.nav-tabs {
+  margin-left: 1.7%;
 }
 
 .tab-div {
