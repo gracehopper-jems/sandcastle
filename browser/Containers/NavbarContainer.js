@@ -8,7 +8,6 @@ import { Modal, Button } from 'react-bootstrap';
 import SigninModal from '../Components/SigninModal';
 import SignupModal from '../Components/SignupModal';
 import tour from '../../tour';
-import SaveButton from '../Components/SaveButton';
 import UserProjects from './UserProjects';
 import store from '../store';
 import ShareButton from '../Components/ShareButton';
@@ -56,7 +55,6 @@ export default class NavbarContainer extends Component {
 
                 axios.post('/setUser', {userId: userId})
                 .then(() => {
-                    console.log('posting userid');
                     this.setState({signin: false, modal: false})
                     window.location.reload();
                 })
@@ -84,7 +82,6 @@ export default class NavbarContainer extends Component {
             return axios.get('/removeContainer')
             .then((res) => {
                 console.log('removing container');
-                console.log('res', res)
             });
         })
         .then(() => {

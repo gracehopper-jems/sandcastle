@@ -1,68 +1,68 @@
 html {
-  height: 100%;
-  width: 100%;
-  margin: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
 }
 
 body {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  position: relative;
-  font-family: 'Roboto', sans-serif;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    font-family: 'Roboto', sans-serif;
 }
 
 body::after {
-  content: "";
-  background: url(dimension.png);
-  opacity: 0.4;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;
+    content: "";
+    background: url(dimension.png);
+    opacity: 0.4;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
 }
 
 .container {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  align-items: center;
-  flex: 1;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+    flex: 1;
 }
 
 #html-firepad-container, #css-firepad-container, #js-firepad-container, #server-firepad-container, #db-firepad-container {
-  width: 100%;
-  height: 100vh;
+    width: 100%;
+    height: 100vh;
 }
 
 .app-frame {
-  width: 45vw;
-  height: 85vh;
+    width: 45vw;
+    height: 85vh;
 }
 
 #serveriframe {
-  width: 45vw;
-  height: 85vh;
+    width: 45vw;
+    height: 85vh;
 }
 
 #IframeTabContainer {
-  width: 45vw;
-  height: 85vh;
+    width: 45vw;
+    height: 85vh;
 }
 
 .powered-by-firepad {
-  height: 0px;
+    height: 0px;
 }
 
 /* Note: CodeMirror applies its own styles which can be customized in the same way. To apply a background to the entire editor, we need to also apply it to CodeMirror. */
 .CodeMirror {
-  background-color: #fff;
-  border: 1px solid #e2e2e2;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
-  border-top-right-radius: 25px;
+    background-color: #fff;
+    border: 1px solid #e2e2e2;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
 }
 
 .navbar-default .navbar-nav > li > a:hover,
@@ -77,39 +77,39 @@ body::after {
 }
 
 .giant-container {
-  display: flex;
+    display: flex;
 }
 
 .editor-container, .iframe-container {
-  width: 50%;
-  margin: 0;
-  padding: 0;
+    width: 50%;
+    margin: 0;
+    padding: 0;
 }
 
 .welcome img {
-  width: 200px;
-  margin: auto;
-  display: block;
+    width: 200px;
+    margin: auto;
+    display: block;
 }
 
 .welcome-inner {
-  margin-left: 5%;
-  margin-right: 5%;
-  padding-left: 15%;
-  padding-right: 15%;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding-left: 15%;
+    padding-right: 15%;
 }
 
 .selectdropdown {
-  font-size: 14px;
-  width: auto;
+    font-size: 14px;
+    width: auto;
 }
 
 .col-md-12 {
-  padding-right: 0px;
+    padding-right: 0px;
 }
 
 table {
-  width: 100%;
+    width: 100%;
 }
 
 h1, h2, h3 {
@@ -122,7 +122,7 @@ h4 {
 }
 
 li {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .welcome {
@@ -149,18 +149,18 @@ li {
 }
 
 .custom-modal {
-  width: 80%;
-  margin-top: 15px;
+    width: 80%;
+    margin-top: 15px;
 }
 
 .modal-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #progress-modal-body {
-  height: 60vh;
+    height: 60vh;
 }
 
 .sandcastle-icon {
@@ -182,7 +182,7 @@ iframe {
 }
 
 ul.nav.nav-tabs {
-  border: 0px;
+    border: 0px;
 }
 
 #FirepadTabContainer ul.nav.nav-tabs {
@@ -190,12 +190,12 @@ ul.nav.nav-tabs {
 }
 
 .tab-div {
-  border: 1px solid #e2e2e2;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
-  border-top-right-radius: 25px;
-  background-color: white;
-  height: 100vh;
-  padding: 5%;
+    border: 1px solid #e2e2e2;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
+    background-color: white;
+    height: 100vh;
+    padding: 5%;
 }
 
