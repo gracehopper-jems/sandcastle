@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const portfinder = require('portfinder');
-const runContainer = require('./docker/runContainer');
-const removeContainer = require('./docker/removeContainer');
+const runContainer = require('../docker/runContainer');
+const removeContainer = require('../docker/removeContainer');
 const Promise = require('bluebird');
 const exec = Promise.promisify(require('child_process').exec);
-const dockerCmd = require('./variables').dockerCmd; 
-const ipAddress = require('./variables').ipAddress; 
+const dockerCmd = require('../variables').dockerCmd;
+const ipAddress = require('../variables').ipAddress;
 
 // these variables are used in the containerAPI routes
 var requestBody;
