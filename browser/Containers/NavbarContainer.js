@@ -95,8 +95,8 @@ export default class NavbarContainer extends Component {
     handleClose(event){
         event.preventDefault();
         const state = store.getState();
-
-        if (state.loading.timeForTour) {
+        console.log('STATE', state);
+        if (state.loading.timeForTour && state.user.userId !== '') {
             tour.init();
             tour.restart(true);
             this.props.handlers.handleSetTimeForTourFalse();
