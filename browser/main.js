@@ -16,7 +16,9 @@ import makeFirepads from './utils/firepads';
 import * as updateActions from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateAllCode } from './reducers/code'
-import {apiKey, authDomain, databaseURL} from '../variables';
+const apiKey = require('../variables').apiKey;
+const authDomain = require('../variables').authDomain;
+const databaseURL = require('../variables').databaseURL;
 
 injectTapEventPlugin(); //need this for the progress indicator
 
