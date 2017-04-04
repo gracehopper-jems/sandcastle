@@ -1,9 +1,7 @@
 
 
-# Sandcastle
-## [www.sandcastle.world](http://www.sandcastle.world)
-
-### A project by Elliott Brooks, Susanna Huang, Meredith Kiung, and Jin Wang 
+# Sandcastle - [www.sandcastle.world](http://www.sandcastle.world)
+### A project by [Elliott Brooks](https://github.com/elliette), [Susanna Huang](https://github.com/susbuilding), [Meredith Kiung](https://github.com/mlkiung), and [Jin Wang](https://github.com/jw2340)
 
 ![Sandcastle App View](./public/sandcastle_app.png "Sandcastle App View")
 
