@@ -3,13 +3,11 @@ import axios from 'axios';
 import Progress, { ProgressModal } from '../Components/ProgressIndicator'
 
 class BackendButton extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
             isLoading: false
         };
-
         this.handleClick = this.handleClick.bind(this)
     }
 

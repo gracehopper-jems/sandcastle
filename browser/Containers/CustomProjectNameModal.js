@@ -6,11 +6,9 @@ import { Modal, Button } from 'react-bootstrap';
 export default class CustomProjectNameModal extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
-				projectName: '',
+			projectName: '',
 		};
-
 		this.handleSave = this.handleSave.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 	}
