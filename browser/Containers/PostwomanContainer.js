@@ -10,7 +10,6 @@ export default class PostwomanContainer extends Component {
             path: '/',
             requestType: 'GET',
             requestBody: '{"example_key": "example_value"}',
-
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSend = this.handleSend.bind(this);
@@ -34,21 +33,21 @@ export default class PostwomanContainer extends Component {
     }
 
     handleSend(event) {
-        event.preventDefault(); 
+        event.preventDefault();
 
         axios.post('/postWomanPath', {path: this.state.path})
         .then(() => {
-            var axiosPromise; 
+            var axiosPromise;
             if (this.state.requestType === 'GET' && this.state.path !== ''){
-                axiosPromise = axios.get('/containerAPI'); 
+                axiosPromise = axios.get('/containerAPI');
             } else if (this.state.requestType === 'POST' && this.state.path !== ''){
                 axiosPromise = axios.post('/containerAPI', {request: this.state.requestBody});
             }  else if (this.state.requestType === 'PUT' && this.state.path !== '') {
                 axiosPromise = axios.put('/containerAPI', {request: this.state.requestBody});
             } else if (this.state.requestType === 'DELETE' && this.state.path !== '') {
                 axiosPromise = axios.delete('/containerAPI', {request: this.state.requestBody});
-            } 
-            return axiosPromise; 
+            }
+            return axiosPromise;
         })
         .then((res) => {
             // return JSON
@@ -62,11 +61,11 @@ export default class PostwomanContainer extends Component {
                 this.props.handlers.handleSendPut(jsonStr);
             } else if (this.state.requestType === 'DELETE'){
                 this.props.handlers.handleSendDelete(jsonStr);
-            } 
+            }
             // dispatches below makes sure iframe for app refreshes
             this.props.handlers.handleUpdateDockerOn(false);
             this.props.handlers.handleUpdateDockerOn(true);
-            return jsonStr 
+            return jsonStr
         })
         .then((jsonStr) => {
             // add JSON to redux state
