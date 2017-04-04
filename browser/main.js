@@ -16,7 +16,7 @@ import makeFirepads from './utils/firepads';
 import * as updateActions from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateAllCode } from './reducers/code'
-// import {apiKey, authDomain, databaseURL} from '../variables';
+import {apiKey, authDomain, databaseURL} from '../variables';
 
 injectTapEventPlugin(); //need this for the progress indicator
 
@@ -64,11 +64,11 @@ var sharedText = false;
 
 const onAppEnter = () => {
     // initialize firebase
-    var config = {
-        apiKey: process.env.API || apiKey,
-        authDomain: process.env.AUTH || authDomain,
-        databaseURL: process.env.DB || databaseURL
-    };
+    var config = {apiKey, authDomain, databaseURL};
+    //     apiKey: process.env.API || apiKey,
+    //     authDomain: process.env.AUTH || authDomain,
+    //     databaseURL: process.env.DB || databaseURL
+    // };
     firebase.initializeApp(config);
 
     let madeFirepads = false;
