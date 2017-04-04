@@ -1,6 +1,10 @@
 /* 
 To run Sandcastle in a development environment, comment out the `deployed variables` and un-comment out the `production variables`. 
 
+Remember - in two seperate shells: 
+`npm run build-watch`
+`node server.js`
+
 WHEN YOU PUSH TO MASTER, BE SURE TO COMMENT THE DEPLOYMENT VARIABLES BACK IN, AND THE PRODUCTION VARIABLES OUT!!!
 	
 
