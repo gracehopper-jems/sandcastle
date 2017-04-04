@@ -60,7 +60,7 @@ module.exports = app
 db.sync({force: true})
     .then(() => {
         const server = app.listen(
-            3000,
+            process.env.PORT || 3000,
             () => {
                 console.log(`--- Started HTTP Server ---`);
                 const { address, port } = server.address();
