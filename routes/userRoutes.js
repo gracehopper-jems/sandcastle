@@ -26,7 +26,7 @@ router.post('/user/:firebaseId', (req, res, next) => {
 router.get('/user/:firebaseId', (req, res, next) => {
 		User.findOne({ where: { firebaseId: req.params.firebaseId } })
 				.then(user => {
-						return user.getProjects();
+						return user ? user.getProjects() : null;
 				})
 				.then(projects => {
 						res.status(200).send(projects);
