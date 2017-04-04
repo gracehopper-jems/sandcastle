@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-const randomstring = require('randomstring');
+import randomstring from 'randomstring';
 import { Modal, Button } from 'react-bootstrap';
 
 export default class CustomProjectNameModal extends Component {
