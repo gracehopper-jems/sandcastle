@@ -9,7 +9,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Provider } from 'react-redux';
 import AppContainer from './Containers/AppContainer';
 import SignUp from './Containers/SignUp';
-import {apiKey, authDomain, databaseURL} from '../secrets';
 import firebase from 'firebase';
 import store from './store';
 import { setUserId } from './reducers/user';
@@ -17,6 +16,7 @@ import makeFirepads from './utils/firepads';
 import * as updateActions from './reducers/code';
 import makeFrontendIframe from './utils/makeFrontendIframe';
 import { updateHTML, updateCSS, updateJS, updateServer, updateDatabase, updateAllCode } from './reducers/code'
+// import {apiKey, authDomain, databaseURL} from '../variables';
 
 injectTapEventPlugin(); //need this for the progress indicator
 
@@ -64,7 +64,11 @@ var sharedText = false;
 
 const onAppEnter = () => {
     // initialize firebase
-    var config = { apiKey, authDomain, databaseURL };
+    var config = {
+        apiKey: process.env.API || apiKey,
+        authDomain: process.env.AUTH || authDomain,
+        databaseURL: process.env.DB || databaseURL
+    };
     firebase.initializeApp(config);
 
     let madeFirepads = false;
