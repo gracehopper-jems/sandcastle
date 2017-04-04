@@ -16,7 +16,6 @@ import CustomProjectNameModal from './CustomProjectNameModal';
 export default class NavbarContainer extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			email: "",
 			password: "",
