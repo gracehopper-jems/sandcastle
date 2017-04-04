@@ -20,9 +20,13 @@ export default class UserProjects extends Component {
     }
 
     handleToggle(){
-        return axios.get(`/api/user/${this.props.user.userId}`)
+        axios.get(`/api/user/${this.props.user.userId}`)
         .then((projects) => {
-            this.setState({open: !this.state.open, projects: projects.data});
+            if (projects.data !== '') {
+                this.setState({open: !this.state.open, projects: projects.data});
+            } else {
+                this.setState({open: !this.state.open});
+            }
         })
         .catch(console.error)
     }
@@ -83,7 +87,15 @@ export default class UserProjects extends Component {
                   onRequestChange={(open) => this.setState({open})}
               >
               <h2>My Saved Projects</h2>
-                  {this.state.projects && this.state.projects.map((project, i) => {
+                  {this.state.projects && this.state.projects.length === 0
+                      ?
+                      <div className="no-projects">
+                          <center>You have no saved projects.</center>
+                      </div>
+                      :
+                      null
+                  }
+                  {this.state.projects && this.state.projects.length > 0 && this.state.projects.map((project, i) => {
                       return (
                           <MenuItem
                               key={project.id}

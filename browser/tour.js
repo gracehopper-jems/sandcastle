@@ -94,6 +94,7 @@ const tour = new Tour({
 	duration: 4000,
 	onEnd: function () {
 		browserHistory.push('/');
+		window.location.reload();
 	}
 });
 
