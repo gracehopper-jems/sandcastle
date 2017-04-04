@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Progress, { ProgressModal } from '../Components/ProgressIndicator';
-import tour from '../../tour';
+import tour from '../tour';
 import store from '../store';
 
 export default class LoadingButton extends Component {
