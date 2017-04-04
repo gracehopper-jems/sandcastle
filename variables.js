@@ -17,6 +17,12 @@ const postgresPath = 'postgres://sandcastles:sandcastles@localhost:5432/sandcast
 
 const appURL = 'http://www.sandcastle.world';
 
+const apiKey = process.env.API;
+
+const authDomain = process.env.AUTH;
+
+const databaseURL =  process.env.DB;
+
 
 /*  ====================
 	PRODUCTION VARIABLES
@@ -30,11 +36,10 @@ const appURL = 'http://www.sandcastle.world';
 
 
 
-// COMMENT IN API VARIABLES WHEN IN PRODCTION MODE
 module.exports = {
   	postgresPath,
   	appURL,
-    // apiKey,
-    // authDomain,
-    // databaseURL
+    apiKey,
+    authDomain,
+    databaseURL
 };
