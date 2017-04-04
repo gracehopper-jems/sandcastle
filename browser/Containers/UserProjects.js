@@ -72,7 +72,6 @@ export default class UserProjects extends Component {
       const buttonStyle = {
           margin: '6px',
       };
-      console.log('=====localstate', this.state);
 
       return (
           <div>
