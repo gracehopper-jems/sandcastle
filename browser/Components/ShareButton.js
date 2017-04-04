@@ -9,8 +9,8 @@ export default class ShareButton extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-				clicked: false,
-				projectId: "",
+			clicked: false,
+			projectId: "",
 		};
 		this.handleSave = this.handleSave.bind(this);
 		this.handleClose = this.handleClose.bind(this);
