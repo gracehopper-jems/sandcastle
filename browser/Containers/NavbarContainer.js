@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import SigninModal from '../Components/SigninModal';
 import SignupModal from '../Components/SignupModal';
-import tour from '../../tour';
+import tour from '../tour';
 import UserProjects from './UserProjects';
 import store from '../store';
 import ShareButton from '../Components/ShareButton';
