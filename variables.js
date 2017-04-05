@@ -13,26 +13,26 @@ WHEN YOU PUSH TO MASTER, BE SURE TO COMMENT THE DEPLOYMENT VARIABLES BACK IN, AN
 	====================  */
 
 
-// const postgresPath = 'postgres://sandcastles:sandcastles@localhost:5432/sandcastles'
+const postgresPath = 'postgres://sandcastles:sandcastles@localhost:5432/sandcastles'
 
-// const appURL = 'http://www.sandcastle.world';
+const appURL = 'http://www.sandcastle.world';
 
-// const apiKey = process.env.API;
+const apiKey = process.env.API;
 
-// const authDomain = process.env.AUTH;
+const authDomain = process.env.AUTH;
 
-// const databaseURL =  process.env.DB;
+const databaseURL =  process.env.DB;
 
 
 /*  ====================
 	PRODUCTION VARIABLES
 	====================  */
 
-const {apiKey, authDomain, databaseURL} = require('./secrets.js');
+// const {apiKey, authDomain, databaseURL} = require('./secrets.js');
 
-const postgresPath = 'postgres://localhost:5432/sandcastle'
+// const postgresPath = 'postgres://localhost:5432/sandcastle'
 
-const appURL = 'http://localhost:3000';
+// const appURL = 'http://localhost:3000';
 
 
 
