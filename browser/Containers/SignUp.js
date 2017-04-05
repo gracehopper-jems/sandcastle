@@ -7,11 +7,11 @@ export default class SignUp extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-				firstname: "",
-				lastname: "",
-				email: "",
-				password: "",
-				signedUp: false
+			firstname: "",
+			lastname: "",
+			email: "",
+			password: "",
+			signedUp: false
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
