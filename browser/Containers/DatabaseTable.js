@@ -2,27 +2,21 @@ import React, {Component} from 'react';
 
 export default class DatabaseTable extends Component {
 	constructor(props){
-			super(props)
-			this.state = {
-					entries: [],
-					headings: [],
-			}
+		super(props)
+		this.state = {
+				entries: [],
+				headings: [],
+		}
 	}
 
 	componentWillReceiveProps(nextProps){
 		const entries = nextProps.database;
-
 		if (entries.length){
-
 			this.setState({entries: entries});
-
 			const headings = Object.keys(entries[0]);
 			this.setState({headings: headings});
-
 		}
-
 	}
-
 
 	render() {
 		let count = 0;

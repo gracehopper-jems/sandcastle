@@ -4,7 +4,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link, browserHistory } from 'react-router';
-import { updateCurrentProject } from '../reducers';
+import { updateCurrentProject, updateAllCode } from '../reducers';
 
 export default class UserProjects extends Component {
 
@@ -42,24 +42,27 @@ export default class UserProjects extends Component {
           return JSON.parse(project.data.code)
       })
       .then((code) => {
-          this.props.handlers.handleHTMLUpdate(code.htmlString);
-          return code
+          this.props.handlers.handleUpdateAllCode(code);
       })
-      .then((code) => {
-          this.props.handlers.handleCSSUpdate(code.cssString);
-          return code
-      })
-      .then((code) => {
-          this.props.handlers.handleJSUpdate(code.jsString);
-          return code
-      })
-      .then((code) => {
-          this.props.handlers.handleDatabaseUpdate(code.databaseString);
-          return code
-      })
-      .then((code) => {
-          this.props.handlers.handleServerUpdate(code.serverString);
-      })
+    //   .then((code) => {
+    //       this.props.handlers.handleHTMLUpdate(code.htmlString);
+    //       return code
+    //   })
+    //   .then((code) => {
+    //       this.props.handlers.handleCSSUpdate(code.cssString);
+    //       return code
+    //   })
+    //   .then((code) => {
+    //       this.props.handlers.handleJSUpdate(code.jsString);
+    //       return code
+    //   })
+    //   .then((code) => {
+    //       this.props.handlers.handleDatabaseUpdate(code.databaseString);
+    //       return code
+    //   })
+    //   .then((code) => {
+    //       this.props.handlers.handleServerUpdate(code.serverString);
+    //   })
       .then(() => {
           browserHistory.push(`/share${hashedProjectId}`);
           window.location.reload()
