@@ -10,7 +10,7 @@ export default class DatabaseTable extends Component {
 	}
 
 	componentWillReceiveProps(nextProps){
-		const entries = nextProps.database;
+		const entries = nextProps.database; // this is the database array defined in our docker reducer
 		if (entries.length){
 			this.setState({entries: entries});
 			const headings = Object.keys(entries[0]);

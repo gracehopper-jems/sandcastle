@@ -18,6 +18,7 @@ export default class PostwomanContainer extends Component {
     }
 
     handleChange(event) {
+        // sets the path a user is making a request to on state
         event.preventDefault();
         let path = event.target.value;
         if (path[0] !== '/') {
@@ -36,6 +37,8 @@ export default class PostwomanContainer extends Component {
         event.preventDefault();
 
         axios.post('/postWomanPath', {path: this.state.path})
+        // this axios request sets the path the user is requesting to their session (see the POST to /postWomanPath in routes/containerRoutes.js)
+        // (note: this is probably unnecessary - we could just send the path down in the request body to containerAPI in the axios requests below)
         .then(() => {
             var axiosPromise;
             if (this.state.requestType === 'GET' && this.state.path !== ''){
@@ -54,7 +57,7 @@ export default class PostwomanContainer extends Component {
             return JSON.stringify(res.data);
         })
         .then((jsonStr) => {
-
+            // we then set the result to state 
             if (this.state.requestType === 'POST'){
                 this.props.handlers.handleSendPost(jsonStr);
             } else if (this.state.requestType === 'PUT'){
