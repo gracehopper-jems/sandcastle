@@ -44,27 +44,10 @@ export default class UserProjects extends Component {
       .then((code) => {
           this.props.handlers.handleUpdateAllCode(code);
       })
-    //   .then((code) => {
-    //       this.props.handlers.handleHTMLUpdate(code.htmlString);
-    //       return code
-    //   })
-    //   .then((code) => {
-    //       this.props.handlers.handleCSSUpdate(code.cssString);
-    //       return code
-    //   })
-    //   .then((code) => {
-    //       this.props.handlers.handleJSUpdate(code.jsString);
-    //       return code
-    //   })
-    //   .then((code) => {
-    //       this.props.handlers.handleDatabaseUpdate(code.databaseString);
-    //       return code
-    //   })
-    //   .then((code) => {
-    //       this.props.handlers.handleServerUpdate(code.serverString);
-    //   })
       .then(() => {
+        // this will cause the functionality for `share` in main.js to be triggered
           browserHistory.push(`/share${hashedProjectId}`);
+          // once the page has reloaded and registers that the string "share" is in the URL bar
           window.location.reload()
           this.setState({open: false});
       })

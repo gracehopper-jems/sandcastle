@@ -74,6 +74,8 @@ module.exports = router
 })
 
 .use('/containerAPI', (req, res, next) => {
+    // middleware for all requests sent to containerAPI - sets the variables requestBody, path, userId and containerName at the top of this page
+    // these variables will all be used in the subsequent get, post, put, and delete routes 
     if (req.session.userId) {
         requestBody = req.body.request;
         path = req.session.path;
@@ -85,7 +87,7 @@ module.exports = router
     next();
 })
 
-// run a get request in container terminal and receive the result
+// run a GET request in container terminal and receive the result
 .get('/containerAPI', (req, res, next) => {
     exec(`docker ps -aqf "name=${containerName}"`)
         .then((containerId) => {
@@ -97,6 +99,7 @@ module.exports = router
         .catch(console.error);
 })
 
+// run a POST request in container terminal and receive the result
 .post('/containerAPI', (req, res, next) => {
     exec(`docker ps -aqf "name=${containerName}"`)
         .then((containerId) => {
@@ -108,6 +111,7 @@ module.exports = router
         .catch(console.error);
 })
 
+// run a PUT request in container terminal and receive the result
 .put('/containerAPI', (req, res, next) => {
     exec(`docker ps -aqf "name=${containerName}"`)
         .then((containerId) => {
@@ -119,6 +123,7 @@ module.exports = router
         .catch(console.error);
 })
 
+// run a DELETE request in container terminal and receive the result
 .delete('/containerAPI', (req, res, next) => {
     exec(`docker ps -aqf "name=${containerName}"`)
         .then((containerId) => {
