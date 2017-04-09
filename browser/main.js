@@ -22,12 +22,16 @@ const databaseURL = require('../variables').databaseURL;
 
 injectTapEventPlugin(); //need this for the progress indicator
 
-var sharedCode;
 let pads = [];
 
+var textFromLocalDB = false; // this variable determines whether or not we are fetching our text from our own database (as opposed to Firebase) - we would only be fetching from our local database if someone had either clicked on one of their saved projects, or had entered in a link to a shared project in their URL bar
 if (location.pathname.startsWith('/share'))  {
+// Check to see if any route begins with ‘share’ 
+    textFromLocalDB = true; // this means we ARE fetching text from our own database 
     const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);
+    // If so, take the hashed ID of the project (which is whatever string is after the word share) 
     axios.get(`/api/project/${hashedId}`)
+    // and fetch the data attached with that hashed ID using an axios request. 
     .then(res => {
         return res.data
     })
@@ -37,40 +41,16 @@ if (location.pathname.startsWith('/share'))  {
     .then(code => {
         return JSON.parse(code);
     })
-    .catch(console.error);
-}
-
-var sharedText = false;
-  if (location.pathname.startsWith('/share'))  {
-    sharedText = true;
-    const hashedId = location.pathname.slice(location.pathname.indexOf('/share')+6);
-        axios.get(`/api/project/${hashedId}`)
-        .then(res => {
-            return res.data
-        })
-        .then(data => {
-            return data.code
-        })
-        .then(code => {
-            return JSON.parse(code);
-        })
-        .then(sharedCode => {
-            return sharedCode
-        })
-        .then(sharedCode => {
-            store.dispatch(updateAllCode(sharedCode));
-        })
-        .then(browserHistory.push('/'))
-        .catch(console.error)
+    .then(sharedCode => {
+        // and then set the fetched data to state 
+        store.dispatch(updateAllCode(sharedCode));
+    })
+    .then(browserHistory.push('/'))
+    .catch(console.error)
 }
 
 const onAppEnter = () => {
-    // initialize firebase
     var config = {apiKey, authDomain, databaseURL};
-    //     apiKey: process.env.API || apiKey,
-    //     authDomain: process.env.AUTH || authDomain,
-    //     databaseURL: process.env.DB || databaseURL
-    // };
     firebase.initializeApp(config);
 
     let madeFirepads = false;
@@ -82,9 +62,6 @@ const onAppEnter = () => {
             store.dispatch(setUserId(userId));
 
             axios.post('/setUser', {userId: userId})
-            .then(() => {
-                console.log('posting userid');
-            })
             .catch(console.error);
 
             // if user is logged in add an event listener to window to check if user is leaving page
@@ -110,20 +87,19 @@ const onAppEnter = () => {
 
             // creating firepads and updating state with text
             Promise.map(allFirepads, (pad, i) => {
-                var appState = store.getState();
-                var appCode = appState.code;
                 return new Promise((resolve, reject) => {
                     pad.on('ready', () => {
                         pads.push(pad);
-                        if (!sharedText){
+                        if (!textFromLocalDB){ // if we aren't fetching our text from our local database, use Firepad's getText method to fetch text from Firebase 
                             store.dispatch(updateActions[`update${orderManifesto[i]}`](pad.getText()));
                             resolve();
-                        } else {
-                          pad.setText(appCode[stateOrderManifesto[i]]);
-                          sharedText = false;
-                          resolve()
-                           window.location.reload();
-                          // pad.refresh();
+                        } else { // if we are fetching our text from our local database, then we need to fetch the code that we saved on state during our axios request, and use Firepad's setText method to update each pad
+                            let appState = store.getState();
+                            let appCode = appState.code;
+                            pad.setText(appCode[stateOrderManifesto[i]]);
+                            textFromLocalDB = false;
+                            resolve()
+                            window.location.reload(); // For whatever reason, it doesn't properly work without reloading the page
                         }
                     });
                 });
