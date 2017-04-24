@@ -5,25 +5,25 @@ const _ = require('lodash');
 const createHTML = require('./createHTML');
 
 const dockerComposeStr = `db:
-  image: postgres
-  ports:
-    - <%= postgresPort %>:<%= userPostgresPort %>
-  environment:
-    POSTGRES_USER: username
-    POSTGRES_PASSWORD: pgpassword
-    POSTGRES_DB: docker-test
+    image: postgres
+    ports:
+        - <%= postgresPort %>:<%= userPostgresPort %>
+    environment:
+        POSTGRES_USER: username
+        POSTGRES_PASSWORD: pgpassword
+        POSTGRES_DB: docker-test
 docker-test:
-  build: .
-  ports:
-    - <%= serverPort %>:<%= userServerPort %>
-  links:
-    - db
-  environment:
-    SEQ_DB: docker-test
-    SEQ_USER: username
-    SEQ_PW: pgpassword
-    PORT: <%= userServerPort %>
-    DATABASE_URL: postgres://username:pgpassword@db:5432/docker-test`;
+    build: .
+    ports:
+        - <%= serverPort %>:<%= userServerPort %>
+    links:
+        - db
+    environment:
+        SEQ_DB: docker-test
+        SEQ_USER: username
+        SEQ_PW: pgpassword
+        PORT: <%= userServerPort %>
+        DATABASE_URL: postgres://username:pgpassword@db:5432/docker-test`;
 
 const dockerFileStr = `FROM node:boron
 
