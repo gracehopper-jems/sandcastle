@@ -48,42 +48,42 @@ export default class SignUp extends Component {
 
 	render(){
 		return (
-				<div>
-					{ this.state.signedUp ?
-						(<div>
-							<div>Thanks for signing up! You are now logged in and can create your first project...BUT! We recommend taking a tour before you do that...
+			<div>
+				{ this.state.signedUp ?
+					(<div>
+						<div>Thanks for signing up! You are now logged in and can create your first project...BUT! We recommend taking a tour before you do that...
+						</div>
+					</div>
+					)
+					: ( <div className="container-fluid">
+							<div className="row">
+								<form>
+									<div className="form-group">
+										<label htmlFor="title" className="control-label">First Name</label>
+										<input name="firstname" type="text" className="form-control" onChange={this.handleChange}  autoFocus={focus} />
+									</div>
+									<div className="form-group">
+										<label htmlFor="title" className="control-label">Last Name</label>
+										<input name="lastname" type="text" className="form-control" onChange={this.handleChange} />
+									</div>
+									<div className="form-group">
+										<label htmlFor="title" className="control-label">Email</label>
+										<input name="email" type="text" className="form-control" onChange={this.handleChange} />
+									</div>
+									<div className="form-group">
+										<label htmlFor="title" className="control-label">Password</label>
+										<input name="password" type="password" className="form-control" onChange={this.handleChange} />
+										<small id="passwordHelp" className="form-text text-muted">Password must be a minimum of 6 characters long.</small>
+									</div>
+									<div className="col-sm-offset-10 col-sm-10">
+										<button onClick={this.handleSubmit} type="submit" className="btn btn-primary">Submit</button>
+									</div>
+								</form>
 							</div>
 						</div>
-						)
-						: ( <div className="container-fluid">
-								<div className="row">
-									<form>
-										<div className="form-group">
-											<label htmlFor="title" className="control-label">First Name</label>
-											<input name="firstname" type="text" className="form-control" onChange={this.handleChange}  autoFocus={focus} />
-										</div>
-										<div className="form-group">
-											<label htmlFor="title" className="control-label">Last Name</label>
-											<input name="lastname" type="text" className="form-control" onChange={this.handleChange} />
-										</div>
-										<div className="form-group">
-											<label htmlFor="title" className="control-label">Email</label>
-											<input name="email" type="text" className="form-control" onChange={this.handleChange} />
-										</div>
-										<div className="form-group">
-											<label htmlFor="title" className="control-label">Password</label>
-											<input name="password" type="password" className="form-control" onChange={this.handleChange} />
-											<small id="passwordHelp" className="form-text text-muted">Password must be a minimum of 6 characters long.</small>
-										</div>
-										<div className="col-sm-offset-10 col-sm-10">
-											<button onClick={this.handleSubmit} type="submit" className="btn btn-primary">Submit</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						)
-					}
-			</div>
+					)
+				}
+		</div>
 		)
 	}
 }
