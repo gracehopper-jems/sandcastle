@@ -24,14 +24,14 @@ router.post('/user/:firebaseId', (req, res, next) => {
 });
 
 router.get('/user/:firebaseId', (req, res, next) => {
-		User.findOne({ where: { firebaseId: req.params.firebaseId } })
-		.then(user => {
-			return user ? user.getProjects() : null;
-		})
-		.then(projects => {
-			res.status(200).send(projects);
-		})
-		.catch(next);
+	User.findOne({ where: { firebaseId: req.params.firebaseId } })
+	.then(user => {
+		return user ? user.getProjects() : null;
+	})
+	.then(projects => {
+		res.status(200).send(projects);
+	})
+	.catch(next);
 });
 
 router.get('/project/:hashedProjectId', (req, res, next) => {
