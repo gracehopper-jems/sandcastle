@@ -1,77 +1,70 @@
 const db = require('./').db;
-console.log('===', db);
-// const Product = require('./product')
-// const {expect} = require('chai')
-
-// describe('Product', () => {
-//   before('wait for the db', () => db.didSync)
-
-//   describe('validations and required fields', () => {
-//     it('includes name, description, color, size, pictureUrl, inventory, magicalAbilities, lifespan, price fields', () =>{
-//       Product.create({
-//         name: 'Bob',
-//         description: 'A happy puppy',
-//         colors: ['brown', 'rainbow'],
-//         size: 'S',
-//         pictureURL: 'http://www.google.com',
-//         inventory: 10,
-//         magicalAbilities: ['being cute'],
-//         lifespan: 15,
-//         price: 100
-//       })
-//       .then(product => {
-//         expect(product.name).to.equal('Bob')
-//         expect(product.description).to.equal('A happy puppy')
-//         expect(product.colors).to.eql(['brown', 'rainbow'])
-//         // add commented code below after color attribute in product model update merged to master
-//         expect(product.colors).to.be.an('array')
-//         expect(product.size).to.equal('S')
-//         expect(product.pictureURL).to.equal('http://www.google.com')
-//         expect(product.inventory).to.equal(10)
-//         expect(product.magicalAbilities).to.be.an('array')
-//         expect(product.magicalAbilities[0]).to.equal('being cute')
-//         expect(product.lifespan).to.equal(15)
-//         expect(product.price).to.equal(100)
-//       })
-//     })
-
-//     it('requires a product name', () =>{
-//       Product.create({})
-//       .catch(err => {
-//         expect(err).to.be.an('object')
-//         expect(err.errors[0].type).to.be.equal('notNull Violation')
-//       })
-//     })
+const User = require('./').User;
+const Project = require('./').Project;
+const {expect} = require('chai')
 
 
-//     it("price and inventory defaults to 0", () => {
-//       Product.create({
-//         name: 'Phoenix',
-//         description: 'Blah blah',
-//         color: 'red',
-//         size: 'M',
-//         lifespan: 6
-//       })
-//       .then(product => {
-//         expect(product.price).to.be.equal(0)
-//         expect(product.inventory).to.be.equal(0)
-//       })
+describe('Models', () => {
+    before('wait for the db', () => db.didSync);
+    afterEach('Clear the tables', () => db.truncate({ cascade: true }));
 
-//     })
+    describe('User fields', () => {
+        it('includes firebaseId', () =>{
+            User.create({
+                firebaseId: 'abc123'
+            })
+            .then(user => {
+                expect(user.firebaseId).to.equal('abc123');
+                expect(user.firebaseId).to.not.equal(null);
+            });
+        });
 
-//     it("Price cannot be lower than 0", () => {
-//       Product.create({
-//         name: 'Phoenix',
-//         description: 'Blah blah',
-//         color: 'red',
-//         size: 'M',
-//         lifespan: 6,
-//         price: -20
-//       })
-//       .catch(err => {
-//         expect(err).to.be.an('object')
-//         expect(err.errors[0].message).to.be.equal('Validation min failed')
-//       })
-//     })
-//   })
-// })
+        it('firebaseId is a string', () =>{
+            User.create({
+                firebaseId: 'abc123'
+            })
+            .then(user => {
+                expect(user.firebaseId).to.be.a('string');
+            });
+        });
+
+    });
+
+    describe('Project fields', () => {
+        it('include hashedProjectId, code, projectName', () =>{
+            Project.create({
+                hashedProjectId: 'def456',
+                code: "{\"htmlString\":\"<h1>My Tiny App</h1>\",\"cssString\":\"h1 {\\n  color: #add8e6;\",\"jsString\":\"console.log(1)\"serverString\":\"const express = require('express');\"databaseString\":\"const Sequelize = require('sequelize');\"}",
+                projectName: 'my project'
+            })
+            .then(project => {
+                expect(project.hashedProjectId).to.equal('def456');
+                expect(project.code).to.equal("{\"htmlString\":\"<h1>My Tiny App</h1>\",\"cssString\":\"h1 {\\n  color: #add8e6;\",\"jsString\":\"console.log(1)\"serverString\":\"const express = require('express');\"databaseString\":\"const Sequelize = require('sequelize');\"}");
+                expect(project.projectName).to.equal('my project');
+            });
+        });
+
+        it('field types are correct and JSON object has correct properties', () =>{
+            Project.create({
+                hashedProjectId: 'xyz890',
+                code: "{\"htmlString\":\"\",\"cssString\":\"\",\"jsString\":\"\",\"serverString\":\"\",\"databaseString\":\"\"}",
+                projectName: 'another project'
+            })
+            .then(project => {
+                expect(project.hashedProjectId).to.be.a('string');
+                expect(project.code).to.be.a('string');
+
+                const projectCodeObj = JSON.parse(project.code);
+                expect(projectCodeObj).to.be.an('object');
+                expect(projectCodeObj).to.have.property('htmlString');
+                expect(projectCodeObj).to.have.property('cssString');
+                expect(projectCodeObj).to.have.property('jsString');
+                expect(projectCodeObj).to.have.property('serverString');
+                expect(projectCodeObj).to.have.property('databaseString');
+                expect(projectCodeObj).to.not.have.property('randomProp');
+                expect(project.projectName).to.be.a('string');
+            });
+        });
+
+    });
+});
