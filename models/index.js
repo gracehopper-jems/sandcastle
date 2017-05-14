@@ -8,15 +8,13 @@ const db = new Sequelize(postgresPath, {
 
 const User = db.define('user', {
 	firebaseId: {
-		type: Sequelize.STRING,
-		// allowNull: false,
+		type: Sequelize.STRING
 	}
 });
 
 const Project = db.define('project', {
 	hashedProjectId: {
-		type: Sequelize.STRING,
-		// allowNull: false,
+		type: Sequelize.STRING
 	},
 	code: {
 		type: Sequelize.JSON,
